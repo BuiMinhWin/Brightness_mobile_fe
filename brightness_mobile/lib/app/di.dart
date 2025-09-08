@@ -7,6 +7,10 @@ import 'package:brightness_mobile/features/auth/data/sources/auth_remote_data_so
 import 'package:brightness_mobile/features/auth/domain/repositories/auth_repository.dart';
 import 'package:brightness_mobile/features/auth/domain/usecases/login_usecase.dart';
 import 'package:brightness_mobile/features/auth/presentation/controllers/login_controller.dart';
+import 'package:brightness_mobile/features/onboarding/di.dart';
+import 'package:brightness_mobile/features/onboarding/presentation/controllers/onboarding_controller.dart';
+import 'package:brightness_mobile/features/home/data/datasources/fitness_data_datasource.dart';
+import 'package:brightness_mobile/features/home/presentation/controllers/home_controller.dart';
 
 final sl = GetIt.instance;
 
@@ -24,6 +28,14 @@ Future<void> initServices(AppConfig config) async {
   );
   sl.registerFactory<LoginUseCase>(() => LoginUseCase(sl()));
   sl.registerFactory<LoginController>(() => LoginController(login: sl()));
+
+  // Features: Onboarding
+  initOnboardingFeature(sl);
+  sl.registerFactory<OnboardingController>(() => OnboardingController(sl()));
+
+  // Features: Home
+  sl.registerLazySingleton<FitnessDataDatasource>(() => FitnessDataDatasource());
+  sl.registerFactory<HomeController>(() => HomeController(sl()));
 
   // TODO: Register other feature services (user, catalog, order, payment)
 }

@@ -63,7 +63,6 @@ class AppConfig {
               defaultValue: 'https://stg.api.example.com/payment')),
         );
       case AppFlavor.dev:
-      default:
         return AppConfig(
           flavor: flavor,
           title: 'Brightness Mobile (Dev)',
@@ -86,4 +85,3 @@ class AppConfig {
     }
   }
 }
-
