@@ -18,3 +18,12 @@ class ServerFailure extends Failure {
 class CacheFailure extends Failure {
   const CacheFailure(super.message, {super.cause});
 }
+
+//
+class AuthFailure extends Failure {
+  const AuthFailure(super.message, {super.cause});
+}
+
+class ValidationFailure extends Failure {
+  const ValidationFailure(super.message, {super.cause});
+}
