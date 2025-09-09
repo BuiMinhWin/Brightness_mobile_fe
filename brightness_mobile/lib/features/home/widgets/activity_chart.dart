@@ -3,8 +3,12 @@ import '../../../../core/theme/app_colors.dart';
 
 class ActivityChart extends StatelessWidget {
   final List<double> weeklyData;
-
-  const ActivityChart({super.key, required this.weeklyData});
+  final double opacity;
+  const ActivityChart({
+    super.key,
+    required this.weeklyData,
+    this.opacity = 0.85,
+  });
 
   @override
   Widget build(BuildContext context) {
@@ -12,11 +16,11 @@ class ActivityChart extends StatelessWidget {
       height: 200,
       padding: const EdgeInsets.all(20),
       decoration: BoxDecoration(
-        color: AppColors.white,
+        color: AppColors.white.withOpacity(opacity.clamp(0.0, 1.0)),
         borderRadius: BorderRadius.circular(20),
         boxShadow: [
           BoxShadow(
-            color: Colors.black.withOpacity(0.05),
+            color: Colors.black.withOpacity(opacity.clamp(0.0, 1.0)),
             blurRadius: 10,
             offset: const Offset(0, 5),
           ),

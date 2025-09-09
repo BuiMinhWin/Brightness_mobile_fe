@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-
 import 'package:brightness_mobile/core/config/app_config.dart';
 import 'package:brightness_mobile/app/di.dart';
 import 'package:brightness_mobile/features/auth/presentation/controllers/login_controller.dart';
@@ -15,6 +14,7 @@ import 'package:brightness_mobile/features/run/presentation/pages/run_map_page.d
 import 'package:brightness_mobile/features/run/presentation/pages/run_detail_page.dart';
 import 'package:brightness_mobile/features/workout/presentation/pages/workout_page.dart';
 
+import 'package:brightness_mobile/app/root_decider.dart';
 class App extends StatelessWidget {
   final AppConfig config;
   const App({super.key, required this.config});
@@ -40,8 +40,9 @@ class App extends StatelessWidget {
           useMaterial3: true,
         ),
         routes: {
-          '/': (_) => const OnboardingScreen(),
+          '/': (_) => const RootDecider(),
           '/home': (_) => const HomeScreen(),
+          '/onboarding': (_) => const OnboardingScreen(),
           '/home/detail': (_) => const StepsDetailPage(),
           '/home/calendar': (_) => const CalendarPage(),
           '/workout/calendar': (_) => const WorkoutPage(),

@@ -34,9 +34,17 @@ class _HomeScreenState extends State<HomeScreen> {
 
     return Scaffold(
       backgroundColor: AppColors.backgroundLight,
-      body: SafeArea(
-        child: Column(
-          children: [
+      body: Stack(
+        children: [
+          Positioned.fill(
+            child: Image.asset(
+              'assets/images/home_bg.png',
+              fit: BoxFit.cover,
+            ),
+          ),
+          SafeArea(
+            child: Column(
+              children: [
             _buildHeader(),
             Expanded(
               child: RefreshIndicator(
@@ -61,7 +69,10 @@ class _HomeScreenState extends State<HomeScreen> {
 
                       // Stats Overview (Calories, Distance, Steps, Points)
                       if (controller.dailyStats != null)
-                        StatsOverview(dailyStats: controller.dailyStats!),
+                        StatsOverview(
+                          dailyStats: controller.dailyStats!,
+                          opacity: 0.8,
+                        ),
 
                       const SizedBox(height: 20),
 
@@ -69,6 +80,7 @@ class _HomeScreenState extends State<HomeScreen> {
                       if (controller.dailyStats != null)
                         ActivityChart(
                           weeklyData: controller.dailyStats!.weeklyCalories,
+                          opacity: 0.9,
                         ),
 
                       const SizedBox(height: 24),
@@ -88,7 +100,9 @@ class _HomeScreenState extends State<HomeScreen> {
                       const SizedBox(height: 24),
 
                       // Recent Plan Section
-                      FitnessProgramsSection(programs: controller.fitnessPrograms),
+                      FitnessProgramsSection(
+                        programs: controller.fitnessPrograms,
+                      ),
 
                       const SizedBox(height: 24),
 
@@ -107,8 +121,10 @@ class _HomeScreenState extends State<HomeScreen> {
                 ),
               ),
             ),
-          ],
-        ),
+              ],
+            ),
+          ),
+        ],
       ),
       bottomNavigationBar: const CustomBottomNavBar(),
     );

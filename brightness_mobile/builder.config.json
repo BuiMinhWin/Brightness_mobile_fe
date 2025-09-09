@@ -1,6 +1,6 @@
 {
   "command": "flutter run",
-  "serverUrl": "http://localhost:3000",
+  "serverUrl": "http://localhost:55027/",
   "authenticateProxy": false,
   "commitMode": "commits"
 }

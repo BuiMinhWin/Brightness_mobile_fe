@@ -68,7 +68,19 @@ class CalorieCard extends StatelessWidget {
               ),
             ),
 
-            // Fox mascot now overlaid from parent, not inside card
+            // Mascot image
+            Positioned(
+              right: -12,
+              bottom: -8,
+              child: SizedBox(
+                width: 210,
+                height: 210,
+                child: Image.asset(
+                  'assets/images/home_fox.png',
+                  fit: BoxFit.contain,
+                ),
+              ),
+            ),
           ],
         ),
       ),
