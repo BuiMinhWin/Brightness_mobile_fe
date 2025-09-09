@@ -5,19 +5,24 @@ import '../domain/entities/daily_stats.dart';
 
 class StatsOverview extends StatelessWidget {
   final DailyStats dailyStats;
+  final double opacity;
 
-  const StatsOverview({super.key, required this.dailyStats});
+  const StatsOverview({
+    super.key,
+    required this.dailyStats,
+    this.opacity = 0.85,
+  });
 
   @override
   Widget build(BuildContext context) {
     return Container(
       padding: const EdgeInsets.all(24),
       decoration: BoxDecoration(
-        color: AppColors.white,
+        color: AppColors.white.withOpacity(opacity.clamp(0.0, 1.0)),
         borderRadius: BorderRadius.circular(20),
         boxShadow: [
           BoxShadow(
-            color: Colors.black.withOpacity(0.05),
+            color: Colors.black.withOpacity(opacity.clamp(0.0, 1.0)),
             blurRadius: 10,
             offset: const Offset(0, 5),
           ),
