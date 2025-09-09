@@ -29,6 +29,8 @@
 //     );
 //   }
 // }
+import 'package:brightness_mobile/features/auth/presentation/controllers/register_controller.dart';
+import 'package:brightness_mobile/features/auth/presentation/pages/register_page.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import '../features/auth/presentation/pages/login_page.dart';
@@ -57,6 +59,11 @@ class BrightNestApp extends StatelessWidget {
         '/login': (context) => ChangeNotifierProvider(
               create: (_) => di.sl<LoginController>(),
               child: const LoginPage(),
+            ),
+        // Add more routes as needed
+        '/register': (context) => ChangeNotifierProvider(
+              create: (_) => di.sl<RegisterController>(),
+              child: const RegisterPage(),
             ),
         // Add more routes as needed
       },

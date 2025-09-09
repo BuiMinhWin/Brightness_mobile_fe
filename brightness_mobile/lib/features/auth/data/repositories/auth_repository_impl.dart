@@ -171,34 +171,34 @@ class AuthRepositoryImpl implements AuthRepository {
     }
   }
 
-  @override
-  Future<Either<Failure, User>> register({
-    DateTime? dateOfBirth,
-    required String email,
-    String? fullName,
-    String? gender,
-    required String password,
-    String? phoneNumber,
-    String? profilePicture,
-    String? username,
-  }) async {
-    try {
-      final userModel = await remoteDataSource.register(
-        // Change 'dateOfBirth' to the correct parameter name if needed, or add it to the register method definition.
-        dateOfBirth: dateOfBirth,
-        email: email,
-        fullName: fullName,
-        gender: gender,
-        password: password,
-        phoneNumber: phoneNumber,
-        profilePicture: profilePicture,
-        username: username,
-      );
-      return Right(userModel);
-    } catch (e) {
-      return Left(AuthFailure(e.toString())); // ✅
-    }
-  }
+  // @override
+  // Future<Either<Failure, User>> register({
+  //   DateTime? dateOfBirth,
+  //   required String email,
+  //   String? fullName,
+  //   String? gender,
+  //   required String password,
+  //   String? phoneNumber,
+  //   String? profilePicture,
+  //   String? username,
+  // }) async {
+  //   try {
+  //     final userModel = await remoteDataSource.register(
+  //       // Change 'dateOfBirth' to the correct parameter name if needed, or add it to the register method definition.
+  //       dateOfBirth: dateOfBirth,
+  //       email: email,
+  //       fullName: fullName,
+  //       gender: gender,
+  //       password: password,
+  //       phoneNumber: phoneNumber,
+  //       profilePicture: profilePicture,
+  //       username: username,
+  //     );
+  //     return Right(userModel);
+  //   } catch (e) {
+  //     return Left(AuthFailure(e.toString())); // ✅
+  //   }
+  // }
 
   // @override
   // Future<Either<Failure, User>> getCurrentUser() async {
@@ -219,4 +219,36 @@ class AuthRepositoryImpl implements AuthRepository {
   //     return Left(AuthFailure(e.toString())); // ✅
   //   }
   // }
+
+   @override
+  Future<Either<Failure, User>> register({
+    required String email,
+    required String password,
+    String? username,
+    String? fullName,
+    String? phoneNumber,
+    String? gender,
+    DateTime? dateOfBirth,
+    String? profilePicture,
+  }) async {
+    try {
+      final user = await remoteDataSource.register(
+        email: email,
+        password: password,
+        username: username,
+        fullName: fullName,
+        phoneNumber: phoneNumber,
+        gender: gender,
+        dateOfBirth: dateOfBirth,
+        profilePicture: profilePicture,
+      );
+      return Right(user);
+    } on ServerException catch (e) {
+      return Left(ServerFailure(e.toString()));
+    } on NetworkException catch (e) {
+      return Left(NetworkFailure(e.toString()));
+    } catch (e) {
+      return Left(ServerFailure('Registration failed'));
+    }
+  }
 }

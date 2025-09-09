@@ -27,6 +27,8 @@
 
 //   // TODO: Register other feature services (user, catalog, order, payment)
 // }
+import 'package:brightness_mobile/features/auth/domain/usecases/register_usecase.dart';
+import 'package:brightness_mobile/features/auth/presentation/controllers/register_controller.dart';
 import 'package:get_it/get_it.dart';
 import 'package:http/http.dart' as http;
 
@@ -86,6 +88,12 @@ Future<void> _initAuth() async {
   sl.registerLazySingleton<AuthRepository>(
     () => AuthRepositoryImpl(remoteDataSource: sl()),
   );
+
+  // UseCase
+  sl.registerLazySingleton(() => RegisterUseCase(repository: sl()));
+
+  // Controller
+  sl.registerFactory(() => RegisterController(registerUseCase: sl()));
 
   // Data Sources (Data Layer)
   sl.registerLazySingleton<AuthRemoteDataSource>(

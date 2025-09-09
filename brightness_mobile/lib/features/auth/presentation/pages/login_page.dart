@@ -56,9 +56,9 @@ class LoginPage extends StatelessWidget {
         begin: Alignment.topCenter,
         end: Alignment.bottomCenter,
         colors: [
-          Color(0xFFB8E986), // Light green
-          Color(0xFF4CAF50), // Medium green
-          Color(0xFF2E7D32), // Dark green
+          Color(0xFFE2F043), // Light green
+          Color.fromARGB(255, 64, 155, 69), // Medium green
+          Color(0xFF05644C), // Dark green
         ],
       ).createShader(
         const Rect.fromLTRB(0, 0, 1, 1),
@@ -68,9 +68,9 @@ class LoginPage extends StatelessWidget {
                 begin: Alignment.topCenter,
                 end: Alignment.bottomCenter,
                 colors: [
-                  Color(0xFFB8E986), // Light green
-                  Color(0xFF4CAF50), // Medium green
-                  Color(0xFF2E7D32), // Dark green
+                  Color(0xFFE2F043), // Light green
+                  Color.fromARGB(255, 64, 155, 69), // Medium green
+                  Color(0xFF05644C), // Dark green
                 ],
               ),
             )
@@ -125,15 +125,15 @@ Widget _buildLogo() {
     children: [
       // Logo JPG
       Container(
-        width: 80,
-        height: 80,
+        width: 100,
+        height: 100,
         decoration: BoxDecoration(
-          color: Colors.white.withOpacity(0.2),
+          color: Colors.white.withOpacity(0.0),
           shape: BoxShape.circle,
         ),
         child: ClipOval(
           child: Image.asset(
-            'assets/images/logo.jpg',
+            'assets/images/logo.png',
             fit: BoxFit.cover,
           ),
         ),
@@ -446,40 +446,31 @@ Widget _buildSocialButton({
   //     ),
   //   );
   // }
-  Widget _buildSignUpSection(BuildContext context) {
-  return RichText(
-    text: TextSpan(
-      text: "Don't have account ? ",
-      style: const TextStyle(
-        color: Colors.white,
-        fontSize: 16,
-      ),
-      children: [
-        TextSpan(
-          text: 'Sign Up',
-          style: const TextStyle(
-            color: Colors.yellow,
-            fontWeight: FontWeight.w600,
-          ),
-          recognizer: TapGestureRecognizer()
-            // ..onTap = () {
-            //   // Chuyển hướng sang SignUpPage
-            //   Navigator.push(
-            //     context,
-            //     MaterialPageRoute(
-            //       builder: (_) => const SignUpPage(),
-            //     ),
-            //   );
-            // },
-             ..onTap = () {
-              // Quay lại LoginPage
-              Navigator.pop(context);
-            },
+ Widget _buildSignUpSection(BuildContext context) {
+    return RichText(
+      text: TextSpan(
+        text: "Don't have account ? ",
+        style: const TextStyle(
+          color: Colors.white,
+          fontSize: 16,
         ),
-      ],
-    ),
-  );
-}
+        children: [
+          TextSpan(
+            text: 'Sign Up',
+            style: const TextStyle(
+              color: Colors.yellow,
+              fontWeight: FontWeight.w600,
+            ),
+            recognizer: TapGestureRecognizer()
+              ..onTap = () {
+                // Navigate to RegisterPage
+                Navigator.pushNamed(context, '/register');
+              },
+          ),
+        ],
+      ),
+    );
+  }
 }
 
 
