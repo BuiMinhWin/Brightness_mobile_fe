@@ -1,20 +1,3 @@
-// import '../../domain/entities/auth_token.dart';
-
-// class AuthTokenModel extends AuthToken {
-//   const AuthTokenModel({required super.accessToken, super.refreshToken});
-
-//   factory AuthTokenModel.fromJson(Map<String, dynamic> json) {
-//     return AuthTokenModel(
-//       accessToken: json['access_token'] as String,
-//       refreshToken: json['refresh_token'] as String?,
-//     );
-//   }
-
-//   Map<String, dynamic> toJson() => {
-//         'access_token': accessToken,
-//         'refresh_token': refreshToken,
-//       };
-// }
 
 import 'dart:convert';
 import '../../domain/entities/auth_token.dart';

@@ -1,41 +1,14 @@
-// import 'package:flutter/material.dart';
-// import 'package:provider/provider.dart';
 
-// import 'package:brightness_mobile/core/config/app_config.dart';
-// import 'package:brightness_mobile/app/di.dart';
-// import 'package:brightness_mobile/features/auth/presentation/pages/login_page.dart';
-// import 'package:brightness_mobile/features/auth/presentation/controllers/login_controller.dart';
-
-// class App extends StatelessWidget {
-//   final AppConfig config;
-//   const App({super.key, required this.config});
-
-//   @override
-//   Widget build(BuildContext context) {
-//     return MultiProvider(
-//       providers: [
-//         ChangeNotifierProvider<LoginController>(
-//           create: (_) => sl<LoginController>(),
-//         ),
-//       ],
-//       child: MaterialApp(
-//         title: config.title,
-//         theme: ThemeData(
-//           colorScheme: ColorScheme.fromSeed(seedColor: Colors.indigo),
-//           useMaterial3: true,
-//         ),
-//         home: const LoginPage(),
-//       ),
-//     );
-//   }
-// }
 import 'package:brightness_mobile/features/auth/presentation/controllers/register_controller.dart';
 import 'package:brightness_mobile/features/auth/presentation/pages/register_page.dart';
+import 'package:brightness_mobile/features/pricing/presentation/pages/pricing_page.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import '../features/auth/presentation/pages/login_page.dart';
 import '../features/auth/presentation/controllers/login_controller.dart';
 import 'di.dart' as di;
+import '../core/navigation/main_navigation_controller.dart';
+
 
 class BrightNestApp extends StatelessWidget {
   const BrightNestApp({Key? key}) : super(key: key);
@@ -47,24 +20,21 @@ class BrightNestApp extends StatelessWidget {
       debugShowCheckedModeBanner: false,
       theme: ThemeData(
         primarySwatch: Colors.green,
-        fontFamily: 'Inter', // You can change this to your preferred font
+        fontFamily: 'Inter',
         visualDensity: VisualDensity.adaptivePlatformDensity,
       ),
-      home: ChangeNotifierProvider(
-        create: (_) => di.sl<LoginController>(),
-        child: const LoginPage(),
-      ),
-      // You can add routing here later
+      home: const MainNavigationController(), // Use the main navigation controller
       routes: {
         '/login': (context) => ChangeNotifierProvider(
               create: (_) => di.sl<LoginController>(),
               child: const LoginPage(),
             ),
-        // Add more routes as needed
         '/register': (context) => ChangeNotifierProvider(
               create: (_) => di.sl<RegisterController>(),
               child: const RegisterPage(),
             ),
+        '/main': (context) => const MainNavigationController(),
+         '/pricing': (context) => const PricingPage(),
         // Add more routes as needed
       },
     );

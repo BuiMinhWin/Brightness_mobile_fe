@@ -1,26 +1,4 @@
-// import 'package:dio/dio.dart';
 
-// import '../models/auth_token_model.dart';
-
-// abstract class AuthRemoteDataSource {
-//   Future<AuthTokenModel> login({required String username, required String password});
-// }
-
-// class AuthRemoteDataSourceImpl implements AuthRemoteDataSource {
-//   final Dio _client;
-//   final Uri baseUrl;
-//   AuthRemoteDataSourceImpl({required Dio client, required this.baseUrl}) : _client = client;
-
-//   @override
-//   Future<AuthTokenModel> login({required String username, required String password}) async {
-//     final url = baseUrl.resolve('/login');
-//     final resp = await _client.postUri(url, data: {
-//       'username': username,
-//       'password': password,
-//     });
-//     return AuthTokenModel.fromJson(resp.data as Map<String, dynamic>);
-//   }
-// }
 import 'dart:convert';
 // ignore: depend_on_referenced_packages
 import 'package:http/http.dart' as http;
@@ -294,85 +272,7 @@ class AuthRemoteDataSourceImpl implements AuthRemoteDataSource {
     }
   }
 
-  // @override
-  // Future<UserModel> register({
-  //   required String email,
-  //   required String password,
-  //   String? username,
-  //   String? firstName,
-  //   String? lastName,
-  // }) async {
-  //   try {
-  //     final response = await client.post(
-  //       Uri.parse('${config.authBaseUrl}/auth/register'),
-  //       headers: {
-  //         'Content-Type': 'application/json',
-  //         'Accept': 'application/json',
-  //       },
-  //       body: json.encode({
-  //         'email': email,
-  //         'password': password,
-  //         'username': username,
-  //         'first_name': firstName,
-  //         'last_name': lastName,
-  //       }),
-  //     );
 
-  //     if (response.statusCode == 201 || response.statusCode == 200) {
-  //       final data = json.decode(response.body);
-  //       return UserModel.fromJson(data['data'] ?? data);
-  //     } else {
-  //       final errorData = json.decode(response.body);
-  //       throw ServerException(
-  //         message: errorData['message'] ?? 'Registration failed',
-  //         statusCode: response.statusCode,
-  //       );
-  //     }
-  //   } catch (e) {
-  //     if (e is ServerException) rethrow;
-  //     throw NetworkException(message: 'Network error occurred');
-  //   }
-  // }
-
-//   @override
-// Future<UserModel> register({
-//   required String email,
-//   required String password,
-//   String? username,
-//   String? firstName,
-//   String? lastName,
-// }) async {
-//   try {
-//     final response = await client.post(
-//       Uri.parse('${config.authBaseUrl}/auth/register'),
-//       headers: {
-//         'Content-Type': 'application/json',
-//         'Accept': 'application/json',
-//       },
-//       body: json.encode({
-//         'email': email,
-//         'password': password,
-//         'username': username,
-//         'first_name': firstName,
-//         'last_name': lastName,
-//       }),
-//     );
-
-//     if (response.statusCode == 201 || response.statusCode == 200) {
-//       final data = json.decode(response.body);
-//       return UserModel.fromJson(data['data'] ?? data);
-//     } else {
-//       final errorData = json.decode(response.body);
-//       throw ServerException(
-//         message: errorData['message'] ?? 'Registration failed',
-//         statusCode: response.statusCode,
-//       );
-//     }
-//   } catch (e) {
-//     if (e is ServerException) rethrow;
-//     throw NetworkException(message: 'Network error occurred');
-//   }
-// }
 // Update the interface to match your database fields
 @override
 Future<UserModel> register({
