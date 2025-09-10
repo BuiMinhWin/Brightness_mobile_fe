@@ -176,13 +176,12 @@ class ProfileDemoPage extends StatelessWidget {
           style: AppTheme.textStyleHeadline3,
         ),
         const SizedBox(height: AppTheme.spacingL),
-        
-        CustomButton.outline(
-          text: 'View All Components',
+        OutlinedButton.icon(
           onPressed: () {
             _showComponentsInfo(context);
           },
-          icon: Icons.info_outline,
+          icon: const Icon(Icons.info_outline),
+          label: const Text('View All Components'),
         ),
       ],
     );

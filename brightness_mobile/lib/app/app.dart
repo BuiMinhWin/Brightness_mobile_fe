@@ -5,6 +5,7 @@ import 'package:brightness_mobile/core/theme/app_theme.dart';
 import 'package:brightness_mobile/app/di.dart';
 import 'package:brightness_mobile/app/router.dart';
 import 'package:brightness_mobile/features/auth/presentation/controllers/login_controller.dart';
+import 'package:brightness_mobile/features/auth/presentation/pages/login_page.dart';
 import 'package:brightness_mobile/features/onboarding/presentation/controllers/onboarding_controller.dart';
 import 'package:brightness_mobile/features/onboarding/presentation/pages/onboarding_page.dart';
 import 'package:brightness_mobile/features/home/presentation/pages/home_page.dart';
