@@ -25,8 +25,10 @@ class CalorieCard extends StatelessWidget {
         ),
         child: Stack(
           children: [
+            // Ensure Stack is tall enough so mascot isn't clipped
+            const SizedBox(height: 190),
             Padding(
-              padding: const EdgeInsets.only(right: 140),
+              padding: const EdgeInsets.only(right: 130, top: 100),
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
@@ -40,7 +42,7 @@ class CalorieCard extends StatelessWidget {
                   Text(
                     "${dailyStats.calories.toInt()} Kcal",
                     style: const TextStyle(
-                      fontSize: 32,
+                      fontSize: 28,
                       fontWeight: FontWeight.bold,
                       color: AppColors.white,
                     ),
@@ -65,20 +67,6 @@ class CalorieCard extends StatelessWidget {
                     ),
                   ),
                 ],
-              ),
-            ),
-
-            // Mascot image
-            Positioned(
-              right: -12,
-              bottom: -8,
-              child: SizedBox(
-                width: 210,
-                height: 210,
-                child: Image.asset(
-                  'assets/images/home_fox.png',
-                  fit: BoxFit.contain,
-                ),
               ),
             ),
           ],

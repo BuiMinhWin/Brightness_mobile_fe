@@ -22,7 +22,7 @@ class StatsOverview extends StatelessWidget {
         borderRadius: BorderRadius.circular(20),
         boxShadow: [
           BoxShadow(
-            color: Colors.black.withOpacity(opacity.clamp(0.0, 1.0)),
+            color: Colors.white.withOpacity(opacity.clamp(0.0, 1.0)),
             blurRadius: 10,
             offset: const Offset(0, 5),
           ),
