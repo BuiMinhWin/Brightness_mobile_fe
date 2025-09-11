@@ -1,4 +1,3 @@
-import 'package:brightness_mobile/features/pricing/presentation/pages/pricing_page.dart';
 import 'package:brightness_mobile/features/yours/data/models/yours.dart';
 import 'package:flutter/material.dart';
 import '../widgets/diet_plan_card.dart';

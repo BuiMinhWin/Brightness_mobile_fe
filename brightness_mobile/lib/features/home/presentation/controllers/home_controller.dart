@@ -15,6 +15,8 @@ class HomeController with ChangeNotifier {
   bool isLoading = false;
   String? error;
   int selectedNavIndex = 0;
+  // Selected day for the 7-day navigator
+  DateTime selectedDate = DateTime.now();
 
   void initialize() {
     loadHomeData();
@@ -42,6 +44,12 @@ class HomeController with ChangeNotifier {
 
   void selectNavItem(int index) {
     selectedNavIndex = index;
+    notifyListeners();
+  }
+
+  void setSelectedDate(DateTime date) {
+    // Normalize to date-only (no time) to compare consistently
+    selectedDate = DateTime(date.year, date.month, date.day);
     notifyListeners();
   }
 

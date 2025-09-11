@@ -39,16 +39,45 @@ class ActivityChart extends StatelessWidget {
                 final maxValue = weeklyData.reduce((a, b) => a > b ? a : b);
                 final heightPercentage = value / maxValue;
 
+                const double railHeight = 120;
+                const double barWidth = 24;
+                final double barHeight =
+                    (railHeight * heightPercentage).clamp(20, railHeight).toDouble();
+
                 return Column(
                   mainAxisAlignment: MainAxisAlignment.end,
                   children: [
-                    Container(
-                      width: 24,
-                      height: (120 * heightPercentage).clamp(20, 120),
-                      decoration: BoxDecoration(
-                        color: isToday ? AppColors.primary : Colors.black,
-                        borderRadius: BorderRadius.circular(12),
-                      ),
+                    // Stack a light rail behind with a shadowed foreground bar
+                    Stack(
+                      alignment: Alignment.bottomCenter,
+                      children: [
+                        // Background light rail
+                        Container(
+                          width: barWidth,
+                          height: railHeight,
+                          decoration: BoxDecoration(
+                            color: const Color(0xFFE9EDF6), // light bluish grey
+                            borderRadius: BorderRadius.circular(12),
+                          ),
+                        ),
+                        // Foreground bar with soft shadow
+                        Container(
+                          width: barWidth,
+                          height: barHeight,
+                          decoration: BoxDecoration(
+                            color: isToday ? AppColors.primary : Colors.black,
+                            borderRadius: BorderRadius.circular(12),
+                            boxShadow: [
+                              BoxShadow(
+                                color: Colors.black.withOpacity(0.25),
+                                blurRadius: 6,
+                                spreadRadius: 0,
+                                offset: const Offset(0, 3),
+                              ),
+                            ],
+                          ),
+                        ),
+                      ],
                     ),
                   ],
                 );

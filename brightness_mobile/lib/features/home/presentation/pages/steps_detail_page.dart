@@ -1,106 +1,376 @@
 import 'package:flutter/material.dart';
-
-import '../../../../core/theme/app_colors.dart';
-import '../../../../core/theme/app_text_styles.dart';
+import 'dart:math' as math;
+import 'dart:ui' as ui;
 
 class StepsDetailPage extends StatelessWidget {
   const StepsDetailPage({super.key});
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      backgroundColor: AppColors.white,
-      body: SafeArea(
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            _Header(),
-            const SizedBox(height: 12),
-            Expanded(
-              child: SingleChildScrollView(
-                padding: const EdgeInsets.symmetric(horizontal: 16),
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: const [
-                    _TodayTitle(),
-                    SizedBox(height: 12),
-                    _TrendCard(),
-                    SizedBox(height: 18),
-                    _KcalNumber(),
-                    SizedBox(height: 4),
-                    _MetricsRow(),
-                    SizedBox(height: 24),
-                    _FriendsTitle(),
-                    SizedBox(height: 12),
-                    _FriendItem(
-                      name: 'Alfred Owen',
-                      calories: '400 Calories',
-                      steps: '2.1k Steps',
-                      avatarColor: Color(0xFFFFE0B2),
-                    ),
-                    SizedBox(height: 12),
-                    _FriendItem(
-                      name: 'Linh Nguyen',
-                      calories: '680 Calories',
-                      steps: '4.1k Steps',
-                      avatarColor: Color(0xFFBBDEFB),
-                    ),
-                    SizedBox(height: 24),
-                  ],
-                ),
-              ),
-            )
-          ],
-        ),
-      ),
-    );
-  }
-}
+    final double paddingTop = MediaQuery.of(context).padding.top;
+    const double headerBase =
+        204; // visual height of white header content (keeps header tight to content)
+    final double headerHeight = headerBase + paddingTop; // full space needed
 
-class _Header extends StatelessWidget {
-  @override
-  Widget build(BuildContext context) {
-    return Padding(
-      padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
-      child: Row(
+    return Scaffold(
+      backgroundColor: const Color(0xFFFFF1F4), // pink background
+      body: Stack(
         children: [
-          GestureDetector(
-            onTap: () => Navigator.of(context).maybePop(),
-            child: const Icon(Icons.arrow_back, color: AppColors.textPrimary),
-          ),
-          const SizedBox(width: 12),
-          Container(
-            width: 46,
-            height: 46,
-            decoration: BoxDecoration(
-              color: AppColors.primary.withOpacity(0.08),
-              shape: BoxShape.circle,
-            ),
-            child: const Icon(Icons.directions_walk, color: AppColors.primary),
-          ),
-          const SizedBox(width: 12),
-          const Expanded(
+          // Base scrollable content
+          SingleChildScrollView(
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                Text('Steps', style: AppTextStyles.h2),
-                SizedBox(height: 2),
-                Text('1 240 Steps', style: AppTextStyles.body2),
+                // Spacer to make room for the white header overlay
+                SizedBox(height: headerHeight),
+
+                // Content below header
+                Padding(
+                  padding: const EdgeInsets.symmetric(horizontal: 16),
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      // Main Stats (semi-transparent to see background)
+                      ClipRRect(
+                        borderRadius: BorderRadius.circular(16),
+                        child: BackdropFilter(
+                          filter: ui.ImageFilter.blur(sigmaX: 6, sigmaY: 6),
+                          child: Container(
+                            padding: const EdgeInsets.symmetric(
+                              vertical: 16,
+                              horizontal: 24,
+                            ),
+                            decoration: BoxDecoration(
+                              color: Colors.white.withOpacity(0),
+                              borderRadius: BorderRadius.circular(16),
+                              boxShadow: [
+                                BoxShadow(
+                                  color: Colors.black.withOpacity(0),
+                                  blurRadius: 10,
+                                  offset: const Offset(0, 4),
+                                ),
+                              ],
+                            ),
+                            child: Column(
+                              children: [
+                                Row(
+                                  mainAxisAlignment: MainAxisAlignment.center,
+                                  children: [
+                                    const Text(
+                                      '4880',
+                                      style: TextStyle(
+                                        fontSize: 48,
+                                        fontWeight: FontWeight.bold,
+                                        color: Colors.black,
+                                      ),
+                                    ),
+                                    const SizedBox(width: 10),
+                                    Container(
+                                      padding: const EdgeInsets.symmetric(
+                                        horizontal: 8,
+                                        vertical: 4,
+                                      ),
+                                      decoration: BoxDecoration(
+                                        color: Color(0xFF20B486),
+                                        borderRadius: BorderRadius.circular(12),
+                                      ),
+                                      child: Row(
+                                        children: const [
+                                          Icon(
+                                            Icons.arrow_upward,
+                                            size: 12,
+                                            color: Colors.white,
+                                          ),
+                                          SizedBox(width: 2),
+                                          Text(
+                                            '14%',
+                                            style: TextStyle(
+                                              color: Colors.white,
+                                              fontSize: 12,
+                                              fontWeight: FontWeight.w600,
+                                            ),
+                                          ),
+                                        ],
+                                      ),
+                                    ),
+                                  ],
+                                ),
+                                const SizedBox(height: 8),
+                                const Text(
+                                  'Total Kilocalories',
+                                  style: TextStyle(
+                                    color: Colors.grey,
+                                    fontSize: 15,
+                                  ),
+                                ),
+                                const SizedBox(height: 20),
+                                Row(
+                                  mainAxisAlignment:
+                                      MainAxisAlignment.spaceEvenly,
+                                  children: const [
+                                    _Metric(value: '480', label: 'Calories'),
+                                    _Metric(value: '24:06', label: 'Time'),
+                                    _Metric(value: '4.84', label: 'Kilometers'),
+                                  ],
+                                ),
+                              ],
+                            ),
+                          ),
+                        ),
+                      ),
+                      const SizedBox(height: 24),
+
+                      // Friends Activity Section
+                      Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        children: [
+                          const Text(
+                            'Friends Activity',
+                            style: TextStyle(
+                              fontSize: 18,
+                              fontWeight: FontWeight.w700,
+                              color: Colors.black,
+                            ),
+                          ),
+                          Icon(Icons.more_horiz, color: Colors.grey.shade600),
+                        ],
+                      ),
+
+                      const SizedBox(height: 16),
+
+                      // Friends List
+                      _buildFriendItem(
+                        'Alfred Owen',
+                        '400 Calories',
+                        '2.1k Steps',
+                        'https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=150&h=150&fit=crop&crop=face',
+                      ),
+                      const SizedBox(height: 16),
+                      _buildFriendItem(
+                        'Linh Nguyen',
+                        '680 Calories',
+                        '4.1k Steps',
+                        'https://images.unsplash.com/photo-1494790108755-2616b612b786?w=150&h=150&fit=crop&crop=face',
+                      ),
+                      const SizedBox(height: 20),
+                    ],
+                  ),
+                ),
+              ],
+            ),
+          ),
+
+          // (Removed) Wavy divider between header and background
+
+          // Overlay: header – back, Steps, Daily, Today
+          Positioned(
+            left: 0,
+            right: 0,
+            top: 0,
+            child: SafeArea(
+              child: CustomPaint(
+                // Paint the white header shape with a wavy bottom
+                painter: HeaderBackgroundPainter(),
+                child: Container(
+                  margin: const EdgeInsets.symmetric(horizontal: 0),
+                  padding: const EdgeInsets.fromLTRB(16, 12, 16, 36),
+                  color: Colors.transparent,
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      // Row 1: Back button only
+                      Align(
+                        alignment: Alignment.centerLeft,
+                        child: InkWell(
+                          onTap: () => Navigator.pop(context),
+                          borderRadius: BorderRadius.circular(24),
+                          child: const Padding(
+                            padding: EdgeInsets.all(8.0),
+                            child: Icon(
+                              Icons.arrow_back,
+                              color: Color(0xFF0C6B5D),
+                            ),
+                          ),
+                        ),
+                      ),
+                      const SizedBox(height: 8),
+                      // Row 2: Icon, title, counter, and dropdown
+                      Row(
+                        children: [
+                          // Circular gradient icon like mock
+                          Container(
+                            width: 44,
+                            height: 44,
+                            decoration: const BoxDecoration(
+                              shape: BoxShape.circle,
+                              gradient: LinearGradient(
+                                begin: Alignment.topLeft,
+                                end: Alignment.bottomRight,
+                                colors: [Color(0xFFE9F7F2), Color(0xFFF4FBF8)],
+                              ),
+                            ),
+                            child: const Center(
+                              child: Icon(
+                                Icons.directions_walk,
+                                color: Color(0xFF0C6B5D),
+                                size: 22,
+                              ),
+                            ),
+                          ),
+                          const SizedBox(width: 12),
+                          const Expanded(
+                            child: Column(
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              children: [
+                                Text(
+                                  'Steps',
+                                  style: TextStyle(
+                                    color: Colors.black,
+                                    fontSize: 18,
+                                    fontWeight: FontWeight.w700,
+                                  ),
+                                ),
+                                Text(
+                                  '1240 Steps',
+                                  style: TextStyle(
+                                    color: Colors.grey,
+                                    fontSize: 12,
+                                  ),
+                                ),
+                              ],
+                            ),
+                          ),
+                          Container(
+                            padding: const EdgeInsets.symmetric(
+                              horizontal: 14,
+                              vertical: 10,
+                            ),
+                            decoration: BoxDecoration(
+                              color: Colors.white,
+                              border: Border.all(color: Color(0xFFEDEDED)),
+                              borderRadius: BorderRadius.circular(22),
+                              boxShadow: [
+                                BoxShadow(
+                                  color: Colors.black.withOpacity(0.06),
+                                  blurRadius: 12,
+                                  offset: const Offset(0, 5),
+                                ),
+                              ],
+                            ),
+                            child: Row(
+                              mainAxisSize: MainAxisSize.min,
+                              children: const [
+                                Text(
+                                  'Daily',
+                                  style: TextStyle(
+                                    color: Colors.black,
+                                    fontSize: 14,
+                                    fontWeight: FontWeight.w600,
+                                  ),
+                                ),
+                                SizedBox(width: 8),
+                                Icon(
+                                  Icons.keyboard_arrow_down,
+                                  color: Colors.black,
+                                  size: 18,
+                                ),
+                              ],
+                            ),
+                          ),
+                        ],
+                      ),
+                      const SizedBox(height: 10),
+                      const Text(
+                        'Today',
+                        style: TextStyle(color: Colors.grey, fontSize: 14),
+                      ),
+                      const SizedBox(height: 6),
+                      const Text(
+                        'Thu, 08 July',
+                        style: TextStyle(
+                          color: Colors.black,
+                          fontSize: 26,
+                          fontWeight: FontWeight.w700,
+                        ),
+                      ),
+                    ],
+                  ),
+                ),
+              ),
+            ),
+          ),
+        ],
+      ),
+    );
+  }
+
+  // Friend item styled card
+
+  Widget _buildFriendItem(
+    String name,
+    String calories,
+    String steps,
+    String imageUrl,
+  ) {
+    return Container(
+      padding: const EdgeInsets.all(16),
+      decoration: BoxDecoration(
+        color: Colors.white,
+        borderRadius: BorderRadius.circular(16),
+        boxShadow: [
+          BoxShadow(
+            color: Colors.black.withOpacity(0.04),
+            blurRadius: 12,
+            offset: const Offset(0, 6),
+          ),
+        ],
+      ),
+      child: Row(
+        children: [
+          CircleAvatar(radius: 26, backgroundImage: NetworkImage(imageUrl)),
+          const SizedBox(width: 14),
+          Expanded(
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Text(
+                  name,
+                  style: const TextStyle(
+                    fontSize: 16,
+                    fontWeight: FontWeight.w700,
+                    color: Colors.black,
+                  ),
+                ),
+                const SizedBox(height: 4),
+                Text(
+                  calories,
+                  style: const TextStyle(color: Colors.grey, fontSize: 13),
+                ),
               ],
             ),
           ),
           Container(
             padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 8),
             decoration: BoxDecoration(
-              color: AppColors.white,
+              color: const Color(0xFFE8F7F2),
               borderRadius: BorderRadius.circular(20),
-              border: Border.all(color: AppColors.border),
             ),
             child: Row(
-              children: const [
-                Text('Daily', style: AppTextStyles.body1),
-                SizedBox(width: 6),
-                Icon(Icons.arrow_drop_down, color: AppColors.textSecondary),
+              children: [
+                Icon(
+                  Icons.directions_walk,
+                  size: 16,
+                  color: Colors.teal.shade600,
+                ),
+                const SizedBox(width: 6),
+                Text(
+                  steps,
+                  style: TextStyle(
+                    color: Colors.teal.shade700,
+                    fontSize: 13,
+                    fontWeight: FontWeight.w600,
+                  ),
+                ),
               ],
             ),
           ),
@@ -110,65 +380,32 @@ class _Header extends StatelessWidget {
   }
 }
 
-class _TodayTitle extends StatelessWidget {
-  const _TodayTitle();
-  @override
-  Widget build(BuildContext context) {
-    return const Column(
-      crossAxisAlignment: CrossAxisAlignment.start,
-      children: [
-        Text('Today', style: AppTextStyles.body2),
-        SizedBox(height: 6),
-        Text('Thu, 08 July', style: AppTextStyles.h2),
-      ],
-    );
-  }
-}
-
-class _TrendCard extends StatelessWidget {
-  const _TrendCard();
-  @override
-  Widget build(BuildContext context) {
-    return Container(
-      height: 160,
-      decoration: BoxDecoration(
-        gradient: LinearGradient(
-          begin: Alignment.topCenter,
-          end: Alignment.bottomCenter,
-          colors: [
-            const Color(0xFFFFF1F2), // light pink
-            Colors.white.withOpacity(0.0),
-          ],
-        ),
-        borderRadius: BorderRadius.circular(20),
-      ),
-      child: CustomPaint(
-        painter: _WavePainter(color: const Color(0xFF1B5E20)),
-        child: const SizedBox.expand(),
-      ),
-    );
-  }
-}
-
-class _WavePainter extends CustomPainter {
-  final Color color;
-  _WavePainter({required this.color});
+// Custom painter for the wavy chart
+class WaveChartPainter extends CustomPainter {
   @override
   void paint(Canvas canvas, Size size) {
     final paint = Paint()
-      ..style = PaintingStyle.stroke
-      ..strokeWidth = 4
-      ..color = color;
+      ..color = Colors.teal
+      ..strokeWidth = 3
+      ..style = PaintingStyle.stroke;
 
     final path = Path();
-    final h = size.height * 0.55;
-    path.moveTo(0, h);
-    final w = size.width;
-    // Draw a smooth wave across the width
-    path.cubicTo(w * 0.1, h - 28, w * 0.2, h + 16, w * 0.3, h - 10);
-    path.cubicTo(w * 0.4, h - 32, w * 0.5, h + 22, w * 0.6, h);
-    path.cubicTo(w * 0.7, h - 20, w * 0.8, h + 18, w * 0.9, h - 6);
-    path.cubicTo(w * 0.95, h - 14, w, h - 2, w, h - 2);
+    final width = size.width;
+    final height = size.height;
+    final centerY = height / 2;
+
+    path.moveTo(0, centerY + 20);
+
+    // Create a wavy pattern
+    for (double x = 0; x <= width; x += 20) {
+      final y = centerY + 20 * math.sin((x / width) * 4 * math.pi);
+      if (x == 0) {
+        path.moveTo(x, y);
+      } else {
+        path.lineTo(x, y);
+      }
+    }
+
     canvas.drawPath(path, paint);
   }
 
@@ -176,137 +413,170 @@ class _WavePainter extends CustomPainter {
   bool shouldRepaint(covariant CustomPainter oldDelegate) => false;
 }
 
-class _KcalNumber extends StatelessWidget {
-  const _KcalNumber();
+// Wavy green border that sits on top of the gradient header
+class WaveBorderPainter extends CustomPainter {
+  @override
+  void paint(Canvas canvas, Size size) {
+    final Paint stroke = Paint()
+      ..color = const Color(0xFF20B486)
+      ..strokeWidth = 4
+      ..style = PaintingStyle.stroke
+      ..strokeJoin = StrokeJoin.round
+      ..strokeCap = StrokeCap.round;
+
+    final Path path = Path();
+
+    final double height = size.height;
+    final double width = size.width;
+    final double baseline = height - 36; // place wave near bottom
+    final double amplitude = 14;
+    final double cycles = 3.5; // number of waves across width
+
+    path.moveTo(0, baseline);
+    for (double x = 0; x <= width; x += 2) {
+      final double t = x / width;
+      final double y =
+          baseline + amplitude * math.sin(t * cycles * 2 * math.pi);
+      path.lineTo(x, y);
+    }
+
+    // Draw the stroke
+    canvas.drawPath(path, stroke);
+  }
+
+  @override
+  bool shouldRepaint(covariant CustomPainter oldDelegate) => false;
+}
+
+// Metric line item mimicking design
+class _Metric extends StatelessWidget {
+  final String value;
+  final String label;
+  const _Metric({super.key, required this.value, required this.label});
+
   @override
   Widget build(BuildContext context) {
     return Column(
       children: [
         Row(
-          mainAxisAlignment: MainAxisAlignment.center,
+          mainAxisSize: MainAxisSize.min,
           children: [
-            const Text(
-              '4880',
-              style: TextStyle(fontSize: 40, fontWeight: FontWeight.w800, color: AppColors.textPrimary),
+            Text(
+              value,
+              style: const TextStyle(
+                fontSize: 18,
+                fontWeight: FontWeight.w700,
+                color: Colors.black,
+              ),
             ),
-            const SizedBox(width: 8),
+            const SizedBox(width: 6),
             Container(
-              padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 4),
+              width: 16,
+              height: 16,
               decoration: BoxDecoration(
-                color: const Color(0xFF16A34A),
-                borderRadius: BorderRadius.circular(12),
+                color: const Color(0xFFE8F7F2),
+                borderRadius: BorderRadius.circular(8),
               ),
-              child: Row(
-                children: const [
-                  Icon(Icons.arrow_upward, size: 14, color: AppColors.white),
-                  SizedBox(width: 2),
-                  Text('14%', style: TextStyle(color: AppColors.white, fontWeight: FontWeight.w700)),
-                ],
+              child: const Icon(
+                Icons.place,
+                size: 12,
+                color: Color(0xFF20B486),
               ),
-            )
+            ),
           ],
         ),
         const SizedBox(height: 4),
-        Text('Total Kilocalories', style: AppTextStyles.body2.copyWith(color: AppColors.textSecondary)),
+        Text(label, style: const TextStyle(color: Colors.grey, fontSize: 12)),
       ],
     );
   }
 }
 
-class _MetricsRow extends StatelessWidget {
-  const _MetricsRow();
-  Widget _item(String value, String label) => Column(
-        children: [
-          Row(
-            children: const [
-              Icon(Icons.place, color: Color(0xFF16A34A), size: 12),
-              SizedBox(width: 4),
-            ],
-          ),
-          Text(value, style: AppTextStyles.h2.copyWith(fontSize: 16)),
-          const SizedBox(height: 2),
-          Text(label, style: AppTextStyles.body2.copyWith(color: AppColors.textSecondary)),
-        ],
-      );
+// Thin wavy divider placed below header
+class WaveEdgePainter extends CustomPainter {
   @override
-  Widget build(BuildContext context) {
-    return Padding(
-      padding: const EdgeInsets.symmetric(horizontal: 12),
-      child: Row(
-        mainAxisAlignment: MainAxisAlignment.spaceAround,
-        children: [
-          _item('480', 'Calories'),
-          _item('24:06', 'Time'),
-          _item('4.84', 'Kilometers'),
-        ],
-      ),
-    );
-  }
-}
+  void paint(Canvas canvas, Size size) {
+    final stroke = Paint()
+      ..color = const Color(0xFF0C6B5D)
+      ..strokeWidth = 5
+      ..style = PaintingStyle.stroke
+      ..strokeCap = StrokeCap.round
+      ..strokeJoin = StrokeJoin.round;
 
-class _FriendsTitle extends StatelessWidget {
-  const _FriendsTitle();
-  @override
-  Widget build(BuildContext context) {
-    return Row(
-      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-      children: const [
-        Text('Friends Activity', style: AppTextStyles.h2),
-        Icon(Icons.more_horiz, color: AppColors.textSecondary),
-      ],
-    );
-  }
-}
+    final path = Path();
+    final double width = size.width;
+    final double amplitude = 9;
+    final double baseline = amplitude + 4; // near top
+    final double cycles = 3.2;
 
-class _FriendItem extends StatelessWidget {
-  final String name;
-  final String calories;
-  final String steps;
-  final Color avatarColor;
-  const _FriendItem({required this.name, required this.calories, required this.steps, required this.avatarColor});
+    path.moveTo(0, baseline);
+    for (double x = 0; x <= width; x += 2) {
+      final t = x / width;
+      final y = baseline + amplitude * math.sin(t * cycles * 2 * math.pi);
+      path.lineTo(x, y);
+    }
+
+    canvas.drawPath(path, stroke);
+  }
 
   @override
-  Widget build(BuildContext context) {
-    return Container(
-      padding: const EdgeInsets.all(14),
-      decoration: BoxDecoration(
-        color: AppColors.white,
-        borderRadius: BorderRadius.circular(20),
-        boxShadow: [
-          BoxShadow(color: Colors.black.withOpacity(0.05), blurRadius: 10, offset: const Offset(0, 5)),
-        ],
-      ),
-      child: Row(
-        children: [
-          CircleAvatar(radius: 22, backgroundColor: avatarColor, child: const Icon(Icons.person, color: AppColors.white)),
-          const SizedBox(width: 12),
-          Expanded(
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                Text(name, style: AppTextStyles.h2.copyWith(fontSize: 16)),
-                const SizedBox(height: 2),
-                Text(calories, style: AppTextStyles.body2),
-              ],
-            ),
-          ),
-          Container(
-            padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 8),
-            decoration: BoxDecoration(
-              color: AppColors.backgroundLight,
-              borderRadius: BorderRadius.circular(18),
-            ),
-            child: Row(
-              children: [
-                const Icon(Icons.directions_walk, size: 16, color: AppColors.textSecondary),
-                const SizedBox(width: 6),
-                Text(steps, style: AppTextStyles.body2.copyWith(fontWeight: FontWeight.w600)),
-              ],
-            ),
-          )
-        ],
-      ),
-    );
-  }
+  bool shouldRepaint(covariant CustomPainter oldDelegate) => false;
 }
 
+// Draws a green wave exactly at the bottom of the header container
+// Paints the full white header with a wavy bottom edge and green stroke
+class HeaderBackgroundPainter extends CustomPainter {
+  @override
+  void paint(Canvas canvas, Size size) {
+    final double width = size.width;
+    const double amplitude = 9; // wave height
+    const double cycles = 3.2; // number of waves across width
+    final double strokeWidth = 5;
+
+    // Baseline for the wave, slightly above the bottom so the stroke is visible
+    final double baseline = size.height - amplitude - strokeWidth / 2;
+
+    // Build the filled shape (white) with a wavy bottom
+    final Path shape = Path()
+      ..moveTo(0, 0)
+      ..lineTo(width, 0)
+      ..lineTo(width, baseline);
+
+    for (double x = width; x >= 0; x -= 2) {
+      final double t = x / width;
+      final double y =
+          baseline + amplitude * math.sin(t * cycles * 2 * math.pi);
+      shape.lineTo(x, y);
+    }
+    shape.close();
+
+    // Subtle shadow under the header
+    canvas.drawShadow(shape, Colors.black.withOpacity(0.10), 8, false);
+
+    // Fill header background
+    final fill = Paint()
+      ..color = Colors.white
+      ..style = PaintingStyle.fill;
+    canvas.drawPath(shape, fill);
+
+    // Draw the green wave stroke on top
+    final Path wave = Path()..moveTo(0, baseline);
+    for (double x = 0; x <= width; x += 2) {
+      final double t = x / width;
+      final double y =
+          baseline + amplitude * math.sin(t * cycles * 2 * math.pi);
+      wave.lineTo(x, y);
+    }
+
+    final stroke = Paint()
+      ..color = const Color(0xFF0C6B5D)
+      ..strokeWidth = strokeWidth
+      ..style = PaintingStyle.stroke
+      ..strokeCap = StrokeCap.round
+      ..strokeJoin = StrokeJoin.round;
+    canvas.drawPath(wave, stroke);
+  }
+
+  @override
+  bool shouldRepaint(covariant CustomPainter oldDelegate) => false;
+}

@@ -1,5 +1,3 @@
-
-import 'dart:convert';
 import '../../domain/entities/auth_token.dart';
 
 class AuthTokenModel extends AuthToken {
@@ -17,8 +15,8 @@ class AuthTokenModel extends AuthToken {
       expiresAt: json['expires_at'] != null
           ? DateTime.parse(json['expires_at'])
           : json['expiresAt'] != null
-              ? DateTime.parse(json['expiresAt'])
-              : DateTime.now().add(const Duration(hours: 1)),
+          ? DateTime.parse(json['expiresAt'])
+          : DateTime.now().add(const Duration(hours: 1)),
       tokenType: json['token_type'] ?? json['tokenType'] ?? 'Bearer',
     );
   }

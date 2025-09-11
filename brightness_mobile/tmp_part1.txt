@@ -1,0 +1,250 @@
+import 'package:flutter/material.dart';
+import 'dart:math' as math;
+import 'dart:ui' as ui;
+
+class StepsDetailPage extends StatelessWidget {
+  const StepsDetailPage({super.key});
+
+  @override
+  Widget build(BuildContext context) {
+    final double paddingTop = MediaQuery.of(context).padding.top;
+    const double headerBase = 176; // visual height of white header content
+    final double headerHeight = headerBase + paddingTop; // full space needed
+    return Scaffold(
+      backgroundColor: const Color(0xFFFFF1F4), // pink background
+      body: Stack(
+        children: [
+          // Base scrollable content
+          SingleChildScrollView(
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                // Spacer to make room for the white header overlay
+                SizedBox(height: headerHeight),
+
+                // Content below header
+                Padding(
+                  padding: const EdgeInsets.symmetric(horizontal: 16),
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      // Main Stats (semi-transparent to see background)
+                      ClipRRect(
+                        borderRadius: BorderRadius.circular(16),
+                        child: BackdropFilter(
+                          filter: ui.ImageFilter.blur(sigmaX: 6, sigmaY: 6),
+                          child: Container(
+                            padding: const EdgeInsets.symmetric(
+                              vertical: 16,
+                              horizontal: 24,
+                            ),
+                            decoration: BoxDecoration(
+                              color: Colors.white.withOpacity(0.65),
+                              borderRadius: BorderRadius.circular(16),
+                              boxShadow: [
+                                BoxShadow(
+                                  color: Colors.black.withOpacity(0.02),
+                                  blurRadius: 10,
+                                  offset: const Offset(0, 4),
+                                ),
+                              ],
+                            ),
+                            child: Column(
+                              children: [
+                                Row(
+                                  mainAxisAlignment: MainAxisAlignment.center,
+                                  children: [
+                                    const Text(
+                                      '4880',
+                                      style: TextStyle(
+                                        fontSize: 48,
+                                        fontWeight: FontWeight.bold,
+                                        color: Colors.black,
+                                      ),
+                                    ),
+                                    const SizedBox(width: 10),
+                                    Container(
+                                      padding: const EdgeInsets.symmetric(
+                                        horizontal: 8,
+                                        vertical: 4,
+                                      ),
+                                      decoration: BoxDecoration(
+                                        color: Color(0xFF20B486),
+                                        borderRadius: BorderRadius.circular(12),
+                                      ),
+                                      child: Row(
+                                        children: const [
+                                          Icon(
+                                            Icons.arrow_upward,
+                                            size: 12,
+                                            color: Colors.white,
+                                          ),
+                                          SizedBox(width: 2),
+                                          Text(
+                                            '14%',
+                                            style: TextStyle(
+                                              color: Colors.white,
+                                              fontSize: 12,
+                                              fontWeight: FontWeight.w600,
+                                            ),
+                                          ),
+                                        ],
+                                      ),
+                                    ),
+                                  ],
+                                ),
+                                const SizedBox(height: 8),
+                                const Text(
+                                  'Total Kilocalories',
+                                  style: TextStyle(
+                                    color: Colors.grey,
+                                    fontSize: 15,
+                                  ),
+                                ),
+                                const SizedBox(height: 20),
+                                Row(
+                                  mainAxisAlignment:
+                                      MainAxisAlignment.spaceEvenly,
+                                  children: const [
+                                    _Metric(value: '480', label: 'Calories'),
+                                    _Metric(value: '24:06', label: 'Time'),
+                                    _Metric(value: '4.84', label: 'Kilometers'),
+                                  ],
+                                ),
+                              ],
+                            ),
+                          ),
+                        ),
+                      ),
+                      const SizedBox(height: 24),
+
+                        // Friends Activity Section
+                        Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                          children: [
+                            const Text(
+                              'Friends Activity',
+                              style: TextStyle(
+                                fontSize: 18,
+                                fontWeight: FontWeight.w700,
+                                color: Colors.black,
+                              ),
+                            ),
+                            Icon(Icons.more_horiz, color: Colors.grey.shade600),
+                          ],
+                        ),
+
+                        const SizedBox(height: 16),
+
+                        // Friends List
+                        _buildFriendItem(
+                          'Alfred Owen',
+                          '400 Calories',
+                          '2.1k Steps',
+                          'https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=150&h=150&fit=crop&crop=face',
+                        ),
+                        const SizedBox(height: 16),
+                        _buildFriendItem(
+                          'Linh Nguyen',
+                          '680 Calories',
+                          '4.1k Steps',
+                          'https://images.unsplash.com/photo-1494790108755-2616b612b786?w=150&h=150&fit=crop&crop=face',
+                        ),
+                        const SizedBox(height: 20),
+                      ),
+                    ],
+                  ),
+                ),
+              ],
+            ),
+          ),
+
+          // Wavy divider between white header and pink background
+          Positioned(
+            top: headerHeight - 10,
+            left: 0,
+            right: 0,
+            child: SizedBox(
+              height: 28,
+              child: CustomPaint(painter: WaveEdgePainter()),
+            ),
+          ),
+
+          // Overlay: header – back, Steps, Daily, Today
+          Positioned(
+            left: 0,
+            right: 0,
+            top: 0,
+            child: SafeArea(
+              child: Container(
+                margin: const EdgeInsets.symmetric(horizontal: 0),
+                padding: const EdgeInsets.fromLTRB(16, 12, 16, 18),
+                decoration: BoxDecoration(
+                  color: Colors.white, // white header
+                  borderRadius: const BorderRadius.only(
+                    bottomLeft: Radius.circular(24),
+                    bottomRight: Radius.circular(24),
+                  ),
+                  boxShadow: [
+                    BoxShadow(
+                      color: Colors.black.withOpacity(0.06),
+                      blurRadius: 12,
+                      offset: const Offset(0, 6),
+                    ),
+                  ],
+                ),
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Row(
+                      children: [
+                        // Back button
+                        InkWell(
+                          onTap: () => Navigator.pop(context),
+                          borderRadius: BorderRadius.circular(24),
+                          child: const Padding(
+                            padding: EdgeInsets.all(8.0),
+                            child: Icon(
+                              Icons.arrow_back,
+                              color: Color(0xFF0C6B5D),
+                            ),
+                          ),
+                        ),
+                        const SizedBox(width: 8),
+                        // Circular gradient icon like mock
+                        Container(
+                          width: 44,
+                          height: 44,
+                          decoration: const BoxDecoration(
+                            shape: BoxShape.circle,
+                            gradient: LinearGradient(
+                              begin: Alignment.topLeft,
+                              end: Alignment.bottomRight,
+                              colors: [Color(0xFFE9F7F2), Color(0xFFF4FBF8)],
+                            ),
+                          ),
+                          child: const Center(
+                            child: Icon(
+                              Icons.directions_walk,
+                              color: Color(0xFF0C6B5D),
+                              size: 22,
+                            ),
+                          ),
+                        ),
+                        const SizedBox(width: 12),
+                        const Expanded(
+                          child: Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              Text(
+                                'Steps',
+                                style: TextStyle(
+                                  color: Colors.black,
+                                  fontSize: 18,
+                                  fontWeight: FontWeight.w700,
+                                ),
+                              ),
+                              Text(
+                                '1240 Steps',
+                                style: TextStyle(
+                                  color: Colors.grey,

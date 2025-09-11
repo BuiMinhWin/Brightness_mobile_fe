@@ -8,47 +8,37 @@ class HomeHeaderBar extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Padding(
-      padding: const EdgeInsets.all(16),
+      padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 12),
       child: Row(
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
+        crossAxisAlignment: CrossAxisAlignment.center,
         children: [
+          // Left actions
           Row(
             children: [
-              GestureDetector(
-                onTap: () => Navigator.of(context).pushNamed(AppRouter.settingsPage),
-                child: Container(
-                  width: 40,
-                  height: 40,
-                  decoration: BoxDecoration(
-                    color: AppColors.backgroundLight,
-                    borderRadius: BorderRadius.circular(12),
-                  ),
-                  child: const Icon(
-                    Icons.settings,
-                    color: AppColors.textSecondary,
-                    size: 20,
-                  ),
-                ),
+              IconButton(
+                onPressed: () => Navigator.of(context).pushNamed(AppRouter.settingsPage),
+                icon: const Icon(Icons.settings_outlined),
+                color: AppColors.textPrimary,
+                iconSize: 24,
+                tooltip: 'Settings',
+                splashRadius: 22,
               ),
-              const SizedBox(width: 12),
-              Container(
-                width: 40,
-                height: 40,
-                decoration: BoxDecoration(
-                  color: AppColors.backgroundLight,
-                  borderRadius: BorderRadius.circular(12),
-                ),
-                child: const Icon(
-                  Icons.add,
-                  color: AppColors.textSecondary,
-                  size: 20,
-                ),
+              const SizedBox(width: 4),
+              IconButton(
+                onPressed: () {},
+                icon: const Icon(Icons.add),
+                color: AppColors.textPrimary,
+                iconSize: 26,
+                splashRadius: 22,
               ),
             ],
           ),
+
+          // Center logo
           Container(
-            width: 50,
-            height: 50,
+            width: 48,
+            height: 48,
             decoration: const BoxDecoration(
               shape: BoxShape.circle,
               image: DecorationImage(
@@ -58,37 +48,24 @@ class HomeHeaderBar extends StatelessWidget {
               ),
             ),
           ),
+
+          // Right actions
           Row(
             children: [
-              Container(
-                width: 40,
-                height: 40,
-                decoration: BoxDecoration(
-                  color: AppColors.backgroundLight,
-                  borderRadius: BorderRadius.circular(12),
-                ),
-                child: const Icon(
-                  Icons.notifications_outlined,
-                  color: AppColors.textSecondary,
-                  size: 20,
-                ),
+              IconButton(
+                onPressed: () {},
+                icon: const Icon(Icons.notifications_none_rounded),
+                color: AppColors.textPrimary,
+                iconSize: 24,
+                splashRadius: 22,
               ),
-              const SizedBox(width: 12),
-              GestureDetector(
-                onTap: () => Navigator.of(context).pushNamed(AppRouter.profile),
-                child: Container(
-                  width: 40,
-                  height: 40,
-                  decoration: BoxDecoration(
-                    color: AppColors.backgroundLight,
-                    borderRadius: BorderRadius.circular(12),
-                  ),
-                  child: const Icon(
-                    Icons.person_outline,
-                    color: AppColors.textSecondary,
-                    size: 20,
-                  ),
-                ),
+              const SizedBox(width: 4),
+              IconButton(
+                onPressed: () => Navigator.of(context).pushNamed(AppRouter.profile),
+                icon: const Icon(Icons.person_outline),
+                color: AppColors.textPrimary,
+                iconSize: 24,
+                splashRadius: 22,
               ),
             ],
           ),
