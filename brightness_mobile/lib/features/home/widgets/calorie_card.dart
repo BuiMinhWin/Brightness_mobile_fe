@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+
 import '../domain/entities/daily_stats.dart';
 
 class CalorieCard extends StatelessWidget {
@@ -21,11 +22,10 @@ class CalorieCard extends StatelessWidget {
           ),
           borderRadius: BorderRadius.circular(24),
         ),
-        child: const SizedBox(height: 170),
+        child: const SizedBox(height: 150),
       ),
     );
   }
 }
 
 // Removed FoxMascotPainter (replaced by asset image)
-

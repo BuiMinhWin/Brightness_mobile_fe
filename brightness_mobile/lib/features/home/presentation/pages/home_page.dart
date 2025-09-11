@@ -73,7 +73,7 @@ class _HomeScreenState extends State<HomeScreen> {
                           // Stack để chồng Fox Mascot lên Calorie Card
                           SizedBox(
                             height:
-                                250, // Tăng chiều cao để chứa đầy đủ Fox bao gồm tai
+                                230, // Tăng chiều cao để chứa đầy đủ Fox bao gồm tai
                             child: Stack(
                               clipBehavior: Clip
                                   .none, // Cho phép Fox tràn ra ngoài không bị cắt
@@ -130,7 +130,7 @@ class _HomeScreenState extends State<HomeScreen> {
                             ),
                           ),
 
-                          const SizedBox(height: 20),
+                          const SizedBox(height: 1),
 
                           // Calendar navigation
                           _buildDateNavigationFixedPositions(),
