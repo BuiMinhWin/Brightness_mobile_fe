@@ -78,9 +78,9 @@ class OnboardingScreen extends StatelessWidget {
                             ),
                             child: CustomButton(
                               text: "Create My Fitness Plan",
-                              isEnabled: controller.isValid,
+                              isDisabled: !controller.isValid,
                               isLoading: controller.isLoading,
-                              gradient: AppColors.primaryGradient,
+                              backgroundColor: AppColors.primary,
                               onPressed: () async {
                                 final success = await controller.saveOnboardingData();
                                 if (success && context.mounted) {

@@ -261,7 +261,7 @@ class CustomButton extends StatelessWidget {
   }
 
   TextStyle get _effectiveTextStyle {
-    if (textStyle != null) return textStyle;
+    if (textStyle != null) return textStyle!;
     
     switch (type) {
       case ButtonType.primary:

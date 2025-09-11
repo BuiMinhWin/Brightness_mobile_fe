@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import 'package:brightness_mobile/app/router.dart';
 import '../../../../core/theme/app_colors.dart';
 import '../presentation/controllers/home_controller.dart';
 
@@ -39,7 +40,7 @@ class CustomBottomNavBar extends StatelessWidget {
             label: "Tracking",
             index: 1,
             selectedIndex: selectedIndex,
-            onTap: () => context.read<HomeController>().selectNavItem(1),
+            onTap: () => Navigator.of(context).pushNamed(AppRouter.runMap),
           ),
           _buildCenterNavItem(),
           _buildNavItem(
@@ -48,7 +49,7 @@ class CustomBottomNavBar extends StatelessWidget {
             label: "Social",
             index: 3,
             selectedIndex: selectedIndex,
-            onTap: () => context.read<HomeController>().selectNavItem(3),
+            onTap: () => Navigator.of(context).pushNamed(AppRouter.feed),
           ),
           _buildNavItem(
             icon: Icons.sports_esports_outlined,

@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:brightness_mobile/app/router.dart';
 import '../../../../core/theme/app_colors.dart';
 
 class HomeHeaderBar extends StatelessWidget {
@@ -13,17 +14,20 @@ class HomeHeaderBar extends StatelessWidget {
         children: [
           Row(
             children: [
-              Container(
-                width: 40,
-                height: 40,
-                decoration: BoxDecoration(
-                  color: AppColors.backgroundLight,
-                  borderRadius: BorderRadius.circular(12),
-                ),
-                child: const Icon(
-                  Icons.settings,
-                  color: AppColors.textSecondary,
-                  size: 20,
+              GestureDetector(
+                onTap: () => Navigator.of(context).pushNamed(AppRouter.settingsPage),
+                child: Container(
+                  width: 40,
+                  height: 40,
+                  decoration: BoxDecoration(
+                    color: AppColors.backgroundLight,
+                    borderRadius: BorderRadius.circular(12),
+                  ),
+                  child: const Icon(
+                    Icons.settings,
+                    color: AppColors.textSecondary,
+                    size: 20,
+                  ),
                 ),
               ),
               const SizedBox(width: 12),
@@ -70,17 +74,20 @@ class HomeHeaderBar extends StatelessWidget {
                 ),
               ),
               const SizedBox(width: 12),
-              Container(
-                width: 40,
-                height: 40,
-                decoration: BoxDecoration(
-                  color: AppColors.backgroundLight,
-                  borderRadius: BorderRadius.circular(12),
-                ),
-                child: const Icon(
-                  Icons.person_outline,
-                  color: AppColors.textSecondary,
-                  size: 20,
+              GestureDetector(
+                onTap: () => Navigator.of(context).pushNamed(AppRouter.profile),
+                child: Container(
+                  width: 40,
+                  height: 40,
+                  decoration: BoxDecoration(
+                    color: AppColors.backgroundLight,
+                    borderRadius: BorderRadius.circular(12),
+                  ),
+                  child: const Icon(
+                    Icons.person_outline,
+                    color: AppColors.textSecondary,
+                    size: 20,
+                  ),
                 ),
               ),
             ],

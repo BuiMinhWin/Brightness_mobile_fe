@@ -6,21 +6,13 @@ import 'package:brightness_mobile/app/di.dart';
 import 'package:brightness_mobile/app/router.dart';
 import 'package:brightness_mobile/features/auth/presentation/controllers/login_controller.dart';
 import 'package:brightness_mobile/features/onboarding/presentation/controllers/onboarding_controller.dart';
-import 'package:brightness_mobile/features/onboarding/presentation/pages/onboarding_page.dart';
-import 'package:brightness_mobile/features/home/presentation/pages/home_page.dart';
-import 'package:brightness_mobile/features/home/presentation/pages/steps_detail_page.dart';
-import 'package:brightness_mobile/features/home/presentation/pages/calendar_page.dart';
-import 'package:brightness_mobile/features/settings/presentation/pages/settings_page.dart';
+// Pages are provided via AppRouter. Remove direct imports to avoid unused warnings.
 import 'package:brightness_mobile/features/home/presentation/controllers/home_controller.dart';
-import 'package:brightness_mobile/features/run/presentation/pages/run_map_page.dart';
-import 'package:brightness_mobile/features/run/presentation/pages/run_detail_page.dart';
-import 'package:brightness_mobile/features/workout/presentation/pages/workout_page.dart';
-
-import 'package:brightness_mobile/app/root_decider.dart';
+// import 'package:brightness_mobile/app/root_decider.dart'; // No longer used
 import 'package:brightness_mobile/features/profile/presentation/controllers/edit_profile_controller.dart';
 import 'package:brightness_mobile/features/profile/presentation/controllers/video_controller.dart';
 import 'package:brightness_mobile/features/profile/presentation/controllers/navigation_controller.dart';
-import 'package:brightness_mobile/features/feed/feed_screen.dart';
+// import 'package:brightness_mobile/features/feed/feed_screen.dart'; // Routed via AppRouter
 
 class App extends StatelessWidget {
   final AppConfig config;
@@ -55,7 +47,9 @@ class App extends StatelessWidget {
           colorScheme: ColorScheme.fromSeed(seedColor: AppTheme.primaryColor),
           useMaterial3: true,
         ),
-        home: const LoginPage(),
+        initialRoute: AppRouter.home,
+        onGenerateRoute: AppRouter.generateRoute,
+        debugShowCheckedModeBanner: false,
       ),
     );
   }

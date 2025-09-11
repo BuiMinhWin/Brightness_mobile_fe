@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 
 import '../../../../core/theme/app_colors.dart';
 import '../../../../core/theme/app_text_styles.dart';
+import 'package:brightness_mobile/app/router.dart';
 
 class CalendarPage extends StatelessWidget {
   const CalendarPage({super.key});
@@ -251,50 +252,52 @@ class _ActivityTile extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      padding: const EdgeInsets.all(16),
-      decoration: BoxDecoration(
-        color: AppColors.white,
-        borderRadius: BorderRadius.circular(22),
-        border: Border.all(color: AppColors.border),
-        boxShadow: [BoxShadow(color: Colors.black.withOpacity(0.04), blurRadius: 8, offset: const Offset(0, 4))],
-      ),
-      child: Row(
-        children: [
-          Container(
-            width: 56,
-            height: 56,
-            decoration: BoxDecoration(gradient: gradient, shape: BoxShape.circle),
-            child: Icon(icon, color: AppColors.white),
-          ),
-          const SizedBox(width: 12),
-          Expanded(
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                Text(title, style: AppTextStyles.h2.copyWith(fontSize: 16)),
-                const SizedBox(height: 2),
-                Text(subtitle, style: AppTextStyles.body2),
-              ],
+    return GestureDetector(
+      onTap: () => Navigator.of(context).pushNamed(AppRouter.stepsDetail),
+      child: Container(
+        padding: const EdgeInsets.all(16),
+        decoration: BoxDecoration(
+          color: AppColors.white,
+          borderRadius: BorderRadius.circular(22),
+          border: Border.all(color: AppColors.border),
+          boxShadow: [BoxShadow(color: Colors.black.withOpacity(0.04), blurRadius: 8, offset: const Offset(0, 4))],
+        ),
+        child: Row(
+          children: [
+            Container(
+              width: 56,
+              height: 56,
+              decoration: BoxDecoration(gradient: gradient, shape: BoxShape.circle),
+              child: Icon(icon, color: AppColors.white),
             ),
-          ),
-          Column(
-            crossAxisAlignment: CrossAxisAlignment.end,
-            children: [
-              Text(distance, style: AppTextStyles.body1.copyWith(fontWeight: FontWeight.w600)),
-              const SizedBox(height: 6),
-              Row(
+            const SizedBox(width: 12),
+            Expanded(
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  const Icon(Icons.local_fire_department, size: 16, color: AppColors.textSecondary),
-                  const SizedBox(width: 4),
-                  Text(kcal, style: AppTextStyles.body2),
+                  Text(title, style: AppTextStyles.h2.copyWith(fontSize: 16)),
+                  const SizedBox(height: 2),
+                  Text(subtitle, style: AppTextStyles.body2),
                 ],
               ),
-            ],
-          ),
-        ],
+            ),
+            Column(
+              crossAxisAlignment: CrossAxisAlignment.end,
+              children: [
+                Text(distance, style: AppTextStyles.body1.copyWith(fontWeight: FontWeight.w600)),
+                const SizedBox(height: 6),
+                Row(
+                  children: [
+                    const Icon(Icons.local_fire_department, size: 16, color: AppColors.textSecondary),
+                    const SizedBox(width: 4),
+                    Text(kcal, style: AppTextStyles.body2),
+                  ],
+                ),
+              ],
+            ),
+          ],
+        ),
       ),
     );
   }
 }
-
