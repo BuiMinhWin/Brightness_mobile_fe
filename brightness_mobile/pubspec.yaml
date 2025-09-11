@@ -20,6 +20,9 @@ dependencies:
   latlong2: ^0.9.1
   image_picker: ^1.0.4
   dartz: ^0.10.1
+  http: ^1.5.0
+  flutter_svg: ^2.2.1
+  intl: ^0.20.2
 
 dev_dependencies:
   flutter_test:
@@ -31,4 +34,8 @@ dev_dependencies:
 flutter:
   uses-material-design: true
   assets:
-    - assets/images/
+    - assets/images/logo.png
+    - assets/images/logo_white.png
+    - assets/images/google.png
+    - assets/images/facebook.png
+    - assets/images/Background_login.svg

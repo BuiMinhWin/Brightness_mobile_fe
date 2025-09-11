@@ -5,6 +5,8 @@ import 'package:brightness_mobile/app/di.dart';
 import 'package:brightness_mobile/core/config/app_config.dart';
 import 'package:brightness_mobile/core/config/app_flavor.dart';
 import 'package:flutter_web_plugins/url_strategy.dart';
+import 'package:flutter/services.dart';
+
 
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();

@@ -79,6 +79,15 @@ class AppTheme {
   static const double avatarSizeM = 60.0;
   static const double avatarSizeL = 80.0;
   static const double avatarSizeXL = 120.0;
+
+  // Avatar sizes New
+  static const double avatarS = 32;
+  static const double avatarM = 40;
+  static const double avatarL = 56;
+
+  // Shadow
+  static const double shadowBlur = 4;
+  static const double shadowOffset = 2;
   
   // Text Styles
   static const TextStyle textStyleHeadline1 = TextStyle(
