@@ -34,8 +34,5 @@ dev_dependencies:
 flutter:
   uses-material-design: true
   assets:
-    - assets/images/logo.png
-    - assets/images/logo_white.png
-    - assets/images/google.png
-    - assets/images/facebook.png
-    - assets/images/Background_login.svg
+    # Include all images in the folder to avoid missing assets
+    - assets/images/

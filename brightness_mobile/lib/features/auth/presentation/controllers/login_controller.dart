@@ -1,8 +1,6 @@
 
-import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import '../../domain/usecases/login_usecase.dart';
-import '../../domain/entities/auth_token.dart';
 
 class LoginController extends ChangeNotifier {
   final LoginUseCase _loginUseCase;

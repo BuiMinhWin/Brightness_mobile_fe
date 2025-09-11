@@ -3,7 +3,7 @@ import '../../../../core/theme/app_colors.dart';
 import '../../../../core/theme/app_text_styles.dart';
 
 class ChallengeRulesSection extends StatelessWidget {
-  const ChallengeRulesSection({Key? key}) : super(key: key);
+  const ChallengeRulesSection({super.key});
 
   @override
   Widget build(BuildContext context) {

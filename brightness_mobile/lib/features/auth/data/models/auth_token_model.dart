@@ -4,16 +4,11 @@ import '../../domain/entities/auth_token.dart';
 
 class AuthTokenModel extends AuthToken {
   const AuthTokenModel({
-    required String accessToken,
-    required String refreshToken,
-    required DateTime expiresAt,
-    String tokenType = 'Bearer',
-  }) : super(
-          accessToken: accessToken,
-          refreshToken: refreshToken,
-          expiresAt: expiresAt,
-          tokenType: tokenType,
-        );
+    required super.accessToken,
+    required super.refreshToken,
+    required super.expiresAt,
+    super.tokenType,
+  });
 
   factory AuthTokenModel.fromJson(Map<String, dynamic> json) {
     return AuthTokenModel(

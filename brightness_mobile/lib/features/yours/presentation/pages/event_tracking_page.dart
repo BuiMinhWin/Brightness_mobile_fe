@@ -15,9 +15,9 @@ class EventTrackingPage extends StatelessWidget {
   final DietPlanModel dietPlan;
 
   const EventTrackingPage({
-    Key? key,
+    super.key,
     required this.dietPlan,
-  }) : super(key: key);
+  });
 
   @override
   Widget build(BuildContext context) {

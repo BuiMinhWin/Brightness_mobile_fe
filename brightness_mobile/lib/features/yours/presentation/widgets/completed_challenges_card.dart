@@ -8,9 +8,9 @@ class CompletedChallengesCard extends StatefulWidget {
   final List<TaskModel> completedTasks;
 
   const CompletedChallengesCard({
-    Key? key,
+    super.key,
     this.completedTasks = const [],
-  }) : super(key: key);
+  });
 
   @override
   State<CompletedChallengesCard> createState() => _CompletedChallengesCardState();

@@ -14,7 +14,7 @@ class PricingCardWidget extends StatelessWidget {
   final bool isPopular;
 
   const PricingCardWidget({
-    Key? key,
+    super.key,
     required this.title,
     this.subtitle,
     this.price,
@@ -23,7 +23,7 @@ class PricingCardWidget extends StatelessWidget {
     this.buttonColor,
     this.onPressed,
     this.isPopular = false,
-  }) : super(key: key);
+  });
 
   @override
   Widget build(BuildContext context) {
@@ -121,8 +121,8 @@ class PricingCardWidget extends StatelessWidget {
                     style: AppTheme.primaryButtonStyle(
                       backgroundColor: buttonColor ?? AppColors.secondary,
                     ).copyWith(
-                      elevation: MaterialStateProperty.all(0),
-                      shape: MaterialStateProperty.all(
+                      elevation: WidgetStateProperty.all(0),
+                      shape: WidgetStateProperty.all(
                         RoundedRectangleBorder(
                           borderRadius: BorderRadius.circular(25),
                         ),

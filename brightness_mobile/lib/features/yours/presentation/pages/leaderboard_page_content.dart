@@ -7,7 +7,7 @@ import '../widgets/leaderboard_item.dart';
 import '../../data/models/leaderboard_user.dart';
 
 class LeaderboardPageContent extends StatefulWidget {
-  const LeaderboardPageContent({Key? key}) : super(key: key);
+  const LeaderboardPageContent({super.key});
 
   @override
   State<LeaderboardPageContent> createState() => _LeaderboardPageContentState();
@@ -194,15 +194,12 @@ class _LeaderboardPageContentState extends State<LeaderboardPageContent> {
       case 1:
         podiumColor = AppColors.warning; // vàng cam cho 1st
         numberColor = AppColors.white;
-        break;
       case 2:
         podiumColor = AppColors.success; // xanh lá cho 2nd
         numberColor = AppColors.white;
-        break;
       case 3:
         podiumColor = AppColors.successLight; // xanh lá nhạt cho 3rd
         numberColor = AppColors.white;
-        break;
       default:
         podiumColor = AppColors.border;
         numberColor = AppColors.white;

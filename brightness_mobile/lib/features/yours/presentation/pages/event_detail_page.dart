@@ -12,9 +12,9 @@ class EventDetailPage extends StatelessWidget {
   final EventModel event;
 
   const EventDetailPage({
-    Key? key,
+    super.key,
     required this.event,
-  }) : super(key: key);
+  });
 
   @override
   Widget build(BuildContext context) {

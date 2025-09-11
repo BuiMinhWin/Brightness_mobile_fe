@@ -1,7 +1,6 @@
 // lib/features/auth/presentation/controllers/register_controller.dart
 import 'package:flutter/material.dart';
 import '../../domain/usecases/register_usecase.dart';
-import '../../domain/entities/user.dart';
 import 'package:intl/intl.dart';
 
 class RegisterController extends ChangeNotifier {

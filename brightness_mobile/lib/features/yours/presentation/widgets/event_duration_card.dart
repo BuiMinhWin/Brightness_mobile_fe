@@ -4,7 +4,7 @@ import '../../../../core/theme/app_text_styles.dart';
 import '../../../../core/theme/app_theme.dart';
 
 class EventDurationCard extends StatelessWidget {
-  const EventDurationCard({Key? key}) : super(key: key);
+  const EventDurationCard({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -109,7 +109,7 @@ class EventDurationCard extends StatelessWidget {
 
 // Rewards & Prizes card
 class RewardsAndPrizesCard extends StatelessWidget {
-  const RewardsAndPrizesCard({Key? key}) : super(key: key);
+  const RewardsAndPrizesCard({super.key});
 
   @override
   Widget build(BuildContext context) {

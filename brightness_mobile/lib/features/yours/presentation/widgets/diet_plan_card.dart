@@ -9,10 +9,10 @@ class DietPlanCard extends StatelessWidget {
   final VoidCallback onTap;
 
   const DietPlanCard({
-    Key? key,
+    super.key,
     required this.dietPlan,
     required this.onTap,
-  }) : super(key: key);
+  });
 
   @override
   Widget build(BuildContext context) {

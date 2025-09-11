@@ -5,7 +5,7 @@ import '../../../../core/theme/app_text_styles.dart';
 import '../../../../core/theme/app_theme.dart';
 
 class YoursPage extends StatefulWidget {
-  const YoursPage({Key? key}) : super(key: key);
+  const YoursPage({super.key});
 
   @override
   State<YoursPage> createState() => _YoursPageState();

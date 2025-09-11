@@ -8,7 +8,7 @@ import '../../../../core/theme/app_text_styles.dart';
 import '../../../../core/theme/app_theme.dart';
 
 class YoursPageContent extends StatelessWidget {
-  const YoursPageContent({Key? key}) : super(key: key);
+  const YoursPageContent({super.key});
 
   static const List<DietPlanModel> dietPlans = [
     DietPlanModel(

@@ -7,9 +7,9 @@ class EventTrackingDescriptionCard extends StatelessWidget {
   final DietPlanModel dietPlan;
 
   const EventTrackingDescriptionCard({
-    Key? key,
+    super.key,
     required this.dietPlan,
-  }) : super(key: key);
+  });
 
   @override
   Widget build(BuildContext context) {

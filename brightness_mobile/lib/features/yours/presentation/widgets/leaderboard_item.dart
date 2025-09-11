@@ -11,10 +11,10 @@ class LeaderboardItem extends StatelessWidget {
   final int rank;
 
   const LeaderboardItem({
-    Key? key,
+    super.key,
     required this.user,
     required this.rank,
-  }) : super(key: key);
+  });
 
   @override
   Widget build(BuildContext context) {

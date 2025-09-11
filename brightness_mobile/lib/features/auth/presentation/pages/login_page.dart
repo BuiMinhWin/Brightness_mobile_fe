@@ -9,7 +9,7 @@ import 'package:flutter/gestures.dart';
 import 'dart:math' as math;
 
 class LoginPage extends StatelessWidget {
-  const LoginPage({Key? key}) : super(key: key);
+  const LoginPage({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -104,7 +104,7 @@ Widget _buildBackground() {
 }
 
   Widget _buildCircularPattern(double size, double opacity) {
-    return Container(
+    return SizedBox(
       width: size,
       height: size,
       child: CustomPaint(
@@ -286,7 +286,7 @@ Widget _buildBackground() {
             return Checkbox(
               value: controller.agreeToTerms,
               onChanged: controller.setAgreeToTerms,
-              fillColor: MaterialStateProperty.all(AppColors.white),
+              fillColor: WidgetStateProperty.all(AppColors.white),
               checkColor: AppColors.primary,
               shape: RoundedRectangleBorder(
                 borderRadius: BorderRadius.circular(AppTheme.radiusS),
@@ -329,7 +329,7 @@ Widget _buildBackground() {
   Widget _buildSignInButton(BuildContext context) {
     return Consumer<LoginController>(
       builder: (context, controller, child) {
-        return Container(
+        return SizedBox(
           width: double.infinity,
           height: AppTheme.buttonHeightL,
           child: ElevatedButton(

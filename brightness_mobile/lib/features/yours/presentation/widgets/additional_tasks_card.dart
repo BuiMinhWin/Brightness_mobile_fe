@@ -10,9 +10,9 @@ class AdditionalTasksCard extends StatefulWidget {
   final List<TaskModel> additionalTasks;
 
   const AdditionalTasksCard({
-    Key? key,
+    super.key,
     this.additionalTasks = const [],
-  }) : super(key: key);
+  });
 
   @override
   State<AdditionalTasksCard> createState() => _AdditionalTasksCardState();

@@ -6,7 +6,7 @@ import 'package:brightness_mobile/features/yours/presentation/widgets/challenge_
 import 'package:flutter/material.dart';
 
 class HowToParticipateCard extends StatelessWidget {
-  const HowToParticipateCard({Key? key}) : super(key: key);
+  const HowToParticipateCard({super.key});
 
   @override
   Widget build(BuildContext context) {

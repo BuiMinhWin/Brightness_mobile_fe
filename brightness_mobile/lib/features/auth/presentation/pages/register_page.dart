@@ -9,7 +9,7 @@ import '../../../../core/theme/app_theme.dart';
 import 'dart:math' as math;
 
 class RegisterPage extends StatelessWidget {
-  const RegisterPage({Key? key}) : super(key: key);
+  const RegisterPage({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -53,7 +53,7 @@ class RegisterPage extends StatelessWidget {
 
 
   Widget _buildCircularPattern(double size, double opacity) {
-    return Container(
+    return SizedBox(
       width: size,
       height: size,
       child: CustomPaint(
@@ -335,7 +335,7 @@ class RegisterPage extends StatelessWidget {
             return Checkbox(
               value: controller.agreeToTerms,
               onChanged: controller.setAgreeToTerms,
-              fillColor: MaterialStateProperty.all(AppColors.white),
+              fillColor: WidgetStateProperty.all(AppColors.white),
               checkColor: AppColors.primary,
               shape: RoundedRectangleBorder(
                 borderRadius: BorderRadius.circular(AppTheme.radiusS),
@@ -386,7 +386,7 @@ class RegisterPage extends StatelessWidget {
   Widget _buildSignUpButton(BuildContext context) {
     return Consumer<RegisterController>(
       builder: (context, controller, child) {
-        return Container(
+        return SizedBox(
           width: double.infinity,
           height: AppTheme.buttonHeightL,
           child: ElevatedButton(

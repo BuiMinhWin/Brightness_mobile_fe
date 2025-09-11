@@ -8,9 +8,9 @@ class EventDescriptionCard extends StatelessWidget {
   final EventModel event;
 
   const EventDescriptionCard({
-    Key? key,
+    super.key,
     required this.event,
-  }) : super(key: key);
+  });
 
   @override
   Widget build(BuildContext context) {
@@ -62,9 +62,9 @@ class EventDurationCard extends StatelessWidget {
   final EventModel event;
 
   const EventDurationCard({
-    Key? key,
+    super.key,
     required this.event,
-  }) : super(key: key);
+  });
 
   @override
   Widget build(BuildContext context) {

@@ -6,7 +6,7 @@ import '../../../../core/theme/app_colors.dart';
 import '../../../../core/theme/app_text_styles.dart';
 
 class EventPageContent extends StatelessWidget {
-  const EventPageContent({Key? key}) : super(key: key);
+  const EventPageContent({super.key});
 
   // Make this static const to allow const constructor
   static const List<EventModel> _events = [

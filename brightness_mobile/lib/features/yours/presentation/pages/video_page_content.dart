@@ -3,7 +3,7 @@ import 'dart:ui';
 import 'package:flutter/material.dart';
 
 class VideoPageContent extends StatelessWidget {
-  const VideoPageContent({Key? key}) : super(key: key);
+  const VideoPageContent({super.key});
 
   @override
   Widget build(BuildContext context) {

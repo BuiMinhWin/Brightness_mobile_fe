@@ -4,7 +4,7 @@ import '../../../../core/theme/app_text_styles.dart';
 import '../../../../core/theme/app_theme.dart';
 
 class WeeklyTrackingChart extends StatelessWidget {
-  const WeeklyTrackingChart({Key? key}) : super(key: key);
+  const WeeklyTrackingChart({super.key});
 
   @override
   Widget build(BuildContext context) {

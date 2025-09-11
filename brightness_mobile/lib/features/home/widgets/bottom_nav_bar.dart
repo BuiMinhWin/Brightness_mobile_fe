@@ -57,7 +57,7 @@ class CustomBottomNavBar extends StatelessWidget {
             label: "Game",
             index: 4,
             selectedIndex: selectedIndex,
-            onTap: () => context.read<HomeController>().selectNavItem(4),
+            onTap: () => Navigator.of(context).pushNamed('/main'),
           ),
         ],
       ),
