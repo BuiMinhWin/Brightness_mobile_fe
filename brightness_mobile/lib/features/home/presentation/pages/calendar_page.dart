@@ -144,7 +144,6 @@ class _CalendarHeader extends StatelessWidget {
   final String headerDateText;
   final ValueChanged<int> onDayTap;
   const _CalendarHeader({
-    super.key,
     required this.displayedYear,
     required this.displayedMonth,
     required this.selectedDay,

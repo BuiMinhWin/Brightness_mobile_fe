@@ -323,7 +323,7 @@ class _HomeScreenState extends State<HomeScreen> {
       controller.selectedDate.month,
       controller.selectedDate.day,
     );
-    final dates = List.generate(7, (i) => today.add(Duration(days: i - 3)));
+    final dates = List.generate(7, (i) => selected.add(Duration(days: i - 3)));
 
     String monthAbbrev(int m) => const [
       'Jan',
@@ -340,101 +340,91 @@ class _HomeScreenState extends State<HomeScreen> {
       'Dec',
     ][m - 1];
 
-    return Column(
-      crossAxisAlignment: CrossAxisAlignment.end,
-      children: [
-        Padding(padding: const EdgeInsets.only(left: 16, right: 16, bottom: 6)),
-        SizedBox(
-          height: 80,
-          child: SingleChildScrollView(
-            scrollDirection: Axis.horizontal,
-            padding: const EdgeInsets.only(left: 16, right: 16),
-            child: Row(
-              mainAxisAlignment: MainAxisAlignment.end,
-              children: List.generate(dates.length, (index) {
-                final d = dates[index];
-                final isSelected =
-                    d.year == selected.year &&
-                    d.month == selected.month &&
-                    d.day == selected.day;
+    return SizedBox(
+      height: 80,
+      child: SingleChildScrollView(
+        scrollDirection: Axis.horizontal,
+        padding: const EdgeInsets.only(left: 16, right: 6),
+        child: Row(
+          mainAxisAlignment: MainAxisAlignment.end,
+          children: List.generate(dates.length, (index) {
+            final d = dates[index];
+            final isSelected =
+                d.year == selected.year &&
+                d.month == selected.month &&
+                d.day == selected.day;
+            final label = isSelected
+                ? 'Today, ${d.day} ${monthAbbrev(d.month)}'
+                : '${d.day}';
 
-                return Padding(
-                  padding: EdgeInsets.only(
-                    right: index == dates.length - 1 ? 0 : 10,
-                  ),
-                  child: InkWell(
-                    borderRadius: BorderRadius.circular(20),
-                    onTap: () =>
-                        context.read<HomeController>().setSelectedDate(d),
-                    child: AnimatedContainer(
-                      padding: const EdgeInsets.symmetric(
-                        horizontal: 8,
-                        vertical: 6,
-                      ),
-                      decoration: BoxDecoration(
-                        color: isSelected
-                            ? AppColors.primary
-                            : Colors.transparent,
-                        borderRadius: BorderRadius.circular(20),
-                      ),
+            return Padding(
+              padding: const EdgeInsets.only(right: 10),
+              child: Center(
+                child: InkWell(
+                  borderRadius: BorderRadius.circular(20),
+                  onTap: () =>
+                      context.read<HomeController>().setSelectedDate(d),
+                  child: AnimatedContainer(
+                    padding: const EdgeInsets.symmetric(
+                      horizontal: 8,
+                      vertical: 6,
+                    ),
+                    decoration: BoxDecoration(
+                      color: isSelected
+                          ? AppColors.primary
+                          : Colors.transparent,
+                      borderRadius: BorderRadius.circular(20),
+                    ),
+                    duration: const Duration(milliseconds: 220),
+                    curve: Curves.easeOut,
+                    child: AnimatedDefaultTextStyle(
                       duration: const Duration(milliseconds: 220),
                       curve: Curves.easeOut,
-                      child: AnimatedDefaultTextStyle(
-                        duration: const Duration(milliseconds: 220),
-                        curve: Curves.easeOut,
-                        style: TextStyle(
-                          fontSize: isSelected ? 14 : 14,
-                          fontWeight: isSelected
-                              ? FontWeight.w600
-                              : FontWeight.w500,
-                          color: isSelected
-                              ? AppColors.white
-                              : AppColors.textSecondary,
+                      style: TextStyle(
+                        fontSize: isSelected ? 14 : 14,
+                        fontWeight: isSelected
+                            ? FontWeight.w600
+                            : FontWeight.w500,
+                        color: isSelected
+                            ? AppColors.white
+                            : AppColors.textSecondary,
+                      ),
+                      child: AnimatedSwitcher(
+                        duration: const Duration(milliseconds: 180),
+                        transitionBuilder: (child, animation) => FadeTransition(
+                          opacity: animation,
+                          child: SlideTransition(
+                            position: Tween<Offset>(
+                              begin: const Offset(0, 0.15),
+                              end: Offset.zero,
+                            ).animate(animation),
+                            child: child,
+                          ),
                         ),
-                        child: AnimatedSwitcher(
-                          duration: const Duration(milliseconds: 180),
-                          transitionBuilder: (child, animation) =>
-                              FadeTransition(
-                                opacity: animation,
-                                child: SlideTransition(
-                                  position: Tween<Offset>(
-                                    begin: const Offset(0, 0.15),
-                                    end: Offset.zero,
-                                  ).animate(animation),
-                                  child: child,
+                        child: isSelected
+                            ? Text(
+                                label,
+                                key: ValueKey(
+                                  'sel-${d.day}-${d.month}-${d.year}',
                                 ),
+                                textAlign: TextAlign.center,
+                              )
+                            : Text(
+                                '${d.day}',
+                                key: ValueKey(
+                                  'day-${d.day}-${d.month}-${d.year}',
+                                ),
+                                textAlign: TextAlign.center,
                               ),
-                          child: isSelected
-                              ? SizedBox(
-                                  width: 36,
-                                  child: Text(
-                                    '${d.day}',
-                                    key: ValueKey(
-                                      'sel-${d.day}-${d.month}-${d.year}',
-                                    ),
-                                    textAlign: TextAlign.center,
-                                  ),
-                                )
-                              : SizedBox(
-                                  width: 36,
-                                  child: Text(
-                                    '${d.day}',
-                                    key: ValueKey(
-                                      'day-${d.day}-${d.month}-${d.year}',
-                                    ),
-                                    textAlign: TextAlign.center,
-                                  ),
-                                ),
-                        ),
                       ),
                     ),
                   ),
-                );
-              }),
-            ),
-          ),
+                ),
+              ),
+            );
+          }),
         ),
-      ],
+      ),
     );
   }
 

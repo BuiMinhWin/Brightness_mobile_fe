@@ -452,7 +452,7 @@ class WaveBorderPainter extends CustomPainter {
 class _Metric extends StatelessWidget {
   final String value;
   final String label;
-  const _Metric({super.key, required this.value, required this.label});
+  const _Metric({required this.value, required this.label});
 
   @override
   Widget build(BuildContext context) {
