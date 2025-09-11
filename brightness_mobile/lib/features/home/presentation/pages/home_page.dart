@@ -123,7 +123,7 @@ class _HomeScreenState extends State<HomeScreen> {
                           const SizedBox(height: 20),
 
                           // Calendar navigation
-                          _buildDateNavigation(),
+                          _buildDateNavigationScrollable(),
 
                           const SizedBox(height: 0),
 
@@ -292,12 +292,15 @@ class _HomeScreenState extends State<HomeScreen> {
                                 maxLines: 1,
                                 overflow: TextOverflow.ellipsis,
                               )
-                            : Text(
-                                '${d.day}',
-                                key: ValueKey(
-                                  'day-${d.day}-${d.month}-${d.year}',
+                            : SizedBox(
+                                width: 36,
+                                child: Text(
+                                  '${d.day}',
+                                  key: ValueKey(
+                                    'day-${d.day}-${d.month}-${d.year}',
+                                  ),
+                                  textAlign: TextAlign.center,
                                 ),
-                                textAlign: TextAlign.center,
                               ),
                       ),
                     ),
@@ -308,6 +311,130 @@ class _HomeScreenState extends State<HomeScreen> {
           }),
         ),
       ),
+    );
+  }
+
+  Widget _buildDateNavigationScrollable() {
+    final controller = context.watch<HomeController>();
+    final now = DateTime.now();
+    final today = DateTime(now.year, now.month, now.day);
+    final selected = DateTime(
+      controller.selectedDate.year,
+      controller.selectedDate.month,
+      controller.selectedDate.day,
+    );
+    final dates = List.generate(7, (i) => today.add(Duration(days: i - 3)));
+
+    String monthAbbrev(int m) => const [
+      'Jan',
+      'Feb',
+      'Mar',
+      'Apr',
+      'May',
+      'Jun',
+      'Jul',
+      'Aug',
+      'Sep',
+      'Oct',
+      'Nov',
+      'Dec',
+    ][m - 1];
+
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.end,
+      children: [
+        Padding(padding: const EdgeInsets.only(left: 16, right: 16, bottom: 6)),
+        SizedBox(
+          height: 80,
+          child: SingleChildScrollView(
+            scrollDirection: Axis.horizontal,
+            padding: const EdgeInsets.only(left: 16, right: 16),
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.end,
+              children: List.generate(dates.length, (index) {
+                final d = dates[index];
+                final isSelected =
+                    d.year == selected.year &&
+                    d.month == selected.month &&
+                    d.day == selected.day;
+
+                return Padding(
+                  padding: EdgeInsets.only(
+                    right: index == dates.length - 1 ? 0 : 10,
+                  ),
+                  child: InkWell(
+                    borderRadius: BorderRadius.circular(20),
+                    onTap: () =>
+                        context.read<HomeController>().setSelectedDate(d),
+                    child: AnimatedContainer(
+                      padding: const EdgeInsets.symmetric(
+                        horizontal: 8,
+                        vertical: 6,
+                      ),
+                      decoration: BoxDecoration(
+                        color: isSelected
+                            ? AppColors.primary
+                            : Colors.transparent,
+                        borderRadius: BorderRadius.circular(20),
+                      ),
+                      duration: const Duration(milliseconds: 220),
+                      curve: Curves.easeOut,
+                      child: AnimatedDefaultTextStyle(
+                        duration: const Duration(milliseconds: 220),
+                        curve: Curves.easeOut,
+                        style: TextStyle(
+                          fontSize: isSelected ? 14 : 14,
+                          fontWeight: isSelected
+                              ? FontWeight.w600
+                              : FontWeight.w500,
+                          color: isSelected
+                              ? AppColors.white
+                              : AppColors.textSecondary,
+                        ),
+                        child: AnimatedSwitcher(
+                          duration: const Duration(milliseconds: 180),
+                          transitionBuilder: (child, animation) =>
+                              FadeTransition(
+                                opacity: animation,
+                                child: SlideTransition(
+                                  position: Tween<Offset>(
+                                    begin: const Offset(0, 0.15),
+                                    end: Offset.zero,
+                                  ).animate(animation),
+                                  child: child,
+                                ),
+                              ),
+                          child: isSelected
+                              ? SizedBox(
+                                  width: 36,
+                                  child: Text(
+                                    '${d.day}',
+                                    key: ValueKey(
+                                      'sel-${d.day}-${d.month}-${d.year}',
+                                    ),
+                                    textAlign: TextAlign.center,
+                                  ),
+                                )
+                              : SizedBox(
+                                  width: 36,
+                                  child: Text(
+                                    '${d.day}',
+                                    key: ValueKey(
+                                      'day-${d.day}-${d.month}-${d.year}',
+                                    ),
+                                    textAlign: TextAlign.center,
+                                  ),
+                                ),
+                        ),
+                      ),
+                    ),
+                  ),
+                );
+              }),
+            ),
+          ),
+        ),
+      ],
     );
   }
 
