@@ -16,7 +16,8 @@ import 'package:brightness_mobile/features/run/presentation/pages/run_map_page.d
 import 'package:brightness_mobile/features/run/presentation/pages/run_detail_page.dart';
 import 'package:brightness_mobile/features/workout/presentation/pages/workout_page.dart';
 
-import 'package:brightness_mobile/app/root_decider.dart';import 'package:brightness_mobile/features/profile/presentation/controllers/edit_profile_controller.dart';
+import 'package:brightness_mobile/app/root_decider.dart';
+import 'package:brightness_mobile/features/profile/presentation/controllers/edit_profile_controller.dart';
 import 'package:brightness_mobile/features/profile/presentation/controllers/video_controller.dart';
 import 'package:brightness_mobile/features/profile/presentation/controllers/navigation_controller.dart';
 import 'package:brightness_mobile/features/feed/feed_screen.dart';

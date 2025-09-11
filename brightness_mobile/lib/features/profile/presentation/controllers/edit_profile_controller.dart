@@ -309,10 +309,6 @@ class EditProfileController extends ChangeNotifier {
     return 'Please fix ${errors.length} validation errors';
   }
 
-  @override
-  void dispose() {
-    super.dispose();
-  }
 }
 
 // Factory function for dependency injection

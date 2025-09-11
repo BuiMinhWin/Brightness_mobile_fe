@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:provider/provider.dart';
 import '../pages/watch_video_page.dart';
 import '../pages/first_aid_videos_page.dart';
 import '../pages/user_profile_page.dart';

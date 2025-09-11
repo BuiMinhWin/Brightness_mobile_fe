@@ -236,7 +236,7 @@ class _UserProfilePageState extends State<UserProfilePage> {
               Padding(
                 padding: const EdgeInsets.all(16),
                 child: Text(
-                  '${_userName}\'s Profile Picture',
+                  '$_userName\'s Profile Picture',
                   style: const TextStyle(
                     fontSize: 16,
                     fontWeight: FontWeight.w600,

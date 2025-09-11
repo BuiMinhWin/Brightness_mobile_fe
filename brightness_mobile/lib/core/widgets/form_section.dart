@@ -259,6 +259,12 @@ class FormSectionWithActions extends StatelessWidget {
     return FormSection(
       title: title,
       subtitle: subtitle,
+      padding: padding,
+      margin: margin,
+      backgroundColor: backgroundColor,
+      showBorder: showBorder,
+      borderRadius: borderRadius,
+      spacing: spacing,
       children: [
         ...children,
         const SizedBox(height: AppTheme.spacingL),
@@ -272,12 +278,6 @@ class FormSectionWithActions extends StatelessWidget {
               .toList(),
         ),
       ],
-      padding: padding,
-      margin: margin,
-      backgroundColor: backgroundColor,
-      showBorder: showBorder,
-      borderRadius: borderRadius,
-      spacing: spacing,
     );
   }
 }
@@ -317,7 +317,6 @@ class FormSectionWithIcon extends StatelessWidget {
     return FormSection(
       title: title,
       subtitle: subtitle,
-      children: children,
       padding: padding,
       margin: margin,
       backgroundColor: backgroundColor,
@@ -362,6 +361,7 @@ class FormSectionWithIcon extends StatelessWidget {
           ],
         ),
       ),
+      children: children,
     );
   }
 }
@@ -397,7 +397,6 @@ class FormSectionWithDivider extends StatelessWidget {
     return FormSection(
       title: title,
       subtitle: subtitle,
-      children: children,
       padding: padding,
       margin: margin,
       backgroundColor: backgroundColor,
@@ -405,6 +404,7 @@ class FormSectionWithDivider extends StatelessWidget {
       borderRadius: borderRadius,
       spacing: spacing,
       showDivider: true,
+      children: children,
     );
   }
 }

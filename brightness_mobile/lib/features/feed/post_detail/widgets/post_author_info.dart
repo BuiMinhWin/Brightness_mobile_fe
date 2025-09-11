@@ -63,7 +63,7 @@ class PostAuthorInfo extends StatelessWidget {
               ],
             ),
           ),
-          Container(
+          SizedBox(
             height: 36,
             child: ElevatedButton(
               onPressed: onFollowPressed,

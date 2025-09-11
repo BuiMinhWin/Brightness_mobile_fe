@@ -88,7 +88,7 @@ class MediaUploadSection extends StatelessWidget {
   Widget _buildMediaPreview() {
     return Column(
       children: [
-        Container(
+        SizedBox(
           height: 120,
           child: ListView.builder(
             scrollDirection: Axis.horizontal,

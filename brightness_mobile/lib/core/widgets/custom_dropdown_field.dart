@@ -154,7 +154,7 @@ class _CustomDropdownFieldState extends State<CustomDropdownField> {
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         DropdownButtonFormField<String>(
-          value: widget.value,
+          initialValue: widget.value,
           onChanged: widget.enabled ? (value) {
             widget.onChanged?.call(value);
             if (_hasError) {
