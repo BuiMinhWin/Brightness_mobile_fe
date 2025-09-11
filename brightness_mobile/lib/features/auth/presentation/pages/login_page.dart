@@ -52,43 +52,56 @@ class LoginPage extends StatelessWidget {
     );
   }
 
-  Widget _buildBackground() {
-    return Container(
-      decoration: const BoxDecoration(
-        gradient: AppColors.customGradientLogin,
-      ),
-      child: Stack(
-        children: [
-          // Circular pattern elements
-          Positioned(
-            top: -50,
-            right: -100,
-            child: _buildCircularPattern(200, 0.1),
+Widget _buildBackground() {
+  return Container(
+    decoration: const BoxDecoration(
+      gradient: AppColors.customGradientLogin,
+    ),
+    child: Stack(
+      children: [
+        Positioned.fill(
+          child: Transform.translate(
+            offset: const Offset(60, -140),
+            child: Transform.scale(
+              scale: 1.5, 
+              child: SvgPicture.asset(
+                'assets/images/Background_login.svg',
+                fit: BoxFit.cover,
+                alignment: Alignment.center,
+              ),
+            ),
           ),
-          Positioned(
-            top: 100,
-            left: -80,
-            child: _buildCircularPattern(160, 0.08),
-          ),
-          Positioned(
-            bottom: 200,
-            right: -60,
-            child: _buildCircularPattern(180, 0.12),
-          ),
-          Positioned(
-            bottom: -100,
-            left: -120,
-            child: _buildCircularPattern(240, 0.15),
-          ),
-          Positioned(
-            top: 300,
-            right: 50,
-            child: _buildCircularPattern(100, 0.06),
-          ),
-        ],
-      ),
-    );
-  }
+        ),
+        // Circular pattern elements
+        Positioned(
+          top: -50,
+          right: -100,
+          child: _buildCircularPattern(200, 0.1),
+        ),
+        Positioned(
+          top: 100,
+          left: -80,
+          child: _buildCircularPattern(160, 0.08),
+        ),
+        Positioned(
+          bottom: 200,
+          right: -60,
+          child: _buildCircularPattern(180, 0.12),
+        ),
+        Positioned(
+          bottom: -100,
+          left: -120,
+          child: _buildCircularPattern(240, 0.15),
+        ),
+        Positioned(
+          top: 300,
+          right: 50,
+          child: _buildCircularPattern(100, 0.06),
+        ),
+      ],
+    ),
+  );
+}
 
   Widget _buildCircularPattern(double size, double opacity) {
     return Container(
@@ -105,8 +118,8 @@ class LoginPage extends StatelessWidget {
       children: [
         // Logo JPG
         Container(
-          width: 100,
-          height: 100,
+          width: 120,
+          height: 120,
           decoration: BoxDecoration(
             color: AppColors.white.withOpacity(0.0),
             shape: BoxShape.circle,

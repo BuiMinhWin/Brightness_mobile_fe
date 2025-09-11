@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/gestures.dart';
+import 'package:flutter_svg/svg.dart';
 import 'package:provider/provider.dart';
 import '../controllers/register_controller.dart';
 import '../../../../core/theme/app_colors.dart';
@@ -49,51 +50,7 @@ class RegisterPage extends StatelessWidget {
     );
   }
 
-  Widget _buildBackground() {
-    return Container(
-      decoration: const BoxDecoration(
-        gradient: LinearGradient(
-          begin: Alignment.topCenter,
-          end: Alignment.bottomCenter,
-          colors: [
-            AppColors.customGradientStart,
-            Color.fromARGB(255, 64, 155, 69),
-            AppColors.customGradientEnd,
-          ],
-        ),
-      ),
-      child: Stack(
-        children: [
-          // Circular pattern elements
-          Positioned(
-            top: -50,
-            right: -100,
-            child: _buildCircularPattern(200, 0.1),
-          ),
-          Positioned(
-            top: 100,
-            left: -80,
-            child: _buildCircularPattern(160, 0.08),
-          ),
-          Positioned(
-            bottom: 200,
-            right: -60,
-            child: _buildCircularPattern(180, 0.12),
-          ),
-          Positioned(
-            bottom: -100,
-            left: -120,
-            child: _buildCircularPattern(240, 0.15),
-          ),
-          Positioned(
-            top: 300,
-            right: 50,
-            child: _buildCircularPattern(100, 0.06),
-          ),
-        ],
-      ),
-    );
-  }
+
 
   Widget _buildCircularPattern(double size, double opacity) {
     return Container(
@@ -104,6 +61,65 @@ class RegisterPage extends StatelessWidget {
       ),
     );
   }
+
+  Widget _buildBackground() {
+  return Container(
+    decoration: const BoxDecoration(
+        gradient: LinearGradient(
+          begin: Alignment.topCenter,
+          end: Alignment.bottomCenter,
+          colors: [
+            AppColors.customGradientStart,
+            Color.fromARGB(255, 64, 155, 69),
+            AppColors.customGradientEnd,
+          ],
+        ),
+      ),
+    child: Stack(
+      children: [
+        Positioned.fill(
+          child: Transform.translate(
+            offset: const Offset(60, -140),
+            child: Transform.scale(
+              scale: 1.5, 
+              child: SvgPicture.asset(
+                'assets/images/Background_login.svg',
+                fit: BoxFit.cover,
+                alignment: Alignment.center,
+              ),
+            ),
+          ),
+        ),
+        // Circular pattern elements
+        Positioned(
+          top: -50,
+          right: -100,
+          child: _buildCircularPattern(200, 0.1),
+        ),
+        Positioned(
+          top: 100,
+          left: -80,
+          child: _buildCircularPattern(160, 0.08),
+        ),
+        Positioned(
+          bottom: 200,
+          right: -60,
+          child: _buildCircularPattern(180, 0.12),
+        ),
+        Positioned(
+          bottom: -100,
+          left: -120,
+          child: _buildCircularPattern(240, 0.15),
+        ),
+        Positioned(
+          top: 300,
+          right: 50,
+          child: _buildCircularPattern(100, 0.06),
+        ),
+      ],
+    ),
+  );
+}
 
   Widget _buildLogo() {
     return Column(
@@ -339,7 +355,7 @@ class RegisterPage extends StatelessWidget {
                 TextSpan(
                   text: 'Terms of use',
                   style: TextStyle(
-                    color: AppColors.customGradientEnd,
+                    color: AppColors.bright,
                     decoration: TextDecoration.underline,
                   ),
                   recognizer: TapGestureRecognizer()
@@ -351,7 +367,7 @@ class RegisterPage extends StatelessWidget {
                 TextSpan(
                   text: 'Privacy Policy',
                   style: TextStyle(
-                    color: AppColors.customGradientEnd,
+                    color: AppColors.bright,
                     decoration: TextDecoration.underline,
                   ),
                   recognizer: TapGestureRecognizer()
@@ -469,7 +485,7 @@ class RegisterPage extends StatelessWidget {
       text: TextSpan(
         text: "Already have account ? ",
         style: AppTextStyles.body1.copyWith(
-          color: AppColors.white,
+          color: AppColors.customGradientStart,
         ),
         children: [
           TextSpan(
