@@ -11,6 +11,14 @@ import 'package:brightness_mobile/features/onboarding/di.dart';
 import 'package:brightness_mobile/features/onboarding/presentation/controllers/onboarding_controller.dart';
 import 'package:brightness_mobile/features/home/data/datasources/fitness_data_datasource.dart';
 import 'package:brightness_mobile/features/home/presentation/controllers/home_controller.dart';
+import 'package:brightness_mobile/features/profile/data/repositories/profile_repository_impl.dart';
+import 'package:brightness_mobile/features/profile/domain/repositories/profile_repository.dart';
+import 'package:brightness_mobile/features/profile/domain/usecases/get_profile_usecase.dart';
+import 'package:brightness_mobile/features/profile/domain/usecases/update_profile_usecase.dart';
+import 'package:brightness_mobile/features/profile/domain/usecases/upload_profile_image_usecase.dart';
+import 'package:brightness_mobile/features/profile/presentation/controllers/edit_profile_controller.dart';
+import 'package:brightness_mobile/features/profile/presentation/controllers/video_controller.dart';
+import 'package:brightness_mobile/features/profile/presentation/controllers/navigation_controller.dart';
 
 final sl = GetIt.instance;
 
@@ -36,6 +44,16 @@ Future<void> initServices(AppConfig config) async {
   // Features: Home
   sl.registerLazySingleton<FitnessDataDatasource>(() => FitnessDataDatasource());
   sl.registerFactory<HomeController>(() => HomeController(sl()));
+  // Features: Profile
+  sl.registerLazySingleton<ProfileRepository>(() => ProfileRepositoryImpl());
+  sl.registerFactory<GetProfileUsecase>(() => GetProfileUsecase(sl()));
+  sl.registerFactory<UpdateProfileUsecase>(() => UpdateProfileUsecase(sl()));
+  sl.registerFactory<UploadProfileImageUsecase>(() => UploadProfileImageUsecase(sl()));
+  sl.registerFactory<EditProfileController>(() => createEditProfileController());
+  
+  // Video and Navigation Controllers
+  sl.registerFactory<VideoController>(() => VideoController());
+  sl.registerFactory<NavigationController>(() => NavigationController());
 
   // TODO: Register other feature services (user, catalog, order, payment)
 }
