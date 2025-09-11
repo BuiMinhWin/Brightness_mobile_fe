@@ -1,0 +1,59 @@
+              children: List.generate(dates.length, (index) {
+                final d = dates[index];
+                final isSelected =
+                    d.year == selected.year &&
+                    d.month == selected.month &&
+                    d.day == selected.day;
+                return Expanded(
+                  child: Padding(
+                    padding: const EdgeInsets.symmetric(horizontal: 2),
+                    child: Center(
+                      child: InkWell(
+                        borderRadius: BorderRadius.circular(20),
+                        onTap: () =>
+                            context.read<HomeController>().setSelectedDate(d),
+                        child: AnimatedContainer(
+                          padding: const EdgeInsets.symmetric(
+                            horizontal: 6,
+                            vertical: 6,
+                          ),
+                          decoration: BoxDecoration(
+                            // Luôn trong suốt; chip nổi sẽ hiển thị chọn
+                            color: Colors.transparent,
+                            borderRadius: BorderRadius.circular(20),
+                          ),
+                          duration: const Duration(milliseconds: 220),
+                          curve: Curves.easeOut,
+                          child: AnimatedDefaultTextStyle(
+                            duration: const Duration(milliseconds: 220),
+                            curve: Curves.easeOut,
+                            style: TextStyle(
+                              fontSize: 14,
+                              fontWeight: isSelected
+                                  ? FontWeight.w600
+                                  : FontWeight.w500,
+                              color: AppColors.textSecondary,
+                              fontFeatures: const [
+                                FontFeature.tabularFigures(),
+                              ],
+                            ),
+                            child: Text(
+                              '${d.day}',
+                              key: ValueKey(
+                                'day-${d.day}-${d.month}-${d.year}',
+                              ),
+                              textAlign: TextAlign.center,
+                            ),
+                          ),
+                        ),
+                      ),
+                    ),
+                  ),
+                );
+              }),
+            ),
+            // Chip nổi hiển thị đầy đủ nội dung ngày được chọn (luôn ở giữa)
+            Positioned.fill(
+              child: IgnorePointer(
+                ignoring: true,
+                child: LayoutBuilder(

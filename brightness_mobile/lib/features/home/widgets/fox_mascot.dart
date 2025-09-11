@@ -5,7 +5,7 @@ class FoxMascot extends StatelessWidget {
   final double height;
 
   // Tăng kích thước mặc định từ 100x110 lên 150x165
-  const FoxMascot({super.key, this.width = 100, this.height = 120});
+  const FoxMascot({super.key, this.width = 80, this.height = 100});
 
   @override
   Widget build(BuildContext context) {

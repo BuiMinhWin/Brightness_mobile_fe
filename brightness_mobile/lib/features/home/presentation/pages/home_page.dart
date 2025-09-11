@@ -1,10 +1,12 @@
 import 'package:flutter/material.dart';
+import 'dart:ui' show FontFeature;
 import 'package:provider/provider.dart';
 import '../../../../core/theme/app_colors.dart';
 import '../../../../core/theme/app_text_styles.dart';
 import '../controllers/home_controller.dart';
 import '../../widgets/calorie_card.dart';
 import '../../widgets/fox_mascot_box.dart';
+import '../../widgets/calorie_info_overlay.dart';
 import '../../widgets/workout_plan_card.dart';
 import '../../widgets/fitness_programs_section.dart';
 import '../../widgets/today_info_section.dart';
@@ -22,6 +24,8 @@ class HomeScreen extends StatefulWidget {
 }
 
 class _HomeScreenState extends State<HomeScreen> {
+  // Dùng để tích lũy khoảng kéo ngang và đổi ngày theo ngưỡng
+  double _dragDx = 0;
   @override
   void initState() {
     super.initState();
@@ -38,13 +42,12 @@ class _HomeScreenState extends State<HomeScreen> {
       backgroundColor: AppColors.backgroundLight,
       body: Stack(
         children: [
-          // Background image centered, nudged a bit downward
           Align(
             alignment: Alignment.center,
             child: Transform.translate(
               offset: const Offset(0, 80),
               child: SizedBox(
-                height: 480, // background band height
+                height: 480,
                 child: Image.asset(
                   'assets/images/home_bg.png',
                   fit: BoxFit.cover,
@@ -65,7 +68,7 @@ class _HomeScreenState extends State<HomeScreen> {
                       child: Column(
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
-                          const SizedBox(height: 10),
+                          const SizedBox(height: 6),
 
                           // Stack để chồng Fox Mascot lên Calorie Card
                           SizedBox(
@@ -79,19 +82,26 @@ class _HomeScreenState extends State<HomeScreen> {
                                 if (controller.dailyStats != null)
                                   Positioned(
                                     top:
-                                        20, // Đẩy Calorie Card xuống để có chỗ cho tai Fox
+                                        39.5, // Đẩy Calorie Card xuống để có chỗ cho tai Fox
                                     left: 0,
                                     right: 0,
                                     child: CalorieCard(
                                       dailyStats: controller.dailyStats!,
                                     ),
                                   ),
+                                Positioned(
+                                  bottom: 0,
+                                  left: 0,
+                                  right: 0,
+                                  child: CalorieInfoOverlay(
+                                    dailyStats: controller.dailyStats!,
+                                  ),
+                                ),
 
                                 // Fox Mascot ở trên, positioned ở bên phải
                                 Positioned(
-                                  top:
-                                      -20, // Điều chỉnh lại để tai không bị cắt
-                                  right: -35, // Dịch Fox sang phải nhiều hơn
+                                  top: 0, // Điều chỉnh lại để tai không bị cắt
+                                  right: -38, // Dịch Fox sang phải nhiều hơn
                                   child: LayoutBuilder(
                                     builder: (context, constraints) {
                                       // Kích thước Fox vừa phải để không bị cắt tai
@@ -100,12 +110,12 @@ class _HomeScreenState extends State<HomeScreen> {
                                       ).size.width;
                                       final foxSize =
                                           screenWidth *
-                                          0.65; // Giảm một chút để tai không bị cắt
+                                          0.60; // Giảm một chút để tai không bị cắt
 
                                       return Transform.translate(
                                         offset: const Offset(
                                           0,
-                                          50,
+                                          25,
                                         ), // kéo Fox xuống một chút
                                         child: FoxMascotBox(
                                           size: foxSize,
@@ -123,7 +133,7 @@ class _HomeScreenState extends State<HomeScreen> {
                           const SizedBox(height: 20),
 
                           // Calendar navigation
-                          _buildDateNavigationScrollable(),
+                          _buildDateNavigationFixedPositions(),
 
                           const SizedBox(height: 0),
 
@@ -192,132 +202,9 @@ class _HomeScreenState extends State<HomeScreen> {
     );
   }
 
-  Widget _buildDateNavigation() {
+  Widget _buildDateNavigationFixedPositions() {
     final controller = context.watch<HomeController>();
-    // Build a 7-day window centered on the currently selected date
-    final now = DateTime.now();
-    final today = DateTime(now.year, now.month, now.day);
-    final selected = DateTime(
-      controller.selectedDate.year,
-      controller.selectedDate.month,
-      controller.selectedDate.day,
-    );
-    final dates = List.generate(
-      7,
-      (i) => selected.add(Duration(days: i - 3)), // [selected-3 .. selected+3]
-    );
 
-    String monthAbbrev(int m) => const [
-      'Jan',
-      'Feb',
-      'Mar',
-      'Apr',
-      'May',
-      'Jun',
-      'Jul',
-      'Aug',
-      'Sep',
-      'Oct',
-      'Nov',
-      'Dec',
-    ][m - 1];
-
-    return SizedBox(
-      height: 80,
-      child: Padding(
-        padding: const EdgeInsets.symmetric(horizontal: 12),
-        child: Row(
-          children: List.generate(dates.length, (index) {
-            final d = dates[index];
-            final isSelected =
-                d.year == selected.year &&
-                d.month == selected.month &&
-                d.day == selected.day;
-            final label = isSelected
-                ? 'Today, ${d.day} ${monthAbbrev(d.month)}'
-                : '${d.day}';
-
-            return Expanded(
-              child: Center(
-                child: InkWell(
-                  borderRadius: BorderRadius.circular(20),
-                  onTap: () =>
-                      context.read<HomeController>().setSelectedDate(d),
-                  child: AnimatedContainer(
-                    padding: const EdgeInsets.symmetric(
-                      horizontal: 12,
-                      vertical: 8,
-                    ),
-                    decoration: BoxDecoration(
-                      color: isSelected
-                          ? AppColors.primary
-                          : Colors.transparent,
-                      borderRadius: BorderRadius.circular(20),
-                    ),
-                    duration: const Duration(milliseconds: 220),
-                    curve: Curves.easeOut,
-                    child: AnimatedDefaultTextStyle(
-                      duration: const Duration(milliseconds: 220),
-                      curve: Curves.easeOut,
-                      style: TextStyle(
-                        fontSize: isSelected
-                            ? 14
-                            : 16, // Giảm font size của selected item
-                        fontWeight: isSelected
-                            ? FontWeight.w600
-                            : FontWeight.w500,
-                        color: isSelected
-                            ? AppColors.white
-                            : AppColors.textSecondary,
-                      ),
-                      child: AnimatedSwitcher(
-                        duration: const Duration(milliseconds: 180),
-                        transitionBuilder: (child, animation) => FadeTransition(
-                          opacity: animation,
-                          child: SlideTransition(
-                            position: Tween<Offset>(
-                              begin: const Offset(0, 0.15),
-                              end: Offset.zero,
-                            ).animate(animation),
-                            child: child,
-                          ),
-                        ),
-                        child: isSelected
-                            ? Text(
-                                label,
-                                key: ValueKey(
-                                  'sel-${d.day}-${d.month}-${d.year}',
-                                ),
-                                textAlign: TextAlign.center,
-                                maxLines: 1,
-                                overflow: TextOverflow.ellipsis,
-                              )
-                            : SizedBox(
-                                width: 36,
-                                child: Text(
-                                  '${d.day}',
-                                  key: ValueKey(
-                                    'day-${d.day}-${d.month}-${d.year}',
-                                  ),
-                                  textAlign: TextAlign.center,
-                                ),
-                              ),
-                      ),
-                    ),
-                  ),
-                ),
-              ),
-            );
-          }),
-        ),
-      ),
-    );
-  }
-
-  Widget _buildDateNavigationScrollable() {
-    final controller = context.watch<HomeController>();
-    final now = DateTime.now();
-    final today = DateTime(now.year, now.month, now.day);
     final selected = DateTime(
       controller.selectedDate.year,
       controller.selectedDate.month,
@@ -342,87 +229,149 @@ class _HomeScreenState extends State<HomeScreen> {
 
     return SizedBox(
       height: 80,
-      child: SingleChildScrollView(
-        scrollDirection: Axis.horizontal,
-        padding: const EdgeInsets.only(left: 16, right: 6),
-        child: Row(
-          mainAxisAlignment: MainAxisAlignment.end,
-          children: List.generate(dates.length, (index) {
-            final d = dates[index];
-            final isSelected =
-                d.year == selected.year &&
-                d.month == selected.month &&
-                d.day == selected.day;
-            final label = isSelected
-                ? 'Today, ${d.day} ${monthAbbrev(d.month)}'
-                : '${d.day}';
-
-            return Padding(
-              padding: const EdgeInsets.only(right: 10),
-              child: Center(
-                child: InkWell(
-                  borderRadius: BorderRadius.circular(20),
-                  onTap: () =>
-                      context.read<HomeController>().setSelectedDate(d),
-                  child: AnimatedContainer(
-                    padding: const EdgeInsets.symmetric(
-                      horizontal: 8,
-                      vertical: 6,
-                    ),
-                    decoration: BoxDecoration(
-                      color: isSelected
-                          ? AppColors.primary
-                          : Colors.transparent,
-                      borderRadius: BorderRadius.circular(20),
-                    ),
-                    duration: const Duration(milliseconds: 220),
-                    curve: Curves.easeOut,
-                    child: AnimatedDefaultTextStyle(
-                      duration: const Duration(milliseconds: 220),
-                      curve: Curves.easeOut,
-                      style: TextStyle(
-                        fontSize: isSelected ? 14 : 14,
-                        fontWeight: isSelected
-                            ? FontWeight.w600
-                            : FontWeight.w500,
-                        color: isSelected
-                            ? AppColors.white
-                            : AppColors.textSecondary,
-                      ),
-                      child: AnimatedSwitcher(
-                        duration: const Duration(milliseconds: 180),
-                        transitionBuilder: (child, animation) => FadeTransition(
-                          opacity: animation,
-                          child: SlideTransition(
-                            position: Tween<Offset>(
-                              begin: const Offset(0, 0.15),
-                              end: Offset.zero,
-                            ).animate(animation),
-                            child: child,
-                          ),
-                        ),
-                        child: isSelected
-                            ? Text(
-                                label,
-                                key: ValueKey(
-                                  'sel-${d.day}-${d.month}-${d.year}',
-                                ),
-                                textAlign: TextAlign.center,
-                              )
-                            : Text(
+      child: GestureDetector(
+        onHorizontalDragUpdate: (details) {
+          _dragDx += details.delta.dx;
+          const stepPx = 40.0; // mỗi 40px đổi 1 ngày
+          final home = context.read<HomeController>();
+          while (_dragDx <= -stepPx) {
+            _dragDx += stepPx;
+            final d = DateTime(
+              home.selectedDate.year,
+              home.selectedDate.month,
+              home.selectedDate.day,
+            ).add(const Duration(days: 1));
+            home.setSelectedDate(d);
+          }
+          while (_dragDx >= stepPx) {
+            _dragDx -= stepPx;
+            final d = DateTime(
+              home.selectedDate.year,
+              home.selectedDate.month,
+              home.selectedDate.day,
+            ).subtract(const Duration(days: 1));
+            home.setSelectedDate(d);
+          }
+        },
+        onHorizontalDragEnd: (_) {
+          _dragDx = 0;
+        },
+        child: Stack(
+          children: [
+            // Hàng 7 ô ngày, vị trí cố định
+            Padding(
+              padding: const EdgeInsets.only(top: 5),
+              child: Row(
+                children: List.generate(dates.length, (index) {
+                  final d = dates[index];
+                  final isSelected =
+                      d.year == selected.year &&
+                      d.month == selected.month &&
+                      d.day == selected.day;
+                  return Expanded(
+                    child: Padding(
+                      padding: const EdgeInsets.symmetric(horizontal: 2),
+                      child: Center(
+                        child: InkWell(
+                          borderRadius: BorderRadius.circular(20),
+                          onTap: () =>
+                              context.read<HomeController>().setSelectedDate(d),
+                          child: AnimatedContainer(
+                            padding: const EdgeInsets.symmetric(
+                              horizontal: 6,
+                              vertical: 6,
+                            ),
+                            decoration: BoxDecoration(
+                              // Luôn trong suốt; chip nổi sẽ hiển thị chọn
+                              color: Colors.transparent,
+                              borderRadius: BorderRadius.circular(20),
+                            ),
+                            duration: const Duration(milliseconds: 220),
+                            curve: Curves.easeOut,
+                            child: AnimatedDefaultTextStyle(
+                              duration: const Duration(milliseconds: 220),
+                              curve: Curves.easeOut,
+                              style: TextStyle(
+                                fontSize: 14,
+                                fontWeight: isSelected
+                                    ? FontWeight.w600
+                                    : FontWeight.w500,
+                                color: AppColors.textSecondary,
+                                fontFeatures: const [
+                                  FontFeature.tabularFigures(),
+                                ],
+                              ),
+                              child: Text(
                                 '${d.day}',
                                 key: ValueKey(
                                   'day-${d.day}-${d.month}-${d.year}',
                                 ),
                                 textAlign: TextAlign.center,
                               ),
+                            ),
+                          ),
+                        ),
                       ),
                     ),
-                  ),
+                  );
+                }),
+              ),
+            ),
+            // Chip nổi hiển thị đầy đủ nội dung ngày được chọn (luôn ở giữa)
+            Align(
+              alignment: Alignment.topCenter,
+              child: IgnorePointer(
+                ignoring: true,
+                child: LayoutBuilder(
+                  builder: (context, constraints) {
+                    final label =
+                        '${selected.day},${monthAbbrev(selected.month)}';
+                    return Center(
+                      child: ConstrainedBox(
+                        constraints: BoxConstraints(
+                          maxWidth: constraints.maxWidth - 16, // chừa mép
+                        ),
+                        child: AnimatedSwitcher(
+                          duration: const Duration(milliseconds: 200),
+                          transitionBuilder: (child, animation) =>
+                              FadeTransition(
+                                opacity: animation,
+                                child: ScaleTransition(
+                                  scale: animation,
+                                  child: child,
+                                ),
+                              ),
+                          child: Container(
+                            key: ValueKey(
+                              '${selected.day}-${selected.month}-${selected.year}',
+                            ),
+                            padding: const EdgeInsets.symmetric(
+                              horizontal: 12,
+                              vertical: 8,
+                            ),
+                            decoration: BoxDecoration(
+                              color: AppColors.primary,
+                              borderRadius: BorderRadius.circular(20),
+                            ),
+                            child: Text(
+                              label,
+                              style: const TextStyle(
+                                color: Colors.white,
+                                fontSize: 14,
+                                fontWeight: FontWeight.w600,
+                              ),
+                              textAlign: TextAlign.center,
+                              overflow: TextOverflow.visible,
+                            ),
+                          ),
+                        ),
+                      ),
+                    );
+                  },
                 ),
               ),
-            );
-          }),
+            ),
+          ],
         ),
       ),
     );
