@@ -1,4 +1,7 @@
 import 'package:flutter/material.dart';
+import '../../../../core/theme/app_colors.dart';
+import '../../../../core/theme/app_text_styles.dart';
+import '../../../../core/theme/app_theme.dart';
 
 class EventDurationCard extends StatelessWidget {
   const EventDurationCard({Key? key}) : super(key: key);
@@ -7,18 +10,8 @@ class EventDurationCard extends StatelessWidget {
   Widget build(BuildContext context) {
     return Container(
       width: double.infinity,
-      padding: const EdgeInsets.all(20),
-      decoration: BoxDecoration(
-        color: Colors.white,
-        borderRadius: BorderRadius.circular(12),
-        boxShadow: [
-          BoxShadow(
-            color: Colors.black.withOpacity(0.1),
-            blurRadius: 10,
-            offset: const Offset(0, 2),
-          ),
-        ],
-      ),
+      padding: const EdgeInsets.all(AppTheme.spacingL),
+      decoration: AppTheme.cardDecoration(),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
@@ -28,48 +21,37 @@ class EventDurationCard extends StatelessWidget {
                 width: 24,
                 height: 24,
                 decoration: const BoxDecoration(
-                  color: Color(0xFF9C27B0),
+                  color: AppColors.secondary, // dùng màu từ AppColors
                   shape: BoxShape.circle,
                 ),
                 child: const Icon(
                   Icons.calendar_today,
-                  color: Colors.white,
-                  size: 16,
+                  color: AppColors.white,
+                  size: AppTheme.iconSizeS,
                 ),
               ),
-              const SizedBox(width: 12),
-              const Text(
+              const SizedBox(width: AppTheme.spacingM),
+              Text(
                 'Event Duration',
-                style: TextStyle(
-                  fontSize: 18,
-                  fontWeight: FontWeight.w600,
-                  color: Color(0xFF333333),
-                ),
+                style: AppTextStyles.h2, // dùng text style có sẵn
               ),
             ],
           ),
-          const SizedBox(height: 24),
+          const SizedBox(height: AppTheme.spacingXL),
           Row(
             children: [
               Expanded(
                 child: Column(
                   children: [
-                    const Text(
+                    Text(
                       '30',
-                      style: TextStyle(
-                        fontSize: 48,
-                        fontWeight: FontWeight.bold,
-                        color: Color(0xFF333333),
-                        height: 1.0,
+                      style: AppTheme.textStyleHeadline2.copyWith(
+                        color: AppColors.textPrimary,
                       ),
                     ),
                     Text(
                       'Days Total',
-                      style: TextStyle(
-                        fontSize: 14,
-                        color: Colors.grey.shade600,
-                        fontWeight: FontWeight.w500,
-                      ),
+                      style: AppTheme.textStyleBody2,
                     ),
                   ],
                 ),
@@ -77,36 +59,29 @@ class EventDurationCard extends StatelessWidget {
               Container(
                 width: 1,
                 height: 60,
-                color: Colors.grey.shade300,
+                color: AppColors.border,
               ),
               Expanded(
                 child: Column(
                   children: [
-                    const Text(
+                    Text(
                       '45',
-                      style: TextStyle(
-                        fontSize: 48,
-                        fontWeight: FontWeight.bold,
-                        color: Color(0xFF333333),
-                        height: 1.0,
+                      style: AppTheme.textStyleHeadline2.copyWith(
+                        color: AppColors.textPrimary,
                       ),
                     ),
                     Text(
                       'Min/Day',
-                      style: TextStyle(
-                        fontSize: 14,
-                        color: Colors.grey.shade600,
-                        fontWeight: FontWeight.w500,
-                      ),
+                      style: AppTheme.textStyleBody2,
                     ),
                   ],
                 ),
               ),
             ],
           ),
-          const SizedBox(height: 24),
+          const SizedBox(height: AppTheme.spacingXL),
           _buildDateInfo('Start Date:', 'March 1, 2024'),
-          const SizedBox(height: 8),
+          const SizedBox(height: AppTheme.spacingS),
           _buildDateInfo('End Date:', 'March 30, 2024'),
         ],
       ),
@@ -118,27 +93,21 @@ class EventDurationCard extends StatelessWidget {
       children: [
         Text(
           label,
-          style: TextStyle(
-            fontSize: 14,
-            color: Colors.grey.shade600,
-            fontWeight: FontWeight.w500,
+          style: AppTheme.textStyleBody2.copyWith(
+            fontWeight: AppTheme.fontWeightMedium,
           ),
         ),
-        const SizedBox(width: 8),
+        const SizedBox(width: AppTheme.spacingS),
         Text(
           date,
-          style: const TextStyle(
-            fontSize: 14,
-            color: Color(0xFF333333),
-            fontWeight: FontWeight.w600,
-          ),
+          style: AppTextStyles.bodyBold,
         ),
       ],
     );
   }
 }
 
-// 5. Rewards and Prizes Card - Reusable Component
+// Rewards & Prizes card
 class RewardsAndPrizesCard extends StatelessWidget {
   const RewardsAndPrizesCard({Key? key}) : super(key: key);
 
@@ -146,18 +115,8 @@ class RewardsAndPrizesCard extends StatelessWidget {
   Widget build(BuildContext context) {
     return Container(
       width: double.infinity,
-      padding: const EdgeInsets.all(20),
-      decoration: BoxDecoration(
-        color: Colors.white,
-        borderRadius: BorderRadius.circular(12),
-        boxShadow: [
-          BoxShadow(
-            color: Colors.black.withOpacity(0.1),
-            blurRadius: 10,
-            offset: const Offset(0, 2),
-          ),
-        ],
-      ),
+      padding: const EdgeInsets.all(AppTheme.spacingL),
+      decoration: AppTheme.cardDecoration(),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
@@ -167,61 +126,63 @@ class RewardsAndPrizesCard extends StatelessWidget {
                 width: 24,
                 height: 24,
                 decoration: const BoxDecoration(
-                  color: Color(0xFFFF9800),
+                  color: AppColors.warning,
                   shape: BoxShape.circle,
                 ),
                 child: const Icon(
                   Icons.emoji_events,
-                  color: Colors.white,
-                  size: 16,
+                  color: AppColors.white,
+                  size: AppTheme.iconSizeS,
                 ),
               ),
-              const SizedBox(width: 12),
-              const Text(
+              const SizedBox(width: AppTheme.spacingM),
+              Text(
                 'Rewards & Prizes',
-                style: TextStyle(
-                  fontSize: 18,
-                  fontWeight: FontWeight.w600,
-                  color: Color(0xFF333333),
-                ),
+                style: AppTextStyles.h2,
               ),
             ],
           ),
-          const SizedBox(height: 20),
+          const SizedBox(height: AppTheme.spacingL),
           _buildPrizeItem(
             Icons.emoji_events,
             'Grand Prize Winner',
             '\$300 in cash',
-            const Color(0xFFFFD700),
-            const Color(0xFFFFF3C4),
+            AppColors.bright,
+            AppColors.warningLight,
           ),
-          const SizedBox(height: 16),
+          const SizedBox(height: AppTheme.spacingM),
           _buildPrizeItem(
             Icons.military_tech,
             'Top 10 Finishers',
             'Premium workout gear',
-            const Color(0xFFFF7043),
-            const Color(0xFFFFF3E0),
+            AppColors.loseWeightColor,
+            AppColors.warningLight,
           ),
-          const SizedBox(height: 16),
+          const SizedBox(height: AppTheme.spacingM),
           _buildPrizeItem(
             Icons.stars,
             'All Completers',
             'Digital badge & certificate',
-            const Color(0xFF2196F3),
-            const Color(0xFFE3F2FD),
+            AppColors.gainMuscleColor,
+            AppColors.backgroundLight,
           ),
         ],
       ),
     );
   }
 
-  Widget _buildPrizeItem(IconData icon, String title, String description, Color iconColor, Color bgColor) {
+  Widget _buildPrizeItem(
+    IconData icon,
+    String title,
+    String description,
+    Color iconColor,
+    Color bgColor,
+  ) {
     return Container(
-      padding: const EdgeInsets.all(16),
+      padding: const EdgeInsets.all(AppTheme.spacingM),
       decoration: BoxDecoration(
         color: bgColor,
-        borderRadius: BorderRadius.circular(8),
+        borderRadius: BorderRadius.circular(AppTheme.radiusM),
         border: Border.all(
           color: iconColor.withOpacity(0.3),
           width: 1,
@@ -234,35 +195,22 @@ class RewardsAndPrizesCard extends StatelessWidget {
             height: 40,
             decoration: BoxDecoration(
               color: iconColor,
-              borderRadius: BorderRadius.circular(8),
+              borderRadius: BorderRadius.circular(AppTheme.radiusM),
             ),
             child: Icon(
               icon,
-              color: Colors.white,
-              size: 20,
+              color: AppColors.white,
+              size: AppTheme.iconSizeM,
             ),
           ),
-          const SizedBox(width: 16),
+          const SizedBox(width: AppTheme.spacingM),
           Expanded(
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                Text(
-                  title,
-                  style: const TextStyle(
-                    fontSize: 16,
-                    fontWeight: FontWeight.w600,
-                    color: Color(0xFF333333),
-                  ),
-                ),
-                const SizedBox(height: 4),
-                Text(
-                  description,
-                  style: TextStyle(
-                    fontSize: 14,
-                    color: Colors.grey.shade600,
-                  ),
-                ),
+                Text(title, style: AppTextStyles.h3),
+                const SizedBox(height: AppTheme.spacingXS),
+                Text(description, style: AppTheme.textStyleBody2),
               ],
             ),
           ),

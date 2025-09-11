@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
-
+import '../../../../core/theme/app_colors.dart';
+import '../../../../core/theme/app_text_styles.dart';
+import '../../../../core/theme/app_theme.dart';
 class CustomBottomNavBar extends StatelessWidget {
   final int currentIndex;
   final ValueChanged<int> onTap;
@@ -15,10 +17,10 @@ class CustomBottomNavBar extends StatelessWidget {
     return Container(
       height: 90,
       decoration: BoxDecoration(
-        color: Colors.white,
+        color: AppColors.white,
         boxShadow: [
           BoxShadow(
-            color: Colors.black.withOpacity(0.1),
+            color: AppTheme.textPrimary.withOpacity(0.1),
             blurRadius: 10,
             offset: const Offset(0, -2),
           ),
@@ -52,11 +54,14 @@ class CustomBottomNavBar extends StatelessWidget {
       onTap: () => onTap(index),
       child: AnimatedContainer(
         duration: const Duration(milliseconds: 200),
-        padding: const EdgeInsets.symmetric(vertical: 8, horizontal: 12),
+        padding: const EdgeInsets.symmetric(
+          vertical: AppTheme.spacingS,
+          horizontal: AppTheme.spacingS + 4,
+        ),
         decoration: isActive && isSpecial
             ? BoxDecoration(
-                color: const Color(0xFF4CAF50),
-                borderRadius: BorderRadius.circular(20),
+                color: AppColors.primary,
+                borderRadius: BorderRadius.circular(AppTheme.radiusM + 12),
               )
             : null,
         child: Column(
@@ -68,20 +73,19 @@ class CustomBottomNavBar extends StatelessWidget {
                 isActive ? activeIcon : icon,
                 key: ValueKey(isActive),
                 color: isActive
-                    ? (isSpecial ? Colors.white : const Color(0xFF4CAF50))
-                    : Colors.grey.shade500,
-                size: 24,
+                    ? (isSpecial ? AppColors.white : AppColors.primary)
+                    : AppTheme.textSecondary,
+                size: AppTheme.iconSizeM,
               ),
             ),
-            const SizedBox(height: 4),
+            const SizedBox(height: AppTheme.spacingXS),
             AnimatedDefaultTextStyle(
               duration: const Duration(milliseconds: 200),
-              style: TextStyle(
-                fontSize: 12,
-                fontWeight: isActive ? FontWeight.w600 : FontWeight.w400,
+              style: AppTextStyles.caption.copyWith(
+                fontWeight: isActive ? AppTheme.fontWeightSemiBold : AppTheme.fontWeightRegular,
                 color: isActive
-                    ? (isSpecial ? Colors.white : const Color(0xFF4CAF50))
-                    : Colors.grey.shade500,
+                    ? (isSpecial ? AppColors.white : AppColors.primary)
+                    : AppTheme.textSecondary,
               ),
               child: Text(label),
             ),

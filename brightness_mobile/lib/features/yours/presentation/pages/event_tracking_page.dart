@@ -7,8 +7,9 @@ import 'package:brightness_mobile/features/yours/presentation/widgets/weekly_tra
 import 'package:flutter/material.dart';
 
 import '../../data/models/yours.dart';
-
-
+import '../../../../core/theme/app_colors.dart';
+import '../../../../core/theme/app_text_styles.dart';
+import '../../../../core/theme/app_theme.dart';
 
 class EventTrackingPage extends StatelessWidget {
   final DietPlanModel dietPlan;
@@ -66,16 +67,7 @@ class EventTrackingPage extends StatelessWidget {
     return Scaffold(
       body: Container(
         decoration: const BoxDecoration(
-          gradient: LinearGradient(
-            begin: Alignment.topCenter,
-            end: Alignment.bottomCenter,
-            colors: [
-              Color(0xFF2E7D32),
-              Color(0xFF4CAF50),
-              Color(0xFF8BC34A),
-              Color(0xFFCDDC39),
-            ],
-          ),
+          gradient: AppColors.customGradient,
         ),
         child: SafeArea(
           child: Column(
@@ -93,29 +85,29 @@ class EventTrackingPage extends StatelessWidget {
 
   Widget _buildHeader(BuildContext context) {
     return Padding(
-      padding: const EdgeInsets.all(16.0),
+      padding: EdgeInsets.all(AppTheme.spacingM),
       child: Row(
         children: [
           IconButton(
             onPressed: () => Navigator.pop(context),
-            icon: const Icon(
+            icon: Icon(
               Icons.arrow_back,
-              color: Colors.white,
-              size: 24,
+              color: AppColors.white,
+              size: AppTheme.iconSizeM,
             ),
           ),
-          const Expanded(
+          Expanded(
             child: Text(
               'Tracking Event',
-              style: TextStyle(
-                fontSize: 20,
-                fontWeight: FontWeight.w600,
-                color: Colors.white,
+              style: AppTextStyles.h2.copyWith(
+                color: AppColors.white,
+                fontSize: AppTheme.fontSizeXL,
+                fontWeight: AppTheme.fontWeightSemiBold,
               ),
               textAlign: TextAlign.center,
             ),
           ),
-          const SizedBox(width: 48),
+          SizedBox(width: AppTheme.iconSizeXL + AppTheme.spacingM),
         ],
       ),
     );
@@ -123,22 +115,21 @@ class EventTrackingPage extends StatelessWidget {
 
   Widget _buildContent(List<TaskModel> ongoingTasks, List<TaskModel> completedTasks, List<TaskModel> additionalTasks) {
     return SingleChildScrollView(
-      padding: const EdgeInsets.symmetric(horizontal: 16.0),
+      padding: EdgeInsets.symmetric(horizontal: AppTheme.spacingM),
       child: Column(
         children: [
           EventTrackingDescriptionCard(dietPlan: dietPlan),
-          const SizedBox(height: 16),
+          SizedBox(height: AppTheme.spacingM),
           const WeeklyTrackingChart(),
-          const SizedBox(height: 16),
+          SizedBox(height: AppTheme.spacingM),
           OngoingChallengesCard(ongoingTasks: ongoingTasks),
-          const SizedBox(height: 16),
+          SizedBox(height: AppTheme.spacingM),
           CompletedChallengesCard(completedTasks: completedTasks),
-          const SizedBox(height: 16),
+          SizedBox(height: AppTheme.spacingM),
           AdditionalTasksCard(additionalTasks: additionalTasks),
-          const SizedBox(height: 20),
+          SizedBox(height: AppTheme.spacingL),
         ],
       ),
     );
   }
 }
-

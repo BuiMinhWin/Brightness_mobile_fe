@@ -2,6 +2,8 @@ import 'package:flutter/material.dart';
 import '../../data/models/event.dart';
 import '../widgets/event_card.dart';
 import 'event_detail_page.dart';
+import '../../../../core/theme/app_colors.dart';
+import '../../../../core/theme/app_text_styles.dart';
 
 class EventPageContent extends StatelessWidget {
   const EventPageContent({Key? key}) : super(key: key);
@@ -69,16 +71,7 @@ class EventPageContent extends StatelessWidget {
   Widget build(BuildContext context) {
     return Container(
       decoration: const BoxDecoration(
-        gradient: LinearGradient(
-          begin: Alignment.topCenter,
-          end: Alignment.bottomCenter,
-          colors: [
-            Color(0xFF2E7D32), // Dark green
-            Color(0xFF4CAF50), // Medium green
-            Color(0xFF8BC34A), // Light green  
-            Color(0xFFCDDC39), // Yellow green
-          ],
-        ),
+        gradient: AppColors.customGradient,
       ),
       child: SafeArea(
         child: Column(
@@ -94,15 +87,11 @@ class EventPageContent extends StatelessWidget {
   }
 
   Widget _buildHeader() {
-    return const Padding(
-      padding: EdgeInsets.all(24.0),
+    return Padding(
+      padding: const EdgeInsets.all(24.0),
       child: Text(
         'Event',
-        style: TextStyle(
-          fontSize: 36,
-          fontWeight: FontWeight.w600,
-          color: Colors.white,
-        ),
+        style: AppTextStyles.h1.copyWith(fontSize: 36),
       ),
     );
   }

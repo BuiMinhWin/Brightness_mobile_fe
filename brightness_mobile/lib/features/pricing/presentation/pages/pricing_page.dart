@@ -1,5 +1,8 @@
 import 'package:brightness_mobile/core/navigation/main_navigation_controller.dart';
 import 'package:flutter/material.dart';
+import '../../../../core/theme/app_colors.dart';
+import '../../../../core/theme/app_text_styles.dart';
+import '../../../../core/theme/app_theme.dart';
 
 class PricingPage extends StatelessWidget {
   const PricingPage({Key? key}) : super(key: key);
@@ -7,101 +10,121 @@ class PricingPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: const Color(0xFF4A9B8E), // Green background
-      appBar: AppBar(
-        backgroundColor: const Color(0xFF4A9B8E),
-        elevation: 0,
-        leading: IconButton(
-          icon: const Icon(Icons.arrow_back, color: Colors.white),
-          onPressed: () {
-  Navigator.pushAndRemoveUntil(
-    context,
-    MaterialPageRoute(
-      builder: (_) => const MainNavigationController(),
-    ),
-    (route) => false,
-  );
-}
+      body: Container(
+        decoration: const BoxDecoration(
+          gradient: AppColors.customGradient,
         ),
-        title: const Text(
-          'Pricing',
-          style: TextStyle(
-            color: Colors.white,
-            fontSize: 20,
-            fontWeight: FontWeight.w600,
+        child: SafeArea(
+          child: Column(
+            children: [
+              // Custom app bar with gradient background
+              Padding(
+                padding: EdgeInsets.all(AppTheme.spacingM),
+                child: Row(
+                  children: [
+                    IconButton(
+                      icon: const Icon(Icons.arrow_back, color: AppColors.white),
+                      onPressed: () {
+                        Navigator.pushAndRemoveUntil(
+                          context,
+                          MaterialPageRoute(
+                            builder: (_) => const MainNavigationController(),
+                          ),
+                          (route) => false,
+                        );
+                      }
+                    ),
+                    Expanded(
+                      child: Text(
+                        'Pricing',
+                        style: AppTextStyles.h2.copyWith(
+                          color: AppColors.white,
+                          fontSize: 20,
+                        ),
+                        textAlign: TextAlign.center,
+                      ),
+                    ),
+                    const SizedBox(width: 48), // Balance the back button
+                  ],
+                ),
+              ),
+              
+              // Scrollable content
+              Expanded(
+                child: SingleChildScrollView(
+                  padding: EdgeInsets.symmetric(horizontal: AppTheme.spacingM),
+                  child: Column(
+                    children: [
+                      SizedBox(height: AppTheme.spacingL),
+                      
+                      // Free Plan Card
+                      _buildPlanCard(
+                        context: context,
+                        title: 'Free',
+                        price: null,
+                        isCurrentPlan: true,
+                        features: [
+                          'First aid for gym accident, emergency info',
+                          'Gamification',
+                          'Community blog access',
+                          'Chatbot AI (Limited)',
+                        ],
+                        buttonText: 'Your Current Plan',
+                        buttonColor: AppColors.loseWeightColor,
+                        onPressed: null, // Disabled since it's current plan
+                      ),
+                      
+                      SizedBox(height: AppTheme.spacingL),
+                      
+                      // Premium Plan 1
+                      _buildPlanCard(
+                        context: context,
+                        title: '79.000',
+                        subtitle: '/month',
+                        price: 79000,
+                        isCurrentPlan: false,
+                        features: [
+                          'AI workout personalization (73.8% demand)',
+                          'Full tracking & exclusive programs',
+                          'Enhanced chatbot, no ads',
+                          'Expert content access',
+                          'Included all feature from free tier',
+                          'Long-term savings',
+                        ],
+                        buttonText: 'Order Now',
+                        buttonColor: AppColors.loseWeightColor,
+                        onPressed: () => _handlePurchase(context, 'premium1'),
+                      ),
+                      
+                      SizedBox(height: AppTheme.spacingL),
+                      
+                      // Premium Plan 2
+                      _buildPlanCard(
+                        context: context,
+                        title: '599.000',
+                        subtitle: '/month',
+                        price: 599000,
+                        isCurrentPlan: false,
+                        features: [
+                          'AI workout personalization (73.8% demand)',
+                          'Full tracking & exclusive programs',
+                          'Enhanced chatbot, no ads',
+                          'Expert content access',
+                          'Included all feature from free tier',
+                          'Long-term savings',
+                        ],
+                        buttonText: 'Order Now',
+                        buttonColor: AppColors.loseWeightColor,
+                        onPressed: () => _handlePurchase(context, 'premium2'),
+                      ),
+                      
+                      SizedBox(height: AppTheme.spacingXXL),
+                    ],
+                  ),
+                ),
+              ),
+            ],
           ),
-        ),
-        centerTitle: true,
-      ),
-      body: SingleChildScrollView(
-        padding: const EdgeInsets.all(16.0),
-        child: Column(
-          children: [
-            const SizedBox(height: 20),
-            
-            // Free Plan Card
-            _buildPlanCard(
-              context: context,
-              title: 'Free',
-              price: null,
-              isCurrentPlan: true,
-              features: [
-                'First aid for gym accident, emergency info',
-                'Gamification',
-                'Community blog access',
-                'Chatbot AI (Limited)',
-              ],
-              buttonText: 'Your Current Plan',
-              buttonColor: const Color(0xFFFF9F7A),
-              onPressed: null, // Disabled since it's current plan
-            ),
-            
-            const SizedBox(height: 20),
-            
-            // Premium Plan 1
-            _buildPlanCard(
-              context: context,
-              title: '79.000',
-              subtitle: '/month',
-              price: 79000,
-              isCurrentPlan: false,
-              features: [
-                'AI workout personalization (73.8% demand)',
-                'Full tracking & exclusive programs',
-                'Enhanced chatbot, no ads',
-                'Expert content access',
-                'Included all feature from free tier',
-                'Long-term savings',
-              ],
-              buttonText: 'Order Now',
-              buttonColor: const Color(0xFFFF9F7A),
-              onPressed: () => _handlePurchase(context, 'premium1'),
-            ),
-            
-            const SizedBox(height: 20),
-            
-            // Premium Plan 2
-            _buildPlanCard(
-              context: context,
-              title: '599.000',
-              subtitle: '/month',
-              price: 599000,
-              isCurrentPlan: false,
-              features: [
-                'AI workout personalization (73.8% demand)',
-                'Full tracking & exclusive programs',
-                'Enhanced chatbot, no ads',
-                'Expert content access',
-                'Included all feature from free tier',
-                'Long-term savings',
-              ],
-              buttonText: 'Order Now',
-              buttonColor: const Color(0xFFFF9F7A),
-              onPressed: () => _handlePurchase(context, 'premium2'),
-            ),
-            
-            const SizedBox(height: 40),
-          ],
         ),
       ),
     );
@@ -121,17 +144,17 @@ class PricingPage extends StatelessWidget {
     return Container(
       width: double.infinity,
       decoration: BoxDecoration(
-        color: Colors.white,
-        borderRadius: BorderRadius.circular(16),
+        color: AppColors.white,
+        borderRadius: BorderRadius.circular(AppTheme.radiusL),
         boxShadow: [
           BoxShadow(
-            color: Colors.black.withOpacity(0.1),
-            blurRadius: 10,
-            offset: const Offset(0, 4),
+            color: Colors.black.withOpacity(0.15),
+            blurRadius: 15,
+            offset: const Offset(0, 5),
           ),
         ],
       ),
-      padding: const EdgeInsets.all(24),
+      padding: EdgeInsets.all(AppTheme.spacingL),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
@@ -139,10 +162,9 @@ class PricingPage extends StatelessWidget {
           if (price == null)
             Text(
               title,
-              style: const TextStyle(
-                fontSize: 28,
-                fontWeight: FontWeight.bold,
-                color: Colors.black87,
+              style: AppTextStyles.h1.copyWith(
+                color: AppColors.textPrimary,
+                fontSize: AppTheme.fontSizeTitle,
               ),
             )
           else
@@ -151,40 +173,38 @@ class PricingPage extends StatelessWidget {
               children: [
                 Text(
                   title,
-                  style: const TextStyle(
+                  style: AppTextStyles.h1.copyWith(
+                    color: AppColors.textPrimary,
                     fontSize: 32,
-                    fontWeight: FontWeight.bold,
-                    color: Color(0xFF2D3748),
                   ),
                 ),
                 if (subtitle != null)
                   Text(
                     subtitle,
-                    style: const TextStyle(
-                      fontSize: 16,
-                      color: Colors.grey,
-                      fontWeight: FontWeight.w500,
+                    style: AppTextStyles.body2.copyWith(
+                      fontSize: AppTheme.fontSizeM,
+                      fontWeight: AppTheme.fontWeightMedium,
                     ),
                   ),
               ],
             ),
           
-          const SizedBox(height: 24),
+          SizedBox(height: AppTheme.spacingL),
           
           // Features List
           ...features.map((feature) => _buildFeatureItem(feature)),
           
-          const SizedBox(height: 24),
+          SizedBox(height: AppTheme.spacingL),
           
           // Action Button
           SizedBox(
             width: double.infinity,
-            height: 50,
+            height: AppTheme.buttonHeightM,
             child: ElevatedButton(
               onPressed: onPressed,
               style: ElevatedButton.styleFrom(
                 backgroundColor: buttonColor,
-                foregroundColor: Colors.white,
+                foregroundColor: AppColors.white,
                 elevation: 0,
                 shape: RoundedRectangleBorder(
                   borderRadius: BorderRadius.circular(25),
@@ -193,9 +213,8 @@ class PricingPage extends StatelessWidget {
               ),
               child: Text(
                 buttonText,
-                style: const TextStyle(
-                  fontSize: 16,
-                  fontWeight: FontWeight.w600,
+                style: AppTextStyles.button.copyWith(
+                  fontSize: AppTheme.fontSizeM,
                 ),
               ),
             ),
@@ -207,31 +226,31 @@ class PricingPage extends StatelessWidget {
 
   Widget _buildFeatureItem(String feature) {
     return Padding(
-      padding: const EdgeInsets.only(bottom: 16),
+      padding: EdgeInsets.only(bottom: AppTheme.spacingM),
       child: Row(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           Container(
             width: 20,
             height: 20,
-            margin: const EdgeInsets.only(top: 2),
-            decoration: const BoxDecoration(
-              color: Color(0xFFB794F6),
+            margin: EdgeInsets.only(top: 2),
+            decoration: BoxDecoration(
+              color: AppColors.secondary,
               shape: BoxShape.circle,
             ),
-            child: const Icon(
+            child: Icon(
               Icons.check,
-              color: Colors.white,
+              color: AppColors.white,
               size: 12,
             ),
           ),
-          const SizedBox(width: 12),
+          SizedBox(width: AppTheme.spacingS + 4),
           Expanded(
             child: Text(
               feature,
-              style: const TextStyle(
+              style: AppTextStyles.body1.copyWith(
                 fontSize: 15,
-                color: Color(0xFF4A5568),
+                color: AppColors.textSecondary,
                 height: 1.4,
               ),
             ),
@@ -247,27 +266,59 @@ class PricingPage extends StatelessWidget {
       context: context,
       builder: (BuildContext context) {
         return AlertDialog(
-          title: const Text('Purchase Plan'),
-          content: Text('You selected the $planType plan. This would normally integrate with your payment system.'),
+          shape: RoundedRectangleBorder(
+            borderRadius: BorderRadius.circular(AppTheme.radiusL),
+          ),
+          title: Text(
+            'Purchase Plan',
+            style: AppTextStyles.h2,
+          ),
+          content: Text(
+            'You selected the $planType plan. This would normally integrate with your payment system.',
+            style: AppTextStyles.body1,
+          ),
           actions: [
             TextButton(
               onPressed: () => Navigator.pop(context),
-              child: const Text('Cancel'),
+              child: Text(
+                'Cancel',
+                style: AppTextStyles.body1.copyWith(
+                  color: AppColors.textSecondary,
+                ),
+              ),
             ),
             ElevatedButton(
               onPressed: () {
                 Navigator.pop(context);
                 ScaffoldMessenger.of(context).showSnackBar(
-                  const SnackBar(
-                    content: Text('Payment integration would be implemented here'),
-                    backgroundColor: Color(0xFF4A9B8E),
+                  SnackBar(
+                    content: Text(
+                      'Payment integration would be implemented here',
+                      style: AppTextStyles.body1.copyWith(
+                        color: AppColors.white,
+                      ),
+                    ),
+                    backgroundColor: AppColors.customGradientStart,
+                    behavior: SnackBarBehavior.floating,
+                    shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(AppTheme.radiusM),
+                    ),
                   ),
                 );
               },
               style: ElevatedButton.styleFrom(
-                backgroundColor: const Color(0xFF4A9B8E),
+                backgroundColor: AppColors.customGradientStart,
+                foregroundColor: AppColors.white,
+                shape: RoundedRectangleBorder(
+                  borderRadius: BorderRadius.circular(AppTheme.radiusM),
+                ),
               ),
-              child: const Text('Proceed'),
+              child: Text(
+                'Proceed',
+                style: AppTextStyles.button.copyWith(
+                  fontSize: AppTheme.fontSizeS,
+                ),
+              ),
             ),
           ],
         );

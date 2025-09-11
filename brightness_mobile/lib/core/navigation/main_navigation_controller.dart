@@ -7,7 +7,7 @@ import '../../features/yours/presentation/pages/leaderboard_page_content.dart';
 import '../../shared/widgets/custom_bottom_navbar.dart';
 
 class MainNavigationController extends StatefulWidget {
-  const MainNavigationController({Key? key}) : super(key: key);
+  const MainNavigationController({super.key});
 
   @override
   State<MainNavigationController> createState() => _MainNavigationControllerState();

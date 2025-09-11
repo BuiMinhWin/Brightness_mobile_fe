@@ -1,4 +1,7 @@
 import 'package:flutter/material.dart';
+import '../../../../core/theme/app_colors.dart';
+import '../../../../core/theme/app_text_styles.dart';
+import '../../../../core/theme/app_theme.dart';
 import '../../data/models/yours.dart'; // Import the unified model
 
 class DietPlanCard extends StatelessWidget {
@@ -14,13 +17,13 @@ class DietPlanCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      margin: const EdgeInsets.only(bottom: 16),
+      margin: const EdgeInsets.only(bottom: AppTheme.spacingL),
       decoration: BoxDecoration(
-        color: Colors.white,
-        borderRadius: BorderRadius.circular(16),
+        color: AppColors.white,
+        borderRadius: BorderRadius.circular(AppTheme.radiusL),
         boxShadow: [
           BoxShadow(
-            color: Colors.black.withOpacity(0.08),
+            color: AppColors.shadow.withOpacity(0.08),
             blurRadius: 12,
             offset: const Offset(0, 4),
           ),
@@ -30,15 +33,15 @@ class DietPlanCard extends StatelessWidget {
         color: Colors.transparent,
         child: InkWell(
           onTap: onTap,
-          borderRadius: BorderRadius.circular(16),
+          borderRadius: BorderRadius.circular(AppTheme.radiusL),
           child: Padding(
-            padding: const EdgeInsets.all(20),
+            padding: const EdgeInsets.all(AppTheme.spacingL),
             child: Row(
               children: [
                 _buildIcon(),
-                const SizedBox(width: 16),
+                const SizedBox(width: AppTheme.spacingM),
                 _buildContent(),
-                const SizedBox(width: 16),
+                const SizedBox(width: AppTheme.spacingM),
                 _buildArrow(),
               ],
             ),
@@ -53,12 +56,12 @@ class DietPlanCard extends StatelessWidget {
       width: 48,
       height: 48,
       decoration: BoxDecoration(
-        color: const Color(0xFFF1F8E9),
-        borderRadius: BorderRadius.circular(12),
+        color: AppColors.greenlight,
+        borderRadius: BorderRadius.circular(AppTheme.radiusM),
       ),
       child: const Icon(
         Icons.restaurant_menu,
-        color: Color(0xFF4CAF50),
+        color: AppColors.success,
         size: 24,
       ),
     );
@@ -71,13 +74,11 @@ class DietPlanCard extends StatelessWidget {
         children: [
           Text(
             dietPlan.title,
-            style: const TextStyle(
-              fontSize: 16,
-              fontWeight: FontWeight.w600,
-              color: Color(0xFF333333),
+            style: AppTextStyles.bodyBold.copyWith(
+              color: AppColors.textPrimary,
             ),
           ),
-          const SizedBox(height: 12),
+          const SizedBox(height: AppTheme.spacingM),
           _buildProgressBar(),
         ],
       ),
@@ -93,7 +94,7 @@ class DietPlanCard extends StatelessWidget {
               child: Container(
                 height: 6,
                 decoration: BoxDecoration(
-                  color: const Color(0xFFE8F5E8),
+                  color: AppColors.successLight.withOpacity(0.4),
                   borderRadius: BorderRadius.circular(3),
                 ),
                 child: FractionallySizedBox(
@@ -102,7 +103,7 @@ class DietPlanCard extends StatelessWidget {
                   child: Container(
                     decoration: BoxDecoration(
                       gradient: const LinearGradient(
-                        colors: [Color(0xFF4CAF50), Color(0xFF66BB6A)],
+                        colors: [AppColors.success, AppColors.successLight],
                       ),
                       borderRadius: BorderRadius.circular(3),
                     ),
@@ -110,12 +111,11 @@ class DietPlanCard extends StatelessWidget {
                 ),
               ),
             ),
-            const SizedBox(width: 8),
+            const SizedBox(width: AppTheme.spacingS),
             Text(
               dietPlan.progressPercentage,
-              style: TextStyle(
-                fontSize: 12,
-                color: Colors.grey.shade600,
+              style: AppTextStyles.caption.copyWith(
+                color: AppColors.textSecondary,
                 fontWeight: FontWeight.w500,
               ),
             ),
@@ -126,9 +126,9 @@ class DietPlanCard extends StatelessWidget {
   }
 
   Widget _buildArrow() {
-    return Icon(
+    return const Icon(
       Icons.chevron_right,
-      color: Colors.grey.shade400,
+      color: AppColors.iconInactive,
       size: 24,
     );
   }

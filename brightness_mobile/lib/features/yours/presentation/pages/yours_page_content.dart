@@ -3,7 +3,9 @@ import 'package:brightness_mobile/features/yours/data/models/yours.dart';
 import 'package:flutter/material.dart';
 import '../widgets/diet_plan_card.dart';
 import 'event_tracking_page.dart';
- // Add this import for the pricing page
+import '../../../../core/theme/app_colors.dart';
+import '../../../../core/theme/app_text_styles.dart';
+import '../../../../core/theme/app_theme.dart';
 
 class YoursPageContent extends StatelessWidget {
   const YoursPageContent({Key? key}) : super(key: key);
@@ -30,16 +32,7 @@ class YoursPageContent extends StatelessWidget {
   Widget build(BuildContext context) {
     return Container(
       decoration: const BoxDecoration(
-        gradient: LinearGradient(
-          begin: Alignment.topCenter,
-          end: Alignment.bottomCenter,
-          colors: [
-            Color(0xFF2E7D32),
-            Color(0xFF4CAF50),
-            Color(0xFF8BC34A),
-            Color(0xFFCDDC39),
-          ],
-        ),
+        gradient: AppColors.customGradient,
       ),
       child: SafeArea(
         child: Column(
@@ -58,25 +51,21 @@ class YoursPageContent extends StatelessWidget {
 
   Widget buildHeader(BuildContext context) {
     return Padding(
-      padding: const EdgeInsets.all(24.0),
+      padding: EdgeInsets.all(AppTheme.spacingL),
       child: Row(
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: [
-          const Text(
+          Text(
             'Yours',
-            style: TextStyle(
-              fontSize: 36,
-              fontWeight: FontWeight.w600,
-              color: Colors.white,
-            ),
+            style: AppTextStyles.h1.copyWith(fontSize: 36),
           ),
           // Alternative: Add pricing button in header
           IconButton(
             onPressed: () => navigateToPricing(context),
-            icon: const Icon(
+            icon: Icon(
               Icons.attach_money,
-              color: Colors.white,
-              size: 28,
+              color: AppColors.white,
+              size: AppTheme.iconSizeL,
             ),
             tooltip: 'View Pricing',
           ),
@@ -87,7 +76,7 @@ class YoursPageContent extends StatelessWidget {
 
   Widget buildDietPlansList(BuildContext context) {
     return Padding(
-      padding: const EdgeInsets.symmetric(horizontal: 24.0),
+      padding: EdgeInsets.symmetric(horizontal: AppTheme.spacingL),
       child: ListView.builder(
         itemCount: dietPlans.length,
         itemBuilder: (context, index) {
@@ -102,30 +91,34 @@ class YoursPageContent extends StatelessWidget {
 
   Widget buildPricingButton(BuildContext context) {
     return Padding(
-      padding: const EdgeInsets.all(24.0),
+      padding: EdgeInsets.all(AppTheme.spacingL),
       child: SizedBox(
         width: double.infinity,
-        height: 56,
+        height: AppTheme.buttonHeightL,
         child: ElevatedButton(
           onPressed: () => navigateToPricing(context),
-          style: ElevatedButton.styleFrom(
-            backgroundColor: Colors.white,
-            foregroundColor: const Color(0xFF2E7D32),
-            elevation: 4,
-            shape: RoundedRectangleBorder(
-              borderRadius: BorderRadius.circular(28),
-            ),
-            textStyle: const TextStyle(
-              fontSize: 18,
-              fontWeight: FontWeight.w600,
+          style: AppTheme.primaryButtonStyle(
+            backgroundColor: AppColors.white,
+            foregroundColor: AppColors.customGradientStart,
+          ).copyWith(
+            elevation: WidgetStateProperty.all(AppTheme.elevationM),
+            shape: WidgetStateProperty.all<RoundedRectangleBorder>(
+              RoundedRectangleBorder(
+                borderRadius: BorderRadius.circular(AppTheme.buttonHeightL / 2),
+              ),
             ),
           ),
-          child: const Row(
+          child: Row(
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
-              Icon(Icons.star, size: 24),
-              SizedBox(width: 8),
-              Text('View Pricing Plans'),
+              Icon(Icons.star, size: AppTheme.iconSizeM),
+              SizedBox(width: AppTheme.spacingS),
+              Text(
+                'View Pricing Plans',
+                style: AppTextStyles.button.copyWith(
+                  color: AppColors.customGradientStart,
+                ),
+              ),
             ],
           ),
         ),

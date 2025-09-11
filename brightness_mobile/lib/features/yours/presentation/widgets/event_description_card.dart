@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
-
 import '../../data/models/event.dart';
+import '../../../../core/theme/app_colors.dart';
+import '../../../../core/theme/app_text_styles.dart';
+import '../../../../core/theme/app_theme.dart';
 
 class EventDescriptionCard extends StatelessWidget {
   final EventModel event;
@@ -14,53 +16,39 @@ class EventDescriptionCard extends StatelessWidget {
   Widget build(BuildContext context) {
     return Container(
       width: double.infinity,
-      padding: const EdgeInsets.all(20),
-      decoration: BoxDecoration(
-        color: Colors.white,
-        borderRadius: BorderRadius.circular(12),
-        boxShadow: [
-          BoxShadow(
-            color: Colors.black.withOpacity(0.1),
-            blurRadius: 10,
-            offset: const Offset(0, 2),
-          ),
-        ],
-      ),
+      padding: const EdgeInsets.all(AppTheme.spacingL),
+      decoration: AppTheme.cardDecoration(),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           Row(
             children: [
               Container(
-                width: 24,
-                height: 24,
+                width: AppTheme.iconSizeL,
+                height: AppTheme.iconSizeL,
                 decoration: const BoxDecoration(
-                  color: Color(0xFF2196F3),
+                  color: AppColors.primary, // dùng màu từ AppColors
                   shape: BoxShape.circle,
                 ),
                 child: const Icon(
                   Icons.info,
-                  color: Colors.white,
-                  size: 16,
+                  color: AppColors.white,
+                  size: AppTheme.iconSizeS,
                 ),
               ),
-              const SizedBox(width: 12),
-              const Text(
+              const SizedBox(width: AppTheme.spacingM),
+              Text(
                 'Event Description',
-                style: TextStyle(
-                  fontSize: 18,
-                  fontWeight: FontWeight.w600,
-                  color: Color(0xFF333333),
+                style: AppTextStyles.h2.copyWith(
+                  color: AppColors.textPrimary,
                 ),
               ),
             ],
           ),
-          const SizedBox(height: 16),
+          const SizedBox(height: AppTheme.spacingM),
           Text(
             event.fullDescription,
-            style: const TextStyle(
-              fontSize: 14,
-              color: Color(0xFF666666),
+            style: AppTextStyles.body2.copyWith(
               height: 1.5,
             ),
           ),
@@ -70,7 +58,6 @@ class EventDescriptionCard extends StatelessWidget {
   }
 }
 
-// Updated Event Duration Card to use event data
 class EventDurationCard extends StatelessWidget {
   final EventModel event;
 
@@ -83,48 +70,36 @@ class EventDurationCard extends StatelessWidget {
   Widget build(BuildContext context) {
     return Container(
       width: double.infinity,
-      padding: const EdgeInsets.all(20),
-      decoration: BoxDecoration(
-        color: Colors.white,
-        borderRadius: BorderRadius.circular(12),
-        boxShadow: [
-          BoxShadow(
-            color: Colors.black.withOpacity(0.1),
-            blurRadius: 10,
-            offset: const Offset(0, 2),
-          ),
-        ],
-      ),
+      padding: const EdgeInsets.all(AppTheme.spacingL),
+      decoration: AppTheme.cardDecoration(),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           Row(
             children: [
               Container(
-                width: 24,
-                height: 24,
+                width: AppTheme.iconSizeL,
+                height: AppTheme.iconSizeL,
                 decoration: const BoxDecoration(
-                  color: Color(0xFF9C27B0),
+                  color: AppColors.secondary, // đổi từ hardcode sang secondary
                   shape: BoxShape.circle,
                 ),
                 child: const Icon(
                   Icons.calendar_today,
-                  color: Colors.white,
-                  size: 16,
+                  color: AppColors.white,
+                  size: AppTheme.iconSizeS,
                 ),
               ),
-              const SizedBox(width: 12),
-              const Text(
+              const SizedBox(width: AppTheme.spacingM),
+              Text(
                 'Event Duration',
-                style: TextStyle(
-                  fontSize: 18,
-                  fontWeight: FontWeight.w600,
-                  color: Color(0xFF333333),
+                style: AppTextStyles.h2.copyWith(
+                  color: AppColors.textPrimary,
                 ),
               ),
             ],
           ),
-          const SizedBox(height: 24),
+          const SizedBox(height: AppTheme.spacingXL),
           Row(
             children: [
               Expanded(
@@ -132,20 +107,13 @@ class EventDurationCard extends StatelessWidget {
                   children: [
                     Text(
                       '${event.durationDays}',
-                      style: const TextStyle(
-                        fontSize: 48,
-                        fontWeight: FontWeight.bold,
-                        color: Color(0xFF333333),
-                        height: 1.0,
+                      style: AppTextStyles.h1.copyWith(
+                        color: AppColors.textPrimary,
                       ),
                     ),
                     Text(
                       'Days Total',
-                      style: TextStyle(
-                        fontSize: 14,
-                        color: Colors.grey.shade600,
-                        fontWeight: FontWeight.w500,
-                      ),
+                      style: AppTextStyles.body2,
                     ),
                   ],
                 ),
@@ -153,36 +121,29 @@ class EventDurationCard extends StatelessWidget {
               Container(
                 width: 1,
                 height: 60,
-                color: Colors.grey.shade300,
+                color: AppColors.border,
               ),
               Expanded(
                 child: Column(
                   children: [
                     Text(
                       '${event.dailyMinutes}',
-                      style: const TextStyle(
-                        fontSize: 48,
-                        fontWeight: FontWeight.bold,
-                        color: Color(0xFF333333),
-                        height: 1.0,
+                      style: AppTextStyles.h1.copyWith(
+                        color: AppColors.textPrimary,
                       ),
                     ),
                     Text(
                       'Min/Day',
-                      style: TextStyle(
-                        fontSize: 14,
-                        color: Colors.grey.shade600,
-                        fontWeight: FontWeight.w500,
-                      ),
+                      style: AppTextStyles.body2,
                     ),
                   ],
                 ),
               ),
             ],
           ),
-          const SizedBox(height: 24),
+          const SizedBox(height: AppTheme.spacingXL),
           _buildDateInfo('Start Date:', event.startDate),
-          const SizedBox(height: 8),
+          const SizedBox(height: AppTheme.spacingS),
           _buildDateInfo('End Date:', event.endDate),
         ],
       ),
@@ -194,19 +155,13 @@ class EventDurationCard extends StatelessWidget {
       children: [
         Text(
           label,
-          style: TextStyle(
-            fontSize: 14,
-            color: Colors.grey.shade600,
-            fontWeight: FontWeight.w500,
-          ),
+          style: AppTextStyles.body2,
         ),
-        const SizedBox(width: 8),
+        const SizedBox(width: AppTheme.spacingS),
         Text(
           date,
-          style: const TextStyle(
-            fontSize: 14,
-            color: Color(0xFF333333),
-            fontWeight: FontWeight.w600,
+          style: AppTextStyles.bodyBold.copyWith(
+            color: AppColors.textPrimary,
           ),
         ),
       ],

@@ -1,4 +1,7 @@
+
 import 'package:flutter/material.dart';
+import '../theme/app_colors.dart';
+import '../theme/app_text_styles.dart';
 
 class BottomNavbar extends StatelessWidget {
   final int currentIndex;
@@ -15,10 +18,10 @@ class BottomNavbar extends StatelessWidget {
     return Container(
       height: 90,
       decoration: BoxDecoration(
-        color: Colors.white,
+        color: AppColors.white,
         border: Border(
           top: BorderSide(
-            color: Colors.grey.shade200,
+            color: AppColors.border,
             width: 1,
           ),
         ),
@@ -79,7 +82,7 @@ class BottomNavbar extends StatelessWidget {
         padding: const EdgeInsets.symmetric(vertical: 8, horizontal: 12),
         decoration: isActive && isSpecial
             ? BoxDecoration(
-                color: const Color(0xFF4CAF50),
+                color: AppColors.success,
                 borderRadius: BorderRadius.circular(20),
               )
             : null,
@@ -89,19 +92,18 @@ class BottomNavbar extends StatelessWidget {
             Icon(
               isActive ? activeIcon : icon,
               color: isActive
-                  ? (isSpecial ? Colors.white : const Color(0xFF4CAF50))
-                  : Colors.grey.shade500,
+                  ? (isSpecial ? AppColors.white : AppColors.success)
+                  : AppColors.textSecondary,
               size: 24,
             ),
             const SizedBox(height: 4),
             Text(
               label,
-              style: TextStyle(
-                fontSize: 12,
+              style: AppTextStyles.caption.copyWith(
                 fontWeight: isActive ? FontWeight.w600 : FontWeight.w400,
                 color: isActive
-                    ? (isSpecial ? Colors.white : const Color(0xFF4CAF50))
-                    : Colors.grey.shade500,
+                    ? (isSpecial ? AppColors.white : AppColors.success)
+                    : AppColors.textSecondary,
               ),
             ),
           ],

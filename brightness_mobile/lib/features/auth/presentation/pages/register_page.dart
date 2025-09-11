@@ -2,6 +2,9 @@ import 'package:flutter/material.dart';
 import 'package:flutter/gestures.dart';
 import 'package:provider/provider.dart';
 import '../controllers/register_controller.dart';
+import '../../../../core/theme/app_colors.dart';
+import '../../../../core/theme/app_text_styles.dart';
+import '../../../../core/theme/app_theme.dart';
 import 'dart:math' as math;
 
 class RegisterPage extends StatelessWidget {
@@ -18,20 +21,20 @@ class RegisterPage extends StatelessWidget {
           SafeArea(
             child: SingleChildScrollView(
               child: Padding(
-                padding: const EdgeInsets.symmetric(horizontal: 24.0),
+                padding: const EdgeInsets.symmetric(horizontal: AppTheme.spacingL),
                 child: Column(
                   children: [
                     const SizedBox(height: 40),
                     _buildLogo(),
-                    const SizedBox(height: 20),
+                    const SizedBox(height: AppTheme.spacingM + 4),
                     _buildSignUpTitle(),
                     const SizedBox(height: 25),
                     _buildRegisterForm(context),
-                    const SizedBox(height: 20),
+                    const SizedBox(height: AppTheme.spacingM + 4),
                     _buildTermsAndPrivacy(),
                     const SizedBox(height: 25),
                     _buildSignUpButton(context),
-                    const SizedBox(height: 20),
+                    const SizedBox(height: AppTheme.spacingM + 4),
                     _buildAlternativeSignUp(),
                     const SizedBox(height: 25),
                     _buildSignInSection(context),
@@ -53,9 +56,9 @@ class RegisterPage extends StatelessWidget {
           begin: Alignment.topCenter,
           end: Alignment.bottomCenter,
           colors: [
-            Color(0xFF05644C), // Light green
-            Color.fromARGB(255, 64, 155, 69), // Medium green
-            Color(0xFFE2F043), // Dark green
+            AppColors.customGradientStart,
+            Color.fromARGB(255, 64, 155, 69),
+            AppColors.customGradientEnd,
           ],
         ),
       ),
@@ -110,7 +113,7 @@ class RegisterPage extends StatelessWidget {
           width: 100,
           height: 100,
           decoration: BoxDecoration(
-            color: Colors.white.withOpacity(0.0),
+            color: AppColors.white.withOpacity(0.0),
             shape: BoxShape.circle,
           ),
           child: ClipOval(
@@ -120,26 +123,26 @@ class RegisterPage extends StatelessWidget {
             ),
           ),
         ),
-        const SizedBox(height: 16),
+        const SizedBox(height: AppTheme.spacingM),
         // BrightNest text
         RichText(
-          text: const TextSpan(
+          text: TextSpan(
             children: [
               TextSpan(
                 text: 'BRIGHT',
-                style: TextStyle(
+                style: AppTextStyles.h2.copyWith(
                   fontSize: 25,
-                  fontWeight: FontWeight.w700,
-                  color: Color.fromARGB(255, 255, 255, 255), // Yellow
+                  fontWeight: AppTheme.fontWeightBold,
+                  color: AppColors.white,
                   letterSpacing: 1.2,
                 ),
               ),
               TextSpan(
                 text: 'NEST',
-                style: TextStyle(
+                style: AppTextStyles.h2.copyWith(
                   fontSize: 25,
-                  fontWeight: FontWeight.w700,
-                  color: Color.fromARGB(255, 255, 255, 255),
+                  fontWeight: AppTheme.fontWeightBold,
+                  color: AppColors.white,
                   letterSpacing: 1.2,
                 ),
               ),
@@ -151,12 +154,11 @@ class RegisterPage extends StatelessWidget {
   }
 
   Widget _buildSignUpTitle() {
-    return const Text(
+    return Text(
       'Sign up',
-      style: TextStyle(
+      style: AppTextStyles.h1.copyWith(
         fontSize: 60,
-        fontWeight: FontWeight.w500,
-        color: Colors.white,
+        fontWeight: AppTheme.fontWeightMedium,
       ),
     );
   }
@@ -172,187 +174,84 @@ class RegisterPage extends StatelessWidget {
               hintText: 'Email',
               icon: Icons.email_outlined,
             ),
-            const SizedBox(height: 16),
-            
-            // // Username field
-            // _buildInputField(
-            //   controller: controller.usernameController,
-            //   hintText: 'Username',
-            //   icon: Icons.person_outline,
-            // ),
-            // const SizedBox(height: 16),
-            
-            // // Full Name field
-            // _buildInputField(
-            //   controller: controller.fullNameController,
-            //   hintText: 'Full Name',
-            //   icon: Icons.badge_outlined,
-            // ),
-            // const SizedBox(height: 16),
-            
-            // // Phone Number field
-            // _buildInputField(
-            //   controller: controller.phoneController,
-            //   hintText: 'Phone Number',
-            //   icon: Icons.phone_outlined,
-            //   keyboardType: TextInputType.phone,
-            // ),
-            // const SizedBox(height: 16),
-            
-            // // Date of Birth field
-            // GestureDetector(
-            //   onTap: () => _selectDate(context, controller),
-            //   child: Container(
-            //     decoration: BoxDecoration(
-            //       borderRadius: BorderRadius.circular(25),
-            //       border: Border.all(
-            //         color: Colors.white,
-            //         width: 1.5,
-            //       ),
-            //     ),
-            //     child: TextFormField(
-            //       controller: controller.dateOfBirthController,
-            //       enabled: false,
-            //       style: const TextStyle(color: Colors.white),
-            //       decoration: InputDecoration(
-            //         hintText: 'Date of Birth',
-            //         hintStyle: TextStyle(
-            //           color: Colors.white.withOpacity(0.7),
-            //           fontSize: 16,
-            //         ),
-            //         prefixIcon: Icon(
-            //           Icons.calendar_today_outlined,
-            //           color: Colors.white.withOpacity(0.7),
-            //         ),
-            //         border: InputBorder.none,
-            //         contentPadding: const EdgeInsets.symmetric(
-            //           horizontal: 20,
-            //           vertical: 16,
-            //         ),
-            //       ),
-            //     ),
-            //   ),
-            // ),
-            // const SizedBox(height: 16),
-            
-            // // Gender dropdown
-            // Container(
-            //   decoration: BoxDecoration(
-            //     borderRadius: BorderRadius.circular(25),
-            //     border: Border.all(
-            //       color: Colors.white,
-            //       width: 1.5,
-            //     ),
-            //   ),
-            //   child: DropdownButtonFormField<String>(
-            //     value: controller.selectedGender,
-            //     dropdownColor: const Color(0xFF4CAF50),
-            //     style: const TextStyle(color: Colors.white),
-            //     decoration: InputDecoration(
-            //       hintText: 'Gender',
-            //       hintStyle: TextStyle(
-            //         color: Colors.white.withOpacity(0.7),
-            //         fontSize: 16,
-            //       ),
-            //       prefixIcon: Icon(
-            //         Icons.person_2_outlined,
-            //         color: Colors.white.withOpacity(0.7),
-            //       ),
-            //       border: InputBorder.none,
-            //       contentPadding: const EdgeInsets.symmetric(
-            //         horizontal: 20,
-            //         vertical: 16,
-            //       ),
-            //     ),
-            //     items: ['Male', 'Female', 'Other'].map((String value) {
-            //       return DropdownMenuItem<String>(
-            //         value: value,
-            //         child: Text(value, style: const TextStyle(color: Colors.white)),
-            //       );
-            //     }).toList(),
-            //     onChanged: controller.setGender,
-            //   ),
-            // ),
-            // const SizedBox(height: 16),
+            const SizedBox(height: AppTheme.spacingM),
             
             // Password field
             Container(
               decoration: BoxDecoration(
                 borderRadius: BorderRadius.circular(25),
                 border: Border.all(
-                  color: Colors.white,
+                  color: AppColors.white,
                   width: 1.5,
                 ),
               ),
               child: TextFormField(
                 controller: controller.passwordController,
                 obscureText: !controller.isPasswordVisible,
-                style: const TextStyle(color: Colors.white),
+                style: AppTextStyles.body1.copyWith(color: AppColors.white),
                 decoration: InputDecoration(
-                  hintText: 'Password',
-                  hintStyle: TextStyle(
-                    color: Colors.white.withOpacity(0.7),
-                    fontSize: 16,
-                  ),
-                  prefixIcon: Icon(
-                    Icons.lock_outline,
-                    color: Colors.white.withOpacity(0.7),
-                  ),
-                  suffixIcon: IconButton(
-                    icon: Icon(
-                      controller.isPasswordVisible
-                          ? Icons.visibility
-                          : Icons.visibility_off,
-                      color: Colors.white.withOpacity(0.7),
-                    ),
-                    onPressed: controller.togglePasswordVisibility,
-                  ),
-                  border: InputBorder.none,
-                  contentPadding: const EdgeInsets.symmetric(
-                    horizontal: 20,
-                    vertical: 16,
+                  filled: true,
+                fillColor: Colors.transparent,
+                hintText: 'Password',
+                hintStyle: AppTextStyles.body1.copyWith(
+                  color: AppColors.white.withOpacity(0.7),
+                ),
+                prefixIcon: Icon(
+                  Icons.person_outline,
+                  color: AppColors.white.withOpacity(0.7),
+                ),
+                enabledBorder: OutlineInputBorder(
+                  borderRadius: BorderRadius.circular(25),
+                  borderSide: BorderSide(color: AppColors.white, width: 1.5),
+                ),
+                focusedBorder: OutlineInputBorder(
+                  borderRadius: BorderRadius.circular(25),
+                  borderSide: BorderSide(color: AppColors.white, width: 1.5),
+                ),
+                contentPadding: const EdgeInsets.symmetric(
+                  horizontal: AppTheme.spacingM + 4,
+                  vertical: AppTheme.spacingM,
                   ),
                 ),
               ),
             ),
-            const SizedBox(height: 16),
+            const SizedBox(height: AppTheme.spacingM),
             
             // Confirm Password field
             Container(
               decoration: BoxDecoration(
                 borderRadius: BorderRadius.circular(25),
                 border: Border.all(
-                  color: Colors.white,
+                  color: AppColors.white,
                   width: 1.5,
                 ),
               ),
               child: TextFormField(
                 controller: controller.confirmPasswordController,
                 obscureText: !controller.isConfirmPasswordVisible,
-                style: const TextStyle(color: Colors.white),
+                style: AppTextStyles.body1.copyWith(color: AppColors.white),
                 decoration: InputDecoration(
-                  hintText: 'Confirm Password',
-                  hintStyle: TextStyle(
-                    color: Colors.white.withOpacity(0.7),
-                    fontSize: 16,
-                  ),
-                  prefixIcon: Icon(
-                    Icons.lock_outline,
-                    color: Colors.white.withOpacity(0.7),
-                  ),
-                  suffixIcon: IconButton(
-                    icon: Icon(
-                      controller.isConfirmPasswordVisible
-                          ? Icons.visibility
-                          : Icons.visibility_off,
-                      color: Colors.white.withOpacity(0.7),
-                    ),
-                    onPressed: controller.toggleConfirmPasswordVisibility,
-                  ),
-                  border: InputBorder.none,
-                  contentPadding: const EdgeInsets.symmetric(
-                    horizontal: 20,
-                    vertical: 16,
+                  filled: true,
+                fillColor: Colors.transparent,
+                hintText: 'Confirm Password',
+                hintStyle: AppTextStyles.body1.copyWith(
+                  color: AppColors.white.withOpacity(0.7),
+                ),
+                prefixIcon: Icon(
+                  Icons.person_outline,
+                  color: AppColors.white.withOpacity(0.7),
+                ),
+                enabledBorder: OutlineInputBorder(
+                  borderRadius: BorderRadius.circular(25),
+                  borderSide: BorderSide(color: AppColors.white, width: 1.5),
+                ),
+                focusedBorder: OutlineInputBorder(
+                  borderRadius: BorderRadius.circular(25),
+                  borderSide: BorderSide(color: AppColors.white, width: 1.5),
+                ),
+                contentPadding: const EdgeInsets.symmetric(
+                  horizontal: AppTheme.spacingM + 4,
+                  vertical: AppTheme.spacingM,
                   ),
                 ),
               ),
@@ -364,67 +263,53 @@ class RegisterPage extends StatelessWidget {
   }
 
   Widget _buildInputField({
-    required TextEditingController controller,
-    required String hintText,
-    required IconData icon,
-    TextInputType keyboardType = TextInputType.text,
-  }) {
-    return Container(
-      decoration: BoxDecoration(
+  required TextEditingController controller,
+  required String hintText,
+  required IconData icon,
+  bool obscureText = false,
+  VoidCallback? onSuffixTap,
+  bool isPassword = false,
+  bool isPasswordVisible = false,
+}) {
+  return TextFormField(
+    controller: controller,
+    obscureText: obscureText,
+    style: AppTextStyles.body1.copyWith(color: AppColors.white),
+    decoration: InputDecoration(
+      hintText: hintText,
+      hintStyle: AppTextStyles.body1.copyWith(
+        color: AppColors.white.withOpacity(0.7),
+      ),
+      prefixIcon: Icon(
+        icon,
+        color: AppColors.white.withOpacity(0.7),
+      ),
+      suffixIcon: isPassword
+          ? IconButton(
+              icon: Icon(
+                isPasswordVisible ? Icons.visibility : Icons.visibility_off,
+                color: AppColors.white.withOpacity(0.7),
+              ),
+              onPressed: onSuffixTap,
+            )
+          : null,
+      filled: true,
+      fillColor: Colors.transparent,
+      enabledBorder: OutlineInputBorder(
         borderRadius: BorderRadius.circular(25),
-        border: Border.all(
-          color: Colors.white,
-          width: 1.5,
-        ),
+        borderSide: BorderSide(color: AppColors.white, width: 1.5),
       ),
-      child: TextFormField(
-        controller: controller,
-        keyboardType: keyboardType,
-        style: const TextStyle(color: Colors.white),
-        decoration: InputDecoration(
-          hintText: hintText,
-          hintStyle: TextStyle(
-            color: Colors.white.withOpacity(0.7),
-            fontSize: 16,
-          ),
-          prefixIcon: Icon(
-            icon,
-            color: Colors.white.withOpacity(0.7),
-          ),
-          border: InputBorder.none,
-          contentPadding: const EdgeInsets.symmetric(
-            horizontal: 20,
-            vertical: 16,
-          ),
-        ),
+      focusedBorder: OutlineInputBorder(
+        borderRadius: BorderRadius.circular(25),
+        borderSide: BorderSide(color: AppColors.white, width: 1.5),
       ),
-    );
-  }
-
-  Future<void> _selectDate(BuildContext context, RegisterController controller) async {
-    final DateTime? picked = await showDatePicker(
-      context: context,
-      initialDate: DateTime.now().subtract(const Duration(days: 6570)), // 18 years ago
-      firstDate: DateTime(1900),
-      lastDate: DateTime.now(),
-      builder: (context, child) {
-        return Theme(
-          data: Theme.of(context).copyWith(
-            colorScheme: const ColorScheme.light(
-              primary: Color(0xFF4CAF50),
-              onPrimary: Colors.white,
-              surface: Colors.white,
-              onSurface: Colors.black,
-            ),
-          ),
-          child: child!,
-        );
-      },
-    );
-    if (picked != null) {
-      controller.setDateOfBirth(picked);
-    }
-  }
+      contentPadding: const EdgeInsets.symmetric(
+        horizontal: AppTheme.spacingM + 4,
+        vertical: AppTheme.spacingM,
+      ),
+    ),
+  );
+}
 
   Widget _buildTermsAndPrivacy() {
     return Row(
@@ -434,10 +319,10 @@ class RegisterPage extends StatelessWidget {
             return Checkbox(
               value: controller.agreeToTerms,
               onChanged: controller.setAgreeToTerms,
-              fillColor: MaterialStateProperty.all(Colors.white),
-              checkColor: const Color(0xFF4CAF50),
+              fillColor: MaterialStateProperty.all(AppColors.white),
+              checkColor: AppColors.primary,
               shape: RoundedRectangleBorder(
-                borderRadius: BorderRadius.circular(4),
+                borderRadius: BorderRadius.circular(AppTheme.radiusS),
               ),
             );
           },
@@ -446,15 +331,15 @@ class RegisterPage extends StatelessWidget {
           child: RichText(
             text: TextSpan(
               text: 'By creating an account, I agree to our ',
-              style: const TextStyle(
-                color: Colors.white,
-                fontSize: 15,
+              style: AppTextStyles.body2.copyWith(
+                color: AppColors.white,
+                fontSize: AppTheme.fontSizeS + 1,
               ),
               children: [
                 TextSpan(
                   text: 'Terms of use',
-                  style: const TextStyle(
-                    color: Color(0xFFFFEB3B), // Yellow
+                  style: TextStyle(
+                    color: AppColors.customGradientEnd,
                     decoration: TextDecoration.underline,
                   ),
                   recognizer: TapGestureRecognizer()
@@ -465,8 +350,8 @@ class RegisterPage extends StatelessWidget {
                 const TextSpan(text: ' and '),
                 TextSpan(
                   text: 'Privacy Policy',
-                  style: const TextStyle(
-                    color: Color(0xFFFFEB3B), // Yellow
+                  style: TextStyle(
+                    color: AppColors.customGradientEnd,
                     decoration: TextDecoration.underline,
                   ),
                   recognizer: TapGestureRecognizer()
@@ -487,28 +372,28 @@ class RegisterPage extends StatelessWidget {
       builder: (context, controller, child) {
         return Container(
           width: double.infinity,
-          height: 56,
+          height: AppTheme.buttonHeightL,
           child: ElevatedButton(
             onPressed: controller.isLoading
                 ? null
                 : () => controller.signUp(context),
             style: ElevatedButton.styleFrom(
-              backgroundColor: const Color(0xFFAEFFC4), // Light green
-              foregroundColor: Colors.black, // Dark text
+              backgroundColor: AppTheme.secondaryColor,
+              foregroundColor: AppTheme.textPrimary,
               shape: RoundedRectangleBorder(
                 borderRadius: BorderRadius.circular(28),
               ),
               elevation: 0,
             ),
             child: controller.isLoading
-                ? const CircularProgressIndicator(
-                    color: Color(0xFF2E7D32),
+                ? CircularProgressIndicator(
+                    color: AppTheme.textPrimary,
                   )
-                : const Text(
+                : Text(
                     'Sign up',
-                    style: TextStyle(
+                    style: AppTextStyles.button.copyWith(
+                      color: AppTheme.textPrimary,
                       fontSize: 25,
-                      fontWeight: FontWeight.w600,
                     ),
                   ),
           ),
@@ -520,14 +405,13 @@ class RegisterPage extends StatelessWidget {
   Widget _buildAlternativeSignUp() {
     return Column(
       children: [
-        const Text(
+        Text(
           'or Sign Up with',
-          style: TextStyle(
-            color: Color(0xFF004643),
-            fontSize: 16,
+          style: AppTextStyles.body1.copyWith(
+            color: AppColors.customGradientStart,
           ),
         ),
-        const SizedBox(height: 20),
+        const SizedBox(height: AppTheme.spacingM + 4),
         Row(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
@@ -537,7 +421,7 @@ class RegisterPage extends StatelessWidget {
                 // Google sign up
               },
             ),
-            const SizedBox(width: 20),
+            const SizedBox(width: AppTheme.spacingM + 4),
             _buildSocialButton(
               assetPath: 'assets/images/facebook.png',
               onPressed: () {
@@ -558,11 +442,11 @@ class RegisterPage extends StatelessWidget {
       width: 64,
       height: 64,
       decoration: BoxDecoration(
-        color: Colors.white,
+        color: AppColors.white,
         shape: BoxShape.circle,
         boxShadow: [
           BoxShadow(
-            color: Colors.black.withOpacity(0.1),
+            color: AppTheme.textPrimary.withOpacity(0.1),
             blurRadius: 8,
             offset: const Offset(0, 2),
           ),
@@ -584,16 +468,15 @@ class RegisterPage extends StatelessWidget {
     return RichText(
       text: TextSpan(
         text: "Already have account ? ",
-        style: const TextStyle(
-          color: Colors.white,
-          fontSize: 16,
+        style: AppTextStyles.body1.copyWith(
+          color: AppColors.white,
         ),
         children: [
           TextSpan(
             text: 'Back To Sign In',
-            style: const TextStyle(
-              color: Color(0xFF004643),
-              fontWeight: FontWeight.w600,
+            style: AppTextStyles.body1.copyWith(
+              color: AppColors.customGradientStart,
+              fontWeight: AppTheme.fontWeightSemiBold,
             ),
             recognizer: TapGestureRecognizer()
               ..onTap = () {
@@ -616,7 +499,7 @@ class CircularPatternPainter extends CustomPainter {
   @override
   void paint(Canvas canvas, Size size) {
     final paint = Paint()
-      ..color = Colors.white.withOpacity(opacity)
+      ..color = AppColors.white.withOpacity(opacity)
       ..style = PaintingStyle.stroke
       ..strokeWidth = 1.5;
 
@@ -631,7 +514,7 @@ class CircularPatternPainter extends CustomPainter {
 
     // Add some decorative dots
     final dotPaint = Paint()
-      ..color = Colors.white.withOpacity(opacity * 0.7)
+      ..color = AppColors.white.withOpacity(opacity * 0.7)
       ..style = PaintingStyle.fill;
 
     for (int i = 0; i < 8; i++) {

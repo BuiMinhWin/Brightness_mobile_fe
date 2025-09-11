@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
-
+import '../../../../core/theme/app_colors.dart';
+import '../../../../core/theme/app_text_styles.dart';
+import '../../../../core/theme/app_theme.dart';
 import '../../data/models/event.dart';
 
 class EventCard extends StatelessWidget {
@@ -15,13 +17,13 @@ class EventCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      margin: const EdgeInsets.only(bottom: 16),
+      margin: const EdgeInsets.only(bottom: AppTheme.spacingL),
       decoration: BoxDecoration(
-        color: Colors.white,
-        borderRadius: BorderRadius.circular(16),
+        color: AppColors.white,
+        borderRadius: BorderRadius.circular(AppTheme.radiusL),
         boxShadow: [
           BoxShadow(
-            color: Colors.black.withOpacity(0.1),
+            color: AppColors.shadow.withOpacity(0.1),
             blurRadius: 10,
             offset: const Offset(0, 2),
           ),
@@ -30,84 +32,84 @@ class EventCard extends StatelessWidget {
       child: Material(
         color: Colors.transparent,
         child: InkWell(
-          onTap: onTap, // This triggers navigation
-          borderRadius: BorderRadius.circular(16),
+          onTap: onTap,
+          borderRadius: BorderRadius.circular(AppTheme.radiusL),
           child: Padding(
-            padding: const EdgeInsets.all(20),
+            padding: const EdgeInsets.all(AppTheme.spacingL),
             child: Row(
               children: [
-                // Event Icon
-                Container(
-                  width: 48,
-                  height: 48,
-                  decoration: BoxDecoration(
-                    color: const Color(0xFFF1F8E9),
-                    borderRadius: BorderRadius.circular(12),
-                  ),
-                  child: const Icon(
-                    Icons.restaurant_menu,
-                    color: Color(0xFF4CAF50),
-                    size: 24,
-                  ),
-                ),
-                const SizedBox(width: 16),
-                // Content
-                Expanded(
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      Text(
-                        event.title,
-                        style: const TextStyle(
-                          fontSize: 16,
-                          fontWeight: FontWeight.w600,
-                          color: Color(0xFF333333),
-                        ),
-                      ),
-                      const SizedBox(height: 8),
-                      // Event Details Row
-                      Row(
-                        children: [
-                          // Date/Time
-                          Expanded(
-                            child: Text(
-                              event.dateTime,
-                              style: TextStyle(
-                                fontSize: 12,
-                                color: Colors.grey.shade600,
-                                fontWeight: FontWeight.w400,
-                              ),
-                            ),
-                          ),
-                          // Description
-                          Expanded(
-                            child: Text(
-                              event.description,
-                              style: TextStyle(
-                                fontSize: 12,
-                                color: Colors.grey.shade600,
-                                fontWeight: FontWeight.w400,
-                              ),
-                              textAlign: TextAlign.right,
-                            ),
-                          ),
-                        ],
-                      ),
-                    ],
-                  ),
-                ),
-                const SizedBox(width: 16),
-                // Arrow Icon
-                Icon(
-                  Icons.chevron_right,
-                  color: Colors.grey.shade400,
-                  size: 24,
-                ),
+                _buildIcon(),
+                const SizedBox(width: AppTheme.spacingM),
+                _buildContent(),
+                const SizedBox(width: AppTheme.spacingM),
+                _buildArrow(),
               ],
             ),
           ),
         ),
       ),
+    );
+  }
+
+  Widget _buildIcon() {
+    return Container(
+      width: 48,
+      height: 48,
+      decoration: BoxDecoration(
+        color: AppColors.greenlight,
+        borderRadius: BorderRadius.circular(AppTheme.radiusM),
+      ),
+      child: const Icon(
+        Icons.event,
+        color: AppColors.success,
+        size: 24,
+      ),
+    );
+  }
+
+  Widget _buildContent() {
+    return Expanded(
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          Text(
+            event.title,
+            style: AppTextStyles.bodyBold.copyWith(
+              color: AppColors.textPrimary,
+            ),
+          ),
+          const SizedBox(height: AppTheme.spacingS),
+          Row(
+            children: [
+              Expanded(
+                child: Text(
+                  event.dateTime,
+                  style: AppTextStyles.caption.copyWith(
+                    color: AppColors.textSecondary,
+                  ),
+                ),
+              ),
+              Expanded(
+                child: Text(
+                  event.description,
+                  style: AppTextStyles.caption.copyWith(
+                    color: AppColors.textSecondary,
+                  ),
+                  textAlign: TextAlign.right,
+                ),
+              ),
+            ],
+          ),
+        ],
+      ),
+    );
+  }
+
+  Widget _buildArrow() {
+    return const Icon(
+      Icons.chevron_right,
+      color: AppColors.iconInactive,
+      size: 24,
     );
   }
 }

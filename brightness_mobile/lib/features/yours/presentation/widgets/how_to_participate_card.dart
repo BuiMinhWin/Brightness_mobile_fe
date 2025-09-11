@@ -1,5 +1,7 @@
 import 'dart:ui';
-
+import '../../../../core/theme/app_colors.dart';
+import '../../../../core/theme/app_text_styles.dart';
+import '../../../../core/theme/app_theme.dart';
 import 'package:brightness_mobile/features/yours/presentation/widgets/challenge_rules_section.dart';
 import 'package:flutter/material.dart';
 
@@ -12,11 +14,11 @@ class HowToParticipateCard extends StatelessWidget {
       width: double.infinity,
       padding: const EdgeInsets.all(20),
       decoration: BoxDecoration(
-        color: Colors.white,
-        borderRadius: BorderRadius.circular(12),
+        color: AppColors.white,
+        borderRadius: BorderRadius.circular(AppTheme.radiusL),
         boxShadow: [
           BoxShadow(
-            color: Colors.black.withOpacity(0.1),
+            color: AppColors.black.withOpacity(0.1),
             blurRadius: 10,
             offset: const Offset(0, 2),
           ),
@@ -31,23 +33,19 @@ class HowToParticipateCard extends StatelessWidget {
                 width: 24,
                 height: 24,
                 decoration: const BoxDecoration(
-                  color: Color(0xFF4CAF50),
+                  color: AppColors.success,
                   shape: BoxShape.circle,
                 ),
                 child: const Icon(
                   Icons.lock_open,
-                  color: Colors.white,
-                  size: 16,
+                  color: AppColors.white,
+                  size: AppTheme.iconSizeS,
                 ),
               ),
               const SizedBox(width: 12),
-              const Text(
+              Text(
                 'How to Participate',
-                style: TextStyle(
-                  fontSize: 18,
-                  fontWeight: FontWeight.w600,
-                  color: Color(0xFF333333),
-                ),
+                style: AppTextStyles.headingMedium,
               ),
             ],
           ),
@@ -76,7 +74,8 @@ class HowToParticipateCard extends StatelessWidget {
     );
   }
 
-  Widget _buildParticipationStep(String number, String title, String description) {
+  Widget _buildParticipationStep(
+      String number, String title, String description) {
     return Row(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
@@ -84,16 +83,14 @@ class HowToParticipateCard extends StatelessWidget {
           width: 24,
           height: 24,
           decoration: BoxDecoration(
-            color: const Color(0xFF2196F3),
-            borderRadius: BorderRadius.circular(6),
+            color: AppColors.primaryBlue,
+            borderRadius: BorderRadius.circular(AppTheme.radiusS),
           ),
           child: Center(
             child: Text(
               number,
-              style: const TextStyle(
-                color: Colors.white,
-                fontSize: 12,
-                fontWeight: FontWeight.w600,
+              style: AppTextStyles.captionBold.copyWith(
+                color: AppColors.white,
               ),
             ),
           ),
@@ -105,20 +102,12 @@ class HowToParticipateCard extends StatelessWidget {
             children: [
               Text(
                 title,
-                style: const TextStyle(
-                  fontSize: 16,
-                  fontWeight: FontWeight.w600,
-                  color: Color(0xFF333333),
-                ),
+                style: AppTextStyles.bodyBold,
               ),
               const SizedBox(height: 4),
               Text(
                 description,
-                style: const TextStyle(
-                  fontSize: 14,
-                  color: Color(0xFF666666),
-                  height: 1.4,
-                ),
+                style: AppTextStyles.bodySmall.copyWith(height: 1.4),
               ),
             ],
           ),

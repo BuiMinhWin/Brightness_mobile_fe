@@ -2,8 +2,10 @@ import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:provider/provider.dart';
 import '../controllers/login_controller.dart';
+import '../../../../core/theme/app_colors.dart';
+import '../../../../core/theme/app_text_styles.dart';
+import '../../../../core/theme/app_theme.dart';
 import 'package:flutter/gestures.dart';
-import 'package:flutter/material.dart';
 import 'dart:math' as math;
 
 class LoginPage extends StatelessWidget {
@@ -20,7 +22,7 @@ class LoginPage extends StatelessWidget {
           SafeArea(
             child: SingleChildScrollView(
               child: Padding(
-                padding: const EdgeInsets.symmetric(horizontal: 24.0),
+                padding: const EdgeInsets.symmetric(horizontal: AppTheme.spacingL),
                 child: Column(
                   children: [
                     const SizedBox(height: 60),
@@ -29,16 +31,16 @@ class LoginPage extends StatelessWidget {
                     _buildSignInTitle(),
                     const SizedBox(height: 35),
                     _buildLoginForm(context),
-                    const SizedBox(height: 24),
+                    const SizedBox(height: AppTheme.spacingL),
                     _buildForgotPassword(),
                     const SizedBox(height: 15),
                     _buildTermsAndPrivacy(),
                     const SizedBox(height: 30),
                     _buildSignInButton(context),
-                    const SizedBox(height: 24),
+                    const SizedBox(height: AppTheme.spacingL),
                     _buildAlternativeSignIn(),
-                    const SizedBox(height: 32),
-                    _buildSignUpSection(context), // có thể thay đổi tùy theo cách gọi nút
+                    const SizedBox(height: AppTheme.spacingXL),
+                    _buildSignUpSection(context),
                     const SizedBox(height: 40),
                   ],
                 ),
@@ -52,34 +54,12 @@ class LoginPage extends StatelessWidget {
 
   Widget _buildBackground() {
     return Container(
-      decoration: const LinearGradient(
-        begin: Alignment.topCenter,
-        end: Alignment.bottomCenter,
-        colors: [
-          Color(0xFFE2F043), // Light green
-          Color.fromARGB(255, 64, 155, 69), // Medium green
-          Color(0xFF05644C), // Dark green
-        ],
-      ).createShader(
-        const Rect.fromLTRB(0, 0, 1, 1),
-      ) != null
-          ? BoxDecoration(
-              gradient: LinearGradient(
-                begin: Alignment.topCenter,
-                end: Alignment.bottomCenter,
-                colors: [
-                  Color(0xFFE2F043), // Light green
-                  Color.fromARGB(255, 64, 155, 69), // Medium green
-                  Color(0xFF05644C), // Dark green
-                ],
-              ),
-            )
-          : const BoxDecoration(
-              color: Color(0xFF4CAF50),
-            ),
+      decoration: const BoxDecoration(
+        gradient: AppColors.customGradientLogin,
+      ),
       child: Stack(
         children: [
-          // Circular pattern SVG elements
+          // Circular pattern elements
           Positioned(
             top: -50,
             right: -100,
@@ -120,61 +100,60 @@ class LoginPage extends StatelessWidget {
     );
   }
 
-Widget _buildLogo() {
-  return Column(
-    children: [
-      // Logo JPG
-      Container(
-        width: 100,
-        height: 100,
-        decoration: BoxDecoration(
-          color: Colors.white.withOpacity(0.0),
-          shape: BoxShape.circle,
-        ),
-        child: ClipOval(
-          child: Image.asset(
-            'assets/images/logo.png',
-            fit: BoxFit.cover,
+  Widget _buildLogo() {
+    return Column(
+      children: [
+        // Logo JPG
+        Container(
+          width: 100,
+          height: 100,
+          decoration: BoxDecoration(
+            color: AppColors.white.withOpacity(0.0),
+            shape: BoxShape.circle,
+          ),
+          child: ClipOval(
+            child: Image.asset(
+              'assets/images/logo.png',
+              fit: BoxFit.cover,
+            ),
           ),
         ),
-      ),
-      const SizedBox(height: 16),
-      // BrightNest text
-      RichText(
-        text: const TextSpan(
-          children: [
-            TextSpan(
-              text: 'BRIGHT',
-              style: TextStyle(
-                fontSize: 24,
-                fontWeight: FontWeight.w700,
-                color: Color(0xFFFED700), // Yellow
-                letterSpacing: 1.2,
+        const SizedBox(height: AppTheme.spacingM),
+        // BrightNest text
+        RichText(
+          text: TextSpan(
+            children: [
+              TextSpan(
+                text: 'BRIGHT',
+                style: AppTextStyles.h2.copyWith(
+                  fontSize: AppTheme.fontSizeL + 6,
+                  fontWeight: AppTheme.fontWeightBold,
+                  color: AppColors.bright,
+                  letterSpacing: 1.2,
+                ),
               ),
-            ),
-            TextSpan(
-              text: 'NEST',
-              style: TextStyle(
-                fontSize: 24,
-                fontWeight: FontWeight.w700,
-                color: Color(0xFF095747),
-                letterSpacing: 1.2,
+              TextSpan(
+                text: 'NEST',
+                style: AppTextStyles.h2.copyWith(
+                  fontSize: AppTheme.fontSizeL + 6,
+                  fontWeight: AppTheme.fontWeightBold,
+                  color: AppColors.customGradientStart,
+                  letterSpacing: 1.2,
+                ),
               ),
-            ),
-          ],
+            ],
+          ),
         ),
-      ),
-    ],
-  );
-}
+      ],
+    );
+  }
 
   Widget _buildSignInTitle() {
-    return const Text(
+    return Text(
       'Sign in',
-      style: TextStyle(
+      style: AppTextStyles.h1.copyWith(
         fontSize: 70,
-        fontWeight: FontWeight.w500,
-        color: Colors.white,
+        fontWeight: AppTheme.fontWeightMedium,
       ),
     );
   }
@@ -189,68 +168,75 @@ Widget _buildLogo() {
               decoration: BoxDecoration(
                 borderRadius: BorderRadius.circular(25),
                 border: Border.all(
-                  color: Colors.white,
+                  color: AppColors.white,
                   width: 1.5,
                 ),
               ),
               child: TextFormField(
                 controller: controller.emailController,
-                style: const TextStyle(color: Colors.white),
+                style: AppTextStyles.body1.copyWith(color: AppColors.white),
                 decoration: InputDecoration(
-                  hintText: 'Email or User Name',
-                  hintStyle: TextStyle(
-                    color: Colors.white.withOpacity(0.7),
-                    fontSize: 16,
-                  ),
-                  prefixIcon: Icon(
-                    Icons.person_outline,
-                    color: Colors.white.withOpacity(0.7),
-                  ),
-                  border: InputBorder.none,
-                  contentPadding: const EdgeInsets.symmetric(
-                    horizontal: 20,
-                    vertical: 16,
+                filled: true,
+                fillColor: Colors.transparent,
+                hintText: 'Email or User Name',
+                hintStyle: AppTextStyles.body1.copyWith(
+                  color: AppColors.white.withOpacity(0.7),
+                ),
+                prefixIcon: Icon(
+                  Icons.person_outline,
+                  color: AppColors.white.withOpacity(0.7),
+                ),
+                enabledBorder: OutlineInputBorder(
+                  borderRadius: BorderRadius.circular(25),
+                  borderSide: BorderSide(color: AppColors.white, width: 1.5),
+                ),
+                focusedBorder: OutlineInputBorder(
+                  borderRadius: BorderRadius.circular(25),
+                  borderSide: BorderSide(color: AppColors.white, width: 1.5),
+                ),
+                contentPadding: const EdgeInsets.symmetric(
+                  horizontal: AppTheme.spacingM + 4,
+                  vertical: AppTheme.spacingM,
                   ),
                 ),
               ),
             ),
-            const SizedBox(height: 16),
+            const SizedBox(height: AppTheme.spacingM),
             // Password field
             Container(
               decoration: BoxDecoration(
                 borderRadius: BorderRadius.circular(25),
                 border: Border.all(
-                  color: Colors.white,
+                  color: AppColors.white,
                   width: 1.5,
                 ),
               ),
               child: TextFormField(
                 controller: controller.passwordController,
                 obscureText: !controller.isPasswordVisible,
-                style: const TextStyle(color: Colors.white),
+                style: AppTextStyles.body1.copyWith(color: AppColors.white),
                 decoration: InputDecoration(
-                  hintText: 'Password',
-                  hintStyle: TextStyle(
-                    color: Colors.white.withOpacity(0.7),
-                    fontSize: 16,
-                  ),
-                  prefixIcon: Icon(
-                    Icons.lock_outline,
-                    color: Colors.white.withOpacity(0.7),
-                  ),
-                  suffixIcon: IconButton(
-                    icon: Icon(
-                      controller.isPasswordVisible
-                          ? Icons.visibility
-                          : Icons.visibility_off,
-                      color: Colors.white.withOpacity(0.7),
-                    ),
-                    onPressed: controller.togglePasswordVisibility,
-                  ),
-                  border: InputBorder.none,
-                  contentPadding: const EdgeInsets.symmetric(
-                    horizontal: 20,
-                    vertical: 16,
+                filled: true,
+                fillColor: Colors.transparent,
+                hintText: 'Password',
+                hintStyle: AppTextStyles.body1.copyWith(
+                  color: AppColors.white.withOpacity(0.7),
+                ),
+                prefixIcon: Icon(
+                  Icons.person_outline,
+                  color: AppColors.white.withOpacity(0.7),
+                ),
+                enabledBorder: OutlineInputBorder(
+                  borderRadius: BorderRadius.circular(25),
+                  borderSide: BorderSide(color: AppColors.white, width: 1.5),
+                ),
+                focusedBorder: OutlineInputBorder(
+                  borderRadius: BorderRadius.circular(25),
+                  borderSide: BorderSide(color: AppColors.white, width: 1.5),
+                ),
+                contentPadding: const EdgeInsets.symmetric(
+                  horizontal: AppTheme.spacingM + 4,
+                  vertical: AppTheme.spacingM,
                   ),
                 ),
               ),
@@ -270,10 +256,9 @@ Widget _buildLogo() {
         },
         child: Text(
           'Forget Password ?',
-          style: TextStyle(
-            color: Colors.white.withOpacity(0.9),
-            fontSize: 16,
-            fontWeight: FontWeight.w500,
+          style: AppTextStyles.body1.copyWith(
+            color: AppColors.white.withOpacity(0.9),
+            fontWeight: AppTheme.fontWeightMedium,
           ),
         ),
       ),
@@ -288,10 +273,10 @@ Widget _buildLogo() {
             return Checkbox(
               value: controller.agreeToTerms,
               onChanged: controller.setAgreeToTerms,
-              fillColor: MaterialStateProperty.all(Colors.white),
-              checkColor: const Color(0xFF4CAF50),
+              fillColor: MaterialStateProperty.all(AppColors.white),
+              checkColor: AppColors.primary,
               shape: RoundedRectangleBorder(
-                borderRadius: BorderRadius.circular(4),
+                borderRadius: BorderRadius.circular(AppTheme.radiusS),
               ),
             );
           },
@@ -300,15 +285,15 @@ Widget _buildLogo() {
           child: RichText(
             text: TextSpan(
               text: 'By creating an account, I agree to our ',
-              style: TextStyle(
-                color: Colors.white,
-                fontSize: 15,
+              style: AppTextStyles.body2.copyWith(
+                color: AppColors.white,
+                fontSize: AppTheme.fontSizeS + 1,
               ),
               children: [
                 TextSpan(
                   text: 'Terms of use',
                   style: TextStyle(
-                    color: Color(0xFFFFEB3B), // Yellow
+                    color: AppColors.customGradientEnd,
                     decoration: TextDecoration.underline,
                   ),
                 ),
@@ -316,7 +301,7 @@ Widget _buildLogo() {
                 TextSpan(
                   text: 'Privacy Policy',
                   style: TextStyle(
-                    color: Color(0xFFFFEB3B), // Yellow
+                    color: AppColors.customGradientEnd,
                     decoration: TextDecoration.underline,
                   ),
                 ),
@@ -333,28 +318,28 @@ Widget _buildLogo() {
       builder: (context, controller, child) {
         return Container(
           width: double.infinity,
-          height: 56,
+          height: AppTheme.buttonHeightL,
           child: ElevatedButton(
             onPressed: controller.isLoading
                 ? null
                 : () => controller.signIn(context),
             style: ElevatedButton.styleFrom(
-              backgroundColor: const Color(0xFFAEFFC4), // Light green
-              foregroundColor: const Color.fromARGB(255, 0, 0, 0), // Dark green text
+              backgroundColor: AppTheme.secondaryColor,
+              foregroundColor: AppTheme.textPrimary,
               shape: RoundedRectangleBorder(
                 borderRadius: BorderRadius.circular(28),
               ),
               elevation: 0,
             ),
             child: controller.isLoading
-                ? const CircularProgressIndicator(
-                    color: Color(0xFF2E7D32),
+                ? CircularProgressIndicator(
+                    color: AppTheme.textPrimary,
                   )
-                : const Text(
+                : Text(
                     'Sign in',
-                    style: TextStyle(
+                    style: AppTextStyles.button.copyWith(
+                      color: AppTheme.textPrimary,
                       fontSize: 25,
-                      fontWeight: FontWeight.w600,
                     ),
                   ),
           ),
@@ -363,103 +348,81 @@ Widget _buildLogo() {
     );
   }
 
-Widget _buildAlternativeSignIn() {
-  return Column(
-    children: [
-      Text(
-        'or Sign In with',
-        style: TextStyle(
-          color: Colors.white,
-          fontSize: 16,
-        ),
-      ),
-      const SizedBox(height: 20),
-      Row(
-        mainAxisAlignment: MainAxisAlignment.center,
-        children: [
-          _buildSocialButton(
-            assetPath: 'assets/images/google.png',
-            onPressed: () {
-              // Google sign in
-            },
+  Widget _buildAlternativeSignIn() {
+    return Column(
+      children: [
+        Text(
+          'or Sign In with',
+          style: AppTextStyles.body1.copyWith(
+            color: AppColors.white,
           ),
-          const SizedBox(width: 20),
-          _buildSocialButton(
-            assetPath: 'assets/images/facebook.png',
-            onPressed: () {
-              // Facebook sign in
-            },
+        ),
+        const SizedBox(height: AppTheme.spacingM + 4),
+        Row(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            _buildSocialButton(
+              assetPath: 'assets/images/google.png',
+              onPressed: () {
+                // Google sign in
+              },
+            ),
+            const SizedBox(width: AppTheme.spacingM + 4),
+            _buildSocialButton(
+              assetPath: 'assets/images/facebook.png',
+              onPressed: () {
+                // Facebook sign in
+              },
+            ),
+          ],
+        ),
+      ],
+    );
+  }
+
+  Widget _buildSocialButton({
+    required String assetPath,
+    required VoidCallback onPressed,
+  }) {
+    return Container(
+      width: 64,
+      height: 64,
+      decoration: BoxDecoration(
+        color: AppColors.white,
+        shape: BoxShape.circle,
+        boxShadow: [
+          BoxShadow(
+            color: AppTheme.textPrimary.withOpacity(0.1),
+            blurRadius: 8,
+            offset: const Offset(0, 2),
           ),
         ],
       ),
-    ],
-  );
-}
-
-Widget _buildSocialButton({
-  required String assetPath,
-  required VoidCallback onPressed,
-}) {
-  return Container(
-    width: 64, // tăng kích thước
-    height: 64,
-    decoration: BoxDecoration(
-      color: Colors.white,
-      shape: BoxShape.circle,
-      boxShadow: [
-        BoxShadow(
-          color: Colors.black.withOpacity(0.1),
-          blurRadius: 8,
-          offset: const Offset(0, 2),
+      child: IconButton(
+        onPressed: onPressed,
+        icon: Image.asset(
+          assetPath,
+          width: 38,
+          height: 38,
+          fit: BoxFit.contain,
         ),
-      ],
-    ),
-    child: IconButton(
-      onPressed: onPressed,
-      icon: Image.asset(
-        assetPath,
-        width: 38,  // logo to hơn
-        height: 38,
-        fit: BoxFit.contain,
       ),
-    ),
-  );
-}
+    );
+  }
 
-  // Widget _buildSignUpSection() {
-  //   return RichText(
-  //     text: TextSpan(
-  //       text: "Don't have account ? ",
-  //       style: TextStyle(
-  //         color: Colors.white,
-  //         fontSize: 16,
-  //       ),
-  //       children: [
-  //         TextSpan(
-  //           text: 'Sign Up',
-  //           style: TextStyle(
-  //             color: Colors.white,
-  //             fontWeight: FontWeight.w600,
-  //           ),
-  //         ),
-  //       ],
-  //     ),
-  //   );
-  // }
- Widget _buildSignUpSection(BuildContext context) {
+  Widget _buildSignUpSection(BuildContext context) {
     return RichText(
       text: TextSpan(
         text: "Don't have account ? ",
-        style: const TextStyle(
-          color: Colors.white,
-          fontSize: 16,
+        style: AppTextStyles.body1.copyWith(
+          color: AppColors.white,
         ),
         children: [
           TextSpan(
             text: 'Sign Up',
-            style: const TextStyle(
-              color: Colors.yellow,
-              fontWeight: FontWeight.w600,
+            style: AppTextStyles.body1.copyWith(
+              color: AppColors.white,
+              fontWeight: AppTheme.fontWeightSemiBold,
             ),
             recognizer: TapGestureRecognizer()
               ..onTap = () {
@@ -473,8 +436,6 @@ Widget _buildSocialButton({
   }
 }
 
-
-
 // Custom painter for circular patterns
 class CircularPatternPainter extends CustomPainter {
   final double opacity;
@@ -484,7 +445,7 @@ class CircularPatternPainter extends CustomPainter {
   @override
   void paint(Canvas canvas, Size size) {
     final paint = Paint()
-      ..color = Colors.white.withOpacity(opacity)
+      ..color = AppColors.white.withOpacity(opacity)
       ..style = PaintingStyle.stroke
       ..strokeWidth = 1.5;
 
@@ -499,7 +460,7 @@ class CircularPatternPainter extends CustomPainter {
 
     // Add some decorative dots
     final dotPaint = Paint()
-      ..color = Colors.white.withOpacity(opacity * 0.7)
+      ..color = AppColors.white.withOpacity(opacity * 0.7)
       ..style = PaintingStyle.fill;
 
     for (int i = 0; i < 8; i++) {

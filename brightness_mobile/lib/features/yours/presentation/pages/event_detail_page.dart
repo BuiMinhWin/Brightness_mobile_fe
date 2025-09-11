@@ -4,6 +4,9 @@ import 'package:brightness_mobile/features/yours/presentation/widgets/how_to_par
 import 'package:flutter/material.dart';
 
 import '../../data/models/event.dart';
+import '../../../../core/theme/app_colors.dart';
+import '../../../../core/theme/app_text_styles.dart';
+import '../../../../core/theme/app_theme.dart';
 
 class EventDetailPage extends StatelessWidget {
   final EventModel event;
@@ -18,16 +21,7 @@ class EventDetailPage extends StatelessWidget {
     return Scaffold(
       body: Container(
         decoration: const BoxDecoration(
-          gradient: LinearGradient(
-            begin: Alignment.topCenter,
-            end: Alignment.bottomCenter,
-            colors: [
-              Color(0xFF2E7D32),
-              Color(0xFF4CAF50),
-              Color(0xFF8BC34A),
-              Color(0xFFCDDC39),
-            ],
-          ),
+          gradient: AppColors.customGradient,
         ),
         child: SafeArea(
           child: Column(
@@ -46,7 +40,7 @@ class EventDetailPage extends StatelessWidget {
 
   Widget _buildHeader(BuildContext context) {
     return Padding(
-      padding: const EdgeInsets.all(16.0),
+      padding: EdgeInsets.all(AppTheme.spacingM),
       child: Row(
         children: [
           IconButton(
@@ -54,24 +48,24 @@ class EventDetailPage extends StatelessWidget {
               // Navigate back to event list
               Navigator.pop(context);
             },
-            icon: const Icon(
+            icon: Icon(
               Icons.arrow_back,
-              color: Colors.white,
-              size: 24,
+              color: AppColors.white,
+              size: AppTheme.iconSizeM,
             ),
           ),
           Expanded(
             child: Text(
               '${event.title} - Detail',
-              style: const TextStyle(
-                fontSize: 18,
-                fontWeight: FontWeight.w600,
-                color: Colors.white,
+              style: AppTextStyles.h2.copyWith(
+                color: AppColors.white,
+                fontSize: AppTheme.fontSizeL,
+                fontWeight: AppTheme.fontWeightSemiBold,
               ),
               textAlign: TextAlign.center,
             ),
           ),
-          const SizedBox(width: 48),
+          SizedBox(width: AppTheme.iconSizeXL + AppTheme.spacingM),
         ],
       ),
     );
@@ -79,17 +73,17 @@ class EventDetailPage extends StatelessWidget {
 
   Widget _buildContent() {
     return SingleChildScrollView(
-      padding: const EdgeInsets.symmetric(horizontal: 16.0),
+      padding: EdgeInsets.symmetric(horizontal: AppTheme.spacingM),
       child: Column(
         children: [
           EventDescriptionCard(event: event),
-          const SizedBox(height: 16),
+          SizedBox(height: AppTheme.spacingM),
           const HowToParticipateCard(),
-          const SizedBox(height: 16),
+          SizedBox(height: AppTheme.spacingM),
           EventDurationCard(event: event),
-          const SizedBox(height: 16),
+          SizedBox(height: AppTheme.spacingM),
           const RewardsAndPrizesCard(),
-          const SizedBox(height: 20),
+          SizedBox(height: AppTheme.spacingL),
         ],
       ),
     );
@@ -97,19 +91,18 @@ class EventDetailPage extends StatelessWidget {
 
   Widget _buildActionButtons(BuildContext context) {
     return Container(
-      padding: const EdgeInsets.all(24),
+      padding: EdgeInsets.all(AppTheme.spacingL),
       child: Column(
         children: [
           Text(
             'Ready to start your ${event.title.toLowerCase()} journey?',
-            style: const TextStyle(
-              fontSize: 16,
-              fontWeight: FontWeight.w500,
-              color: Colors.white,
+            style: AppTextStyles.body1.copyWith(
+              color: AppColors.white,
+              fontWeight: AppTheme.fontWeightMedium,
             ),
             textAlign: TextAlign.center,
           ),
-          const SizedBox(height: 16),
+          SizedBox(height: AppTheme.spacingM),
           Row(
             children: [
               Expanded(
@@ -119,11 +112,11 @@ class EventDetailPage extends StatelessWidget {
                     _showJoinDialog(context);
                   },
                   icon: Icons.check,
-                  color: const Color(0xFF4CAF50),
+                  color: AppColors.success,
                   tooltip: 'Join Event',
                 ),
               ),
-              const SizedBox(width: 16),
+              SizedBox(width: AppTheme.spacingM),
               Expanded(
                 child: _buildActionButton(
                   onPressed: () {
@@ -131,7 +124,7 @@ class EventDetailPage extends StatelessWidget {
                     Navigator.pop(context);
                   },
                   icon: Icons.close,
-                  color: const Color(0xFFE53E3E),
+                  color: AppColors.loseWeightColor,
                   tooltip: 'Go Back',
                 ),
               ),
@@ -151,13 +144,13 @@ class EventDetailPage extends StatelessWidget {
     return Tooltip(
       message: tooltip,
       child: Container(
-        height: 56,
+        height: AppTheme.buttonHeightL,
         decoration: BoxDecoration(
-          color: Colors.white,
-          borderRadius: BorderRadius.circular(28),
+          color: AppColors.white,
+          borderRadius: BorderRadius.circular(AppTheme.buttonHeightL / 2),
           boxShadow: [
             BoxShadow(
-              color: Colors.black.withOpacity(0.1),
+              color: AppTheme.textPrimary.withValues(alpha: 0.1),
               blurRadius: 10,
               offset: const Offset(0, 2),
             ),
@@ -167,17 +160,17 @@ class EventDetailPage extends StatelessWidget {
           color: Colors.transparent,
           child: InkWell(
             onTap: onPressed,
-            borderRadius: BorderRadius.circular(28),
+            borderRadius: BorderRadius.circular(AppTheme.buttonHeightL / 2),
             child: Container(
               decoration: BoxDecoration(
                 border: Border.all(color: color, width: 2),
-                borderRadius: BorderRadius.circular(28),
+                borderRadius: BorderRadius.circular(AppTheme.buttonHeightL / 2),
               ),
               child: Center(
                 child: Icon(
                   icon,
                   color: color,
-                  size: 28,
+                  size: AppTheme.iconSizeL,
                 ),
               ),
             ),
@@ -192,15 +185,27 @@ class EventDetailPage extends StatelessWidget {
       context: context,
       builder: (BuildContext context) {
         return AlertDialog(
+          backgroundColor: AppColors.white,
           shape: RoundedRectangleBorder(
-            borderRadius: BorderRadius.circular(16),
+            borderRadius: BorderRadius.circular(AppTheme.radiusXL),
           ),
-          title: Text('Join ${event.title}?'),
-          content: Text('Are you ready to commit to this ${event.durationDays}-day challenge?'),
+          title: Text(
+            'Join ${event.title}?',
+            style: AppTextStyles.h2,
+          ),
+          content: Text(
+            'Are you ready to commit to this ${event.durationDays}-day challenge?',
+            style: AppTextStyles.body1,
+          ),
           actions: [
             TextButton(
               onPressed: () => Navigator.pop(context),
-              child: const Text('Cancel'),
+              child: Text(
+                'Cancel',
+                style: AppTextStyles.body1.copyWith(
+                  color: AppColors.textSecondary,
+                ),
+              ),
             ),
             ElevatedButton(
               onPressed: () {
@@ -209,16 +214,23 @@ class EventDetailPage extends StatelessWidget {
                 // Here you would typically handle the join logic
                 ScaffoldMessenger.of(context).showSnackBar(
                   SnackBar(
-                    content: Text('Successfully joined ${event.title}!'),
-                    backgroundColor: const Color(0xFF4CAF50),
+                    content: Text(
+                      'Successfully joined ${event.title}!',
+                      style: AppTextStyles.body1.copyWith(
+                        color: AppColors.white,
+                      ),
+                    ),
+                    backgroundColor: AppColors.success,
                   ),
                 );
               },
-              style: ElevatedButton.styleFrom(
-                backgroundColor: const Color(0xFF4CAF50),
-                foregroundColor: Colors.white,
+              style: AppTheme.primaryButtonStyle(
+                backgroundColor: AppColors.success,
               ),
-              child: const Text('Join Now'),
+              child: Text(
+                'Join Now',
+                style: AppTextStyles.button,
+              ),
             ),
           ],
         );

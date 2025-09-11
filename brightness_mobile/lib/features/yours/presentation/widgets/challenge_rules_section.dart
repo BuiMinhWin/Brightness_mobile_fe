@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import '../../../../core/theme/app_colors.dart';
+import '../../../../core/theme/app_text_styles.dart';
 
 class ChallengeRulesSection extends StatelessWidget {
   const ChallengeRulesSection({Key? key}) : super(key: key);
@@ -8,10 +10,10 @@ class ChallengeRulesSection extends StatelessWidget {
     return Container(
       padding: const EdgeInsets.all(16),
       decoration: BoxDecoration(
-        color: const Color(0xFFFFF3C4),
+        color: AppColors.warningLight,
         borderRadius: BorderRadius.circular(8),
         border: Border.all(
-          color: const Color(0xFFFF9800),
+          color: AppColors.warning,
           width: 1,
         ),
       ),
@@ -22,16 +24,14 @@ class ChallengeRulesSection extends StatelessWidget {
             children: [
               const Icon(
                 Icons.warning_amber,
-                color: Color(0xFFFF9800),
+                color: AppColors.redDark,
                 size: 16,
               ),
               const SizedBox(width: 8),
-              const Text(
+              Text(
                 'Challenge Rules',
-                style: TextStyle(
-                  fontSize: 14,
-                  fontWeight: FontWeight.w600,
-                  color: Color(0xFFFF9800),
+                style: AppTextStyles.captionBold.copyWith(
+                  color: AppColors.redDark,
                 ),
               ),
             ],
@@ -57,7 +57,7 @@ class ChallengeRulesSection extends StatelessWidget {
             height: 4,
             margin: const EdgeInsets.only(top: 6),
             decoration: const BoxDecoration(
-              color: Color(0xFFFF9800),
+              color: AppColors.redDark,
               shape: BoxShape.circle,
             ),
           ),
@@ -65,9 +65,8 @@ class ChallengeRulesSection extends StatelessWidget {
           Expanded(
             child: Text(
               rule,
-              style: const TextStyle(
-                fontSize: 12,
-                color: Color(0xFFFF9800),
+              style: AppTextStyles.caption.copyWith(
+                color: AppColors.redDark,
                 height: 1.4,
               ),
             ),

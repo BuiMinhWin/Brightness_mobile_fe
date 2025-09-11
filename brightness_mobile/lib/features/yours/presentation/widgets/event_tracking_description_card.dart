@@ -1,4 +1,6 @@
 import 'package:brightness_mobile/features/yours/data/models/yours.dart';
+import '../../../../core/theme/app_colors.dart';
+import '../../../../core/theme/app_text_styles.dart';
 import 'package:flutter/material.dart';
 
 class EventTrackingDescriptionCard extends StatelessWidget {
@@ -15,11 +17,11 @@ class EventTrackingDescriptionCard extends StatelessWidget {
       width: double.infinity,
       padding: const EdgeInsets.all(20),
       decoration: BoxDecoration(
-        color: Colors.white,
+        color: AppColors.white,
         borderRadius: BorderRadius.circular(12),
         boxShadow: [
           BoxShadow(
-            color: Colors.black.withOpacity(0.1),
+            color: AppColors.black.withOpacity(0.1),
             blurRadius: 10,
             offset: const Offset(0, 2),
           ),
@@ -34,22 +36,20 @@ class EventTrackingDescriptionCard extends StatelessWidget {
                 width: 24,
                 height: 24,
                 decoration: const BoxDecoration(
-                  color: Color(0xFF2196F3),
+                  color: AppColors.primaryBlue,
                   shape: BoxShape.circle,
                 ),
                 child: const Icon(
                   Icons.info,
-                  color: Colors.white,
+                  color: AppColors.white,
                   size: 16,
                 ),
               ),
               const SizedBox(width: 12),
-              const Text(
+              Text(
                 'Event Description',
-                style: TextStyle(
-                  fontSize: 18,
-                  fontWeight: FontWeight.w600,
-                  color: Color(0xFF333333),
+                style: AppTextStyles.headingMedium.copyWith(
+                  color: AppColors.textPrimary,
                 ),
               ),
             ],
@@ -57,9 +57,8 @@ class EventTrackingDescriptionCard extends StatelessWidget {
           const SizedBox(height: 16),
           Text(
             'Join thousands of fitness enthusiasts in our most exciting 30-day challenge yet! This comprehensive program combines strength training, cardio workouts, and mindfulness practices to help you achieve your fitness goals. Whether you\'re a beginner or an experienced athlete, this challenge adapts to your fitness level and pushes you to new heights.',
-            style: const TextStyle(
-              fontSize: 14,
-              color: Color(0xFF666666),
+            style: AppTextStyles.bodySmall.copyWith(
+              color: AppColors.textSecondary,
               height: 1.5,
             ),
           ),
@@ -67,7 +66,7 @@ class EventTrackingDescriptionCard extends StatelessWidget {
           Container(
             padding: const EdgeInsets.all(12),
             decoration: BoxDecoration(
-              color: const Color(0xFFF1F8E9),
+              color: AppColors.greenlight,
               borderRadius: BorderRadius.circular(8),
             ),
             child: Row(
@@ -80,8 +79,7 @@ class EventTrackingDescriptionCard extends StatelessWidget {
                 const SizedBox(width: 8),
                 Text(
                   'Current Progress: ${dietPlan.progressPercentage}',
-                  style: TextStyle(
-                    fontSize: 14,
+                  style: AppTextStyles.bodySmall.copyWith(
                     fontWeight: FontWeight.w600,
                     color: dietPlan.progressColor,
                   ),

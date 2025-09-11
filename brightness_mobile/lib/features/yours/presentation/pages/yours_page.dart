@@ -1,7 +1,8 @@
-import 'package:brightness_mobile/core/widgets/bottom_navbar.dart';
 import 'package:flutter/material.dart';
 import '../../../../core/widgets/bottom_navbar.dart';
-
+import '../../../../core/theme/app_colors.dart';
+import '../../../../core/theme/app_text_styles.dart';
+import '../../../../core/theme/app_theme.dart';
 
 class YoursPage extends StatefulWidget {
   const YoursPage({Key? key}) : super(key: key);
@@ -24,15 +25,7 @@ class _YoursPageState extends State<YoursPage> {
     return Scaffold(
       body: Container(
         decoration: const BoxDecoration(
-          gradient: LinearGradient(
-            begin: Alignment.topCenter,
-            end: Alignment.bottomCenter,
-            colors: [
-              Color(0xFF4CAF50), // Dark green
-              Color(0xFF8BC34A), // Medium green
-              Color(0xFFCDDC39), // Yellow green
-            ],
-          ),
+          gradient: AppColors.customGradientVertical, // ✅ dùng gradient system
         ),
         child: SafeArea(
           child: Column(
@@ -54,17 +47,13 @@ class _YoursPageState extends State<YoursPage> {
 
   Widget _buildHeader() {
     return Padding(
-      padding: const EdgeInsets.all(24.0),
+      padding: const EdgeInsets.all(AppTheme.spacingL),
       child: Row(
         children: [
           const Expanded(
             child: Text(
               'Yours',
-              style: TextStyle(
-                fontSize: 32,
-                fontWeight: FontWeight.w600,
-                color: Colors.white,
-              ),
+              style: AppTextStyles.h1, // ✅ dùng style system
               textAlign: TextAlign.center,
             ),
           ),
@@ -75,7 +64,7 @@ class _YoursPageState extends State<YoursPage> {
 
   Widget _buildContent() {
     return Padding(
-      padding: const EdgeInsets.symmetric(horizontal: 24.0),
+      padding: const EdgeInsets.symmetric(horizontal: AppTheme.spacingL),
       child: ListView.builder(
         itemCount: _dietPlans.length,
         itemBuilder: (context, index) {
@@ -87,53 +76,41 @@ class _YoursPageState extends State<YoursPage> {
 
   Widget _buildDietCard(DietPlan dietPlan) {
     return Container(
-      margin: const EdgeInsets.only(bottom: 16),
-      padding: const EdgeInsets.all(20),
-      decoration: BoxDecoration(
-        color: Colors.white,
-        borderRadius: BorderRadius.circular(16),
-        boxShadow: [
-          BoxShadow(
-            color: Colors.black.withOpacity(0.1),
-            blurRadius: 10,
-            offset: const Offset(0, 2),
-          ),
-        ],
-      ),
+      margin: const EdgeInsets.only(bottom: AppTheme.spacingM),
+      padding: const EdgeInsets.all(AppTheme.spacingL),
+      decoration: AppTheme.cardDecoration(), // ✅ dùng card style
       child: InkWell(
         onTap: () => _onDietCardTap(dietPlan),
-        borderRadius: BorderRadius.circular(16),
+        borderRadius: BorderRadius.circular(AppTheme.radiusL),
         child: Row(
           children: [
             // Diet Icon
             Container(
-              width: 48,
-              height: 48,
+              width: AppTheme.iconSizeXL,
+              height: AppTheme.iconSizeXL,
               decoration: BoxDecoration(
-                color: const Color(0xFFF1F8E9),
-                borderRadius: BorderRadius.circular(12),
+                color: AppColors.backgroundLight,
+                borderRadius: BorderRadius.circular(AppTheme.radiusM),
               ),
               child: const Icon(
                 Icons.restaurant_menu,
-                color: Color(0xFF4CAF50),
-                size: 24,
+                color: AppColors.success,
+                size: AppTheme.iconSizeM,
               ),
             ),
-            const SizedBox(width: 16),
+            const SizedBox(width: AppTheme.spacingM),
             // Content
             Expanded(
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  const Text(
+                  Text(
                     'HEALTHY DIET',
-                    style: TextStyle(
-                      fontSize: 16,
-                      fontWeight: FontWeight.w600,
-                      color: Color(0xFF333333),
+                    style: AppTextStyles.h2.copyWith(
+                      color: AppColors.textPrimary,
                     ),
                   ),
-                  const SizedBox(height: 12),
+                  const SizedBox(height: AppTheme.spacingM),
                   // Progress Bar
                   Row(
                     children: [
@@ -141,7 +118,7 @@ class _YoursPageState extends State<YoursPage> {
                         child: Container(
                           height: 6,
                           decoration: BoxDecoration(
-                            color: Colors.grey.shade200,
+                            color: AppColors.border,
                             borderRadius: BorderRadius.circular(3),
                           ),
                           child: FractionallySizedBox(
@@ -149,20 +126,18 @@ class _YoursPageState extends State<YoursPage> {
                             widthFactor: dietPlan.progress,
                             child: Container(
                               decoration: BoxDecoration(
-                                color: const Color(0xFF4CAF50),
+                                color: AppColors.success,
                                 borderRadius: BorderRadius.circular(3),
                               ),
                             ),
                           ),
                         ),
                       ),
-                      const SizedBox(width: 8),
+                      const SizedBox(width: AppTheme.spacingS),
                       Text(
                         '${(dietPlan.progress * 100).round()}%',
-                        style: TextStyle(
-                          fontSize: 12,
-                          color: Colors.grey.shade600,
-                          fontWeight: FontWeight.w500,
+                        style: AppTextStyles.caption.copyWith(
+                          color: AppColors.textSecondary,
                         ),
                       ),
                     ],
@@ -170,12 +145,12 @@ class _YoursPageState extends State<YoursPage> {
                 ],
               ),
             ),
-            const SizedBox(width: 16),
+            const SizedBox(width: AppTheme.spacingM),
             // Arrow Icon
-            Icon(
+            const Icon(
               Icons.chevron_right,
-              color: Colors.grey.shade400,
-              size: 24,
+              color: AppColors.textSecondary,
+              size: AppTheme.iconSizeM,
             ),
           ],
         ),
@@ -187,7 +162,7 @@ class _YoursPageState extends State<YoursPage> {
     setState(() {
       _currentNavIndex = index;
     });
-    
+
     // Handle navigation to different pages
     switch (index) {
       case 0:
@@ -209,12 +184,7 @@ class _YoursPageState extends State<YoursPage> {
   }
 
   void _onDietCardTap(DietPlan dietPlan) {
-    // Handle diet card tap
-    print('Tapped on diet plan: ${dietPlan.id}');
-      // Navigate to diet plan details
-      // Navigator.push(context, MaterialPageRoute(
-      //   builder: (_) => DietPlanDetailPage(dietPlan: dietPlan),
-      // ));
+    debugPrint('Tapped on diet plan: ${dietPlan.id}');
   }
 }
 
@@ -227,43 +197,4 @@ class DietPlan {
     required this.id,
     required this.progress,
   });
-}
-
-// Example of how to use the navbar in other pages
-class HomePage extends StatefulWidget {
-  const HomePage({Key? key}) : super(key: key);
-
-  @override
-  State<HomePage> createState() => _HomePageState();
-}
-
-class _HomePageState extends State<HomePage> {
-  int _currentNavIndex = 0; // Home tab is active
-
-  @override
-  Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
-        title: const Text('Home'),
-      ),
-      body: const Center(
-        child: Text('Home Page Content'),
-      ),
-      bottomNavigationBar: BottomNavbar(
-        currentIndex: _currentNavIndex,
-        onTap: (index) {
-          setState(() {
-            _currentNavIndex = index;
-          });
-          // Handle navigation
-          if (index == 2) {
-            Navigator.push(
-              context,
-              MaterialPageRoute(builder: (_) => const YoursPage()),
-            );
-          }
-        },
-      ),
-    );
-  }
 }

@@ -1,5 +1,9 @@
 // lib/features/gamification/presentation/widgets/leaderboard_item.dart
 import 'package:flutter/material.dart';
+import '../../../../core/theme/app_colors.dart';
+import '../../../../core/theme/app_text_styles.dart';
+import '../../../../core/theme/app_theme.dart';
+
 import '../../data/models/leaderboard_user.dart';
 
 class LeaderboardItem extends StatelessWidget {
@@ -15,20 +19,23 @@ class LeaderboardItem extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      margin: const EdgeInsets.only(bottom: 12),
-      padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 12),
+      margin: const EdgeInsets.only(bottom: AppTheme.spacingM),
+      padding: const EdgeInsets.symmetric(
+        horizontal: AppTheme.spacingL,
+        vertical: AppTheme.spacingM,
+      ),
       decoration: BoxDecoration(
-        color: Colors.white,
-        borderRadius: BorderRadius.circular(12),
+        color: AppColors.white,
+        borderRadius: BorderRadius.circular(AppTheme.radiusM),
         border: Border.all(
-          color: Colors.grey.shade200,
+          color: AppColors.borderLight,
           width: 1,
         ),
         boxShadow: [
           BoxShadow(
-            color: Colors.black.withOpacity(0.05),
-            blurRadius: 4,
-            offset: const Offset(0, 2),
+            color: AppColors.shadow.withOpacity(0.05),
+            blurRadius: AppTheme.shadowBlur,
+            offset: const Offset(0, AppTheme.shadowOffset),
           ),
         ],
       ),
@@ -36,51 +43,46 @@ class LeaderboardItem extends StatelessWidget {
         children: [
           // Rank
           Container(
-            width: 32,
-            height: 32,
+            width: AppTheme.avatarS,
+            height: AppTheme.avatarS,
             decoration: BoxDecoration(
-              color: _getRankColor().withOpacity(0.1),
+              color: _getRankColorBackground(),
               shape: BoxShape.circle,
             ),
             child: Center(
               child: Text(
                 rank.toString().padLeft(2, '0'),
-                style: TextStyle(
-                  fontSize: 14,
+                style: AppTextStyles.bodySmall.copyWith(
                   fontWeight: FontWeight.w600,
                   color: _getRankColor(),
                 ),
               ),
             ),
           ),
-          const SizedBox(width: 12),
+          const SizedBox(width: AppTheme.spacingM),
           // Avatar
           Container(
-            width: 40,
-            height: 40,
+            width: AppTheme.avatarM,
+            height: AppTheme.avatarM,
             decoration: BoxDecoration(
               shape: BoxShape.circle,
               gradient: LinearGradient(
                 begin: Alignment.topLeft,
                 end: Alignment.bottomRight,
-                colors: [
-                  _getAvatarColors()[0],
-                  _getAvatarColors()[1],
-                ],
+                colors: _getAvatarColors(),
               ),
             ),
             child: Center(
               child: Text(
                 user.name.substring(0, 1).toUpperCase(),
-                style: const TextStyle(
-                  fontSize: 16,
+                style: AppTextStyles.bodyMedium.copyWith(
                   fontWeight: FontWeight.bold,
-                  color: Colors.white,
+                  color: AppColors.white,
                 ),
               ),
             ),
           ),
-          const SizedBox(width: 12),
+          const SizedBox(width: AppTheme.spacingM),
           // User Info
           Expanded(
             child: Column(
@@ -88,19 +90,16 @@ class LeaderboardItem extends StatelessWidget {
               children: [
                 Text(
                   user.name,
-                  style: const TextStyle(
-                    fontSize: 16,
+                  style: AppTextStyles.bodyMedium.copyWith(
                     fontWeight: FontWeight.w600,
-                    color: Color(0xFF333333),
+                    color: AppColors.textPrimary,
                   ),
                 ),
-                const SizedBox(height: 2),
+                const SizedBox(height: AppTheme.spacingXS),
                 Text(
                   '${user.points} points',
-                  style: TextStyle(
-                    fontSize: 12,
-                    color: Colors.grey.shade600,
-                    fontWeight: FontWeight.w400,
+                  style: AppTextStyles.captionRegular.copyWith(
+                    color: AppColors.textSecondary,
                   ),
                 ),
               ],
@@ -108,16 +107,16 @@ class LeaderboardItem extends StatelessWidget {
           ),
           // Trend Icon
           Container(
-            width: 32,
-            height: 32,
+            width: AppTheme.avatarS,
+            height: AppTheme.avatarS,
             decoration: BoxDecoration(
-              color: _getTrendColor().withOpacity(0.1),
+              color: _getTrendColorBackground(),
               shape: BoxShape.circle,
             ),
             child: Icon(
               _getTrendIcon(),
               color: _getTrendColor(),
-              size: 16,
+              size: AppTheme.iconSizeS,
             ),
           ),
         ],
@@ -125,42 +124,41 @@ class LeaderboardItem extends StatelessWidget {
     );
   }
 
+  /// Rank colors
   Color _getRankColor() {
-    if (rank <= 3) {
-      return const Color(0xFF2E7D32); // Green for top 3
-    } else if (rank <= 6) {
-      return const Color(0xFF4CAF50); // Medium green for 4-6
-    } else {
-      return const Color(0xFF8BC34A); // Light green for 7+
-    }
+    if (rank <= 3) return AppColors.successDark;
+    if (rank <= 6) return AppColors.success;
+    return AppColors.successLight;
   }
 
+  Color _getRankColorBackground() {
+    return _getRankColor().withOpacity(0.1);
+  }
+
+  /// Avatar gradient colors
   List<Color> _getAvatarColors() {
-    // Generate consistent colors based on user ID
     final colors = [
-      [const Color(0xFF3182CE), const Color(0xFF4299E1)], // Blue
-      [const Color(0xFF38A169), const Color(0xFF48BB78)], // Green
-      [const Color(0xFF9F7AEA), const Color(0xFFB794F6)], // Purple
-      [const Color(0xFFED8936), const Color(0xFFF6AD55)], // Orange
-      [const Color(0xFFE53E3E), const Color(0xFFFC8181)], // Red
-      [const Color(0xFF38B2AC), const Color(0xFF4FD1C7)], // Teal
+      [AppColors.primaryBlue, AppColors.primaryLightBlue],
+      [AppColors.successDark, AppColors.success],
+      [AppColors.purpleDark, AppColors.purpleLight],
+      [AppColors.orangeDark, AppColors.orangeLight],
+      [AppColors.redDark, AppColors.redLight],
+      [AppColors.tealDark, AppColors.tealLight],
     ];
-    
     final index = user.id.hashCode.abs() % colors.length;
     return colors[index];
   }
 
+  /// Trend colors
   Color _getTrendColor() {
-    // Simulate trend based on rank - even ranks go up, odd ranks go down
-    return rank % 2 == 0 
-        ? const Color(0xFF3182CE) // Blue for up trend
-        : const Color(0xFFE53E3E); // Red for down trend
+    return rank % 2 == 0 ? AppColors.primaryBlue : AppColors.redDark;
+  }
+
+  Color _getTrendColorBackground() {
+    return _getTrendColor().withOpacity(0.1);
   }
 
   IconData _getTrendIcon() {
-    // Simulate trend based on rank - even ranks go up, odd ranks go down
-    return rank % 2 == 0 
-        ? Icons.keyboard_arrow_up 
-        : Icons.keyboard_arrow_down;
+    return rank % 2 == 0 ? Icons.keyboard_arrow_up : Icons.keyboard_arrow_down;
   }
 }
