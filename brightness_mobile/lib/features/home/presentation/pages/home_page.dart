@@ -115,7 +115,7 @@ class _HomeScreenState extends State<HomeScreen> {
                                       return Transform.translate(
                                         offset: const Offset(
                                           0,
-                                          25,
+                                          1,
                                         ), // kéo Fox xuống một chút
                                         child: FoxMascotBox(
                                           size: foxSize,
