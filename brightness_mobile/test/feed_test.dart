@@ -8,12 +8,10 @@ import 'package:brightness_mobile/features/feed/widgets/hashtag_text.dart';
 
 void main() {
   group('Feed Components Tests', () {
-    testWidgets('FeedScreen should render correctly', (WidgetTester tester) async {
-      await tester.pumpWidget(
-        const MaterialApp(
-          home: FeedScreen(),
-        ),
-      );
+    testWidgets('FeedScreen should render correctly', (
+      WidgetTester tester,
+    ) async {
+      await tester.pumpWidget(const MaterialApp(home: FeedScreen()));
 
       expect(find.text('FitNews'), findsOneWidget);
       expect(find.text('Following'), findsOneWidget);
@@ -21,25 +19,26 @@ void main() {
       expect(find.text('Newest'), findsOneWidget);
     });
 
-    testWidgets('FeedAppBar should have correct elements', (WidgetTester tester) async {
+    testWidgets('FeedAppBar should have correct elements', (
+      WidgetTester tester,
+    ) async {
       await tester.pumpWidget(
         const MaterialApp(
-          home: Scaffold(
-            appBar: FeedAppBar(),
-            body: SizedBox(),
-          ),
+          home: Scaffold(appBar: FeedAppBar(), body: SizedBox()),
         ),
       );
 
       expect(find.text('FitNews'), findsOneWidget);
-      expect(find.byIcon(Icons.arrow_back_ios), findsOneWidget);
+      expect(find.byIcon(Icons.arrow_back), findsOneWidget);
       expect(find.byIcon(Icons.search), findsOneWidget);
       expect(find.byIcon(Icons.notifications_outlined), findsOneWidget);
     });
 
-    testWidgets('FeedTabs should switch tabs correctly', (WidgetTester tester) async {
+    testWidgets('FeedTabs should switch tabs correctly', (
+      WidgetTester tester,
+    ) async {
       String selectedTab = 'Following';
-      
+
       await tester.pumpWidget(
         MaterialApp(
           home: Scaffold(
@@ -61,7 +60,9 @@ void main() {
       await tester.pump();
     });
 
-    testWidgets('SocialPostCard should render with sample data', (WidgetTester tester) async {
+    testWidgets('SocialPostCard should render with sample data', (
+      WidgetTester tester,
+    ) async {
       await tester.pumpWidget(
         const MaterialApp(
           home: Scaffold(
@@ -85,7 +86,9 @@ void main() {
       expect(find.textContaining('This is a test post'), findsOneWidget);
     });
 
-    testWidgets('HashtagText should render hashtags with colors', (WidgetTester tester) async {
+    testWidgets('HashtagText should render hashtags with colors', (
+      WidgetTester tester,
+    ) async {
       await tester.pumpWidget(
         const MaterialApp(
           home: Scaffold(

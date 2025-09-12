@@ -9,10 +9,7 @@ class AiHeader extends StatelessWidget implements PreferredSizeWidget {
       backgroundColor: Colors.white,
       elevation: 0,
       leading: IconButton(
-        icon: const Icon(
-          Icons.arrow_back_ios,
-          color: Color(0xFF1F2937),
-        ),
+        icon: const Icon(Icons.arrow_back, color: Color(0xFF1F2937)),
         onPressed: () {
           Navigator.of(context).pop();
         },
@@ -27,10 +24,7 @@ class AiHeader extends StatelessWidget implements PreferredSizeWidget {
               borderRadius: BorderRadius.circular(8),
             ),
             child: const Center(
-              child: Text(
-                '🦊',
-                style: TextStyle(fontSize: 18),
-              ),
+              child: Text('🦊', style: TextStyle(fontSize: 18)),
             ),
           ),
           const SizedBox(width: 12),
@@ -49,20 +43,13 @@ class AiHeader extends StatelessWidget implements PreferredSizeWidget {
               color: const Color(0xFF4CAF50),
               borderRadius: BorderRadius.circular(4),
             ),
-            child: const Icon(
-              Icons.settings,
-              color: Colors.white,
-              size: 16,
-            ),
+            child: const Icon(Icons.settings, color: Colors.white, size: 16),
           ),
         ],
       ),
       actions: [
         IconButton(
-          icon: const Icon(
-            Icons.search,
-            color: Color(0xFF1F2937),
-          ),
+          icon: const Icon(Icons.search, color: Color(0xFF1F2937)),
           onPressed: () {
             // TODO: Implement search functionality
           },

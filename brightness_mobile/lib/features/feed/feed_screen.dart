@@ -26,15 +26,8 @@ class _FeedScreenState extends State<FeedScreen> {
       appBar: const FeedAppBar(),
       body: Column(
         children: [
-          FeedTabs(
-            selectedTab: _selectedTab,
-            onTabChanged: _onTabChanged,
-          ),
-          Expanded(
-            child: SocialFeed(
-              selectedTab: _selectedTab,
-            ),
-          ),
+          FeedTabs(selectedTab: _selectedTab, onTabChanged: _onTabChanged),
+          Expanded(child: SocialFeed(selectedTab: _selectedTab)),
         ],
       ),
       floatingActionButton: FloatingActionButton(
@@ -42,10 +35,7 @@ class _FeedScreenState extends State<FeedScreen> {
           Navigator.of(context).pushNamed('/create-post');
         },
         backgroundColor: const Color(0xFF4CAF50),
-        child: const Icon(
-          Icons.add,
-          color: Colors.white,
-        ),
+        child: const Icon(Icons.add, color: Colors.white),
       ),
     );
   }

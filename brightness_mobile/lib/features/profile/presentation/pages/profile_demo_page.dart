@@ -29,11 +29,11 @@ class ProfileDemoPage extends StatelessWidget {
             // Header section
             _buildHeaderSection(),
             const SizedBox(height: AppTheme.spacingXXL),
-            
+
             // Demo pages section
             _buildDemoPagesSection(context),
             const SizedBox(height: AppTheme.spacingXXL),
-            
+
             // Components section
             _buildComponentsSection(context),
           ],
@@ -84,12 +84,9 @@ class ProfileDemoPage extends StatelessWidget {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        Text(
-          'Demo Pages',
-          style: AppTheme.textStyleHeadline3,
-        ),
+        Text('Demo Pages', style: AppTheme.textStyleHeadline3),
         const SizedBox(height: AppTheme.spacingL),
-        
+
         // User Profile Page
         _buildDemoCard(
           title: 'User Profile Page',
@@ -98,13 +95,14 @@ class ProfileDemoPage extends StatelessWidget {
           onTap: () {
             Navigator.of(context).push(
               MaterialPageRoute(
-                builder: (context) => const UserProfilePage(isOwnProfile: false),
+                builder: (context) =>
+                    const UserProfilePage(isOwnProfile: false),
               ),
             );
           },
         ),
         const SizedBox(height: AppTheme.spacingM),
-        
+
         // My Profile Page
         _buildDemoCard(
           title: 'My Profile Page',
@@ -119,7 +117,7 @@ class ProfileDemoPage extends StatelessWidget {
           },
         ),
         const SizedBox(height: AppTheme.spacingM),
-        
+
         // Edit Profile Page
         _buildDemoCard(
           title: 'Edit Profile Page',
@@ -127,18 +125,17 @@ class ProfileDemoPage extends StatelessWidget {
           icon: Icons.edit,
           onTap: () {
             Navigator.of(context).push(
-              MaterialPageRoute(
-                builder: (context) => const EditProfilePage(),
-              ),
+              MaterialPageRoute(builder: (context) => const EditProfilePage()),
             );
           },
         ),
         const SizedBox(height: AppTheme.spacingM),
-        
+
         // First Aid Videos Page
         _buildDemoCard(
           title: 'First Aid Videos Page',
-          description: 'Medical videos with iFrame player and category filtering',
+          description:
+              'Medical videos with iFrame player and category filtering',
           icon: Icons.medical_services,
           onTap: () {
             Navigator.of(context).push(
@@ -149,17 +146,16 @@ class ProfileDemoPage extends StatelessWidget {
           },
         ),
         const SizedBox(height: AppTheme.spacingM),
-        
+
         // Watch Video Page
         _buildDemoCard(
           title: 'Watch Video Page',
-          description: 'Full video player with controls, info, and related videos',
+          description:
+              'Full video player with controls, info, and related videos',
           icon: Icons.play_circle_filled,
           onTap: () {
             Navigator.of(context).push(
-              MaterialPageRoute(
-                builder: (context) => const WatchVideoPage(),
-              ),
+              MaterialPageRoute(builder: (context) => const WatchVideoPage()),
             );
           },
         ),
@@ -171,12 +167,9 @@ class ProfileDemoPage extends StatelessWidget {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        Text(
-          'Reusable Components',
-          style: AppTheme.textStyleHeadline3,
-        ),
+        Text('Reusable Components', style: AppTheme.textStyleHeadline3),
         const SizedBox(height: AppTheme.spacingL),
-        
+
         CustomButton.outline(
           text: 'View All Components',
           onPressed: () {
@@ -229,10 +222,7 @@ class ProfileDemoPage extends StatelessWidget {
                     ),
                   ),
                   const SizedBox(height: AppTheme.spacingXS),
-                  Text(
-                    description,
-                    style: AppTheme.textStyleCaption,
-                  ),
+                  Text(description, style: AppTheme.textStyleCaption),
                 ],
               ),
             ),
@@ -259,52 +249,124 @@ class ProfileDemoPage extends StatelessWidget {
             children: [
               // Profile Components
               _buildComponentSection('Profile Components'),
-              _buildComponentItem('ProfileHeader', 'Avatar, name, job, location, hobby labels'),
-              _buildComponentItem('StatsRow', 'Posts and likes metrics display'),
-              _buildComponentItem('ActionButtons', 'Edit profile and Add friend buttons'),
-              _buildComponentItem('PostCard', 'User posts with content and images'),
-              _buildComponentItem('FeedSection', 'Scrollable posts list with loading states'),
-              
+              _buildComponentItem(
+                'ProfileHeader',
+                'Avatar, name, job, location, hobby labels',
+              ),
+              _buildComponentItem(
+                'StatsRow',
+                'Posts and likes metrics display',
+              ),
+              _buildComponentItem(
+                'ActionButtons',
+                'Edit profile and Add friend buttons',
+              ),
+              _buildComponentItem(
+                'PostCard',
+                'User posts with content and images',
+              ),
+              _buildComponentItem(
+                'FeedSection',
+                'Scrollable posts list with loading states',
+              ),
+
               const SizedBox(height: AppTheme.spacingL),
-              
+
               // Video Components
               _buildComponentSection('Video Components'),
-              _buildComponentItem('VideoAppBar', 'Navigation, title, and filter options'),
-              _buildComponentItem('CategoryTabs', 'Horizontal scrollable category filter'),
-              _buildComponentItem('SearchBar', 'Video search with voice integration'),
-              _buildComponentItem('VideoCard', 'Video player with iFrame and metadata'),
-              _buildComponentItem('VideoFeed', 'Scrollable video list with infinite scroll'),
-              _buildComponentItem('PullToRefresh', 'Refresh mechanism with loading states'),
-              
+              _buildComponentItem(
+                'VideoAppBar',
+                'Navigation, title, and filter options',
+              ),
+              _buildComponentItem(
+                'CategoryTabs',
+                'Horizontal scrollable category filter',
+              ),
+              _buildComponentItem(
+                'SearchBar',
+                'Video search with voice integration',
+              ),
+              _buildComponentItem(
+                'VideoCard',
+                'Video player with iFrame and metadata',
+              ),
+              _buildComponentItem(
+                'VideoFeed',
+                'Scrollable video list with infinite scroll',
+              ),
+              _buildComponentItem(
+                'PullToRefresh',
+                'Refresh mechanism with loading states',
+              ),
+
               const SizedBox(height: AppTheme.spacingL),
-              
+
               // Watch Video Components
               _buildComponentSection('Watch Video Components'),
-              _buildComponentItem('VideoPlayerHeader', 'Navigation and menu options'),
-              _buildComponentItem('MainVideoPlayer', 'Full-width iFrame video player with controls'),
-              _buildComponentItem('VideoInfo', 'Title, duration, date, and description'),
-              _buildComponentItem('AuthorInfo', 'Author avatar, name, and credentials'),
-              _buildComponentItem('VideoActions', 'Save offline and bookmark buttons'),
-              _buildComponentItem('RelatedVideos', 'List of related videos without play overlays'),
-              _buildComponentItem('VideoListItem', 'Individual related video item'),
-              
+              _buildComponentItem(
+                'VideoPlayerHeader',
+                'Navigation and menu options',
+              ),
+              _buildComponentItem(
+                'MainVideoPlayer',
+                'Full-width iFrame video player with controls',
+              ),
+              _buildComponentItem(
+                'VideoInfo',
+                'Title, duration, date, and description',
+              ),
+              _buildComponentItem(
+                'AuthorInfo',
+                'Author avatar, name, and credentials',
+              ),
+              _buildComponentItem(
+                'VideoActions',
+                'Save offline and bookmark buttons',
+              ),
+              _buildComponentItem(
+                'RelatedVideos',
+                'List of related videos without play overlays',
+              ),
+              _buildComponentItem(
+                'VideoListItem',
+                'Individual related video item',
+              ),
+
               const SizedBox(height: AppTheme.spacingL),
-              
+
               // Form Components
               _buildComponentSection('Form Components'),
-              _buildComponentItem('CustomTextField', 'Text input with validation'),
-              _buildComponentItem('CustomDropdownField', 'Dropdown with search support'),
-              _buildComponentItem('ProfileAvatar', 'Image picker with camera/gallery'),
-              _buildComponentItem('CustomButton', 'Multiple button types with loading'),
+              _buildComponentItem(
+                'CustomTextField',
+                'Text input with validation',
+              ),
+              _buildComponentItem(
+                'CustomDropdownField',
+                'Dropdown with search support',
+              ),
+              _buildComponentItem(
+                'ProfileAvatar',
+                'Image picker with camera/gallery',
+              ),
+              _buildComponentItem(
+                'CustomButton',
+                'Multiple button types with loading',
+              ),
               _buildComponentItem('FormSection', 'Grouped form sections'),
-              
+
               const SizedBox(height: AppTheme.spacingL),
-              
+
               // Core Components
               _buildComponentSection('Core Components'),
               _buildComponentItem('AppTheme', 'Consistent styling system'),
-              _buildComponentItem('ValidationRules', 'Comprehensive validation'),
-              _buildComponentItem('EditProfileController', 'State management with Provider'),
+              _buildComponentItem(
+                'ValidationRules',
+                'Comprehensive validation',
+              ),
+              _buildComponentItem(
+                'EditProfileController',
+                'State management with Provider',
+              ),
             ],
           ),
         ),
@@ -320,7 +382,10 @@ class ProfileDemoPage extends StatelessWidget {
 
   Widget _buildComponentSection(String title) {
     return Padding(
-      padding: const EdgeInsets.only(bottom: AppTheme.spacingS, top: AppTheme.spacingM),
+      padding: const EdgeInsets.only(
+        bottom: AppTheme.spacingS,
+        top: AppTheme.spacingM,
+      ),
       child: Text(
         title,
         style: AppTheme.textStyleBody1.copyWith(
@@ -353,10 +418,7 @@ class ProfileDemoPage extends StatelessWidget {
                     fontWeight: AppTheme.fontWeightMedium,
                   ),
                 ),
-                Text(
-                  description,
-                  style: AppTheme.textStyleCaption,
-                ),
+                Text(description, style: AppTheme.textStyleCaption),
               ],
             ),
           ),

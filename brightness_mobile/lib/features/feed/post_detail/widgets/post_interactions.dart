@@ -8,6 +8,7 @@ class PostInteractions extends StatelessWidget {
   final int commentsCount;
   final VoidCallback? onLikePressed;
   final VoidCallback? onBookmarkPressed;
+  final Map<String, dynamic>? postData;
 
   const PostInteractions({
     super.key,
@@ -17,6 +18,7 @@ class PostInteractions extends StatelessWidget {
     required this.commentsCount,
     this.onLikePressed,
     this.onBookmarkPressed,
+    this.postData,
   });
 
   @override
@@ -27,8 +29,12 @@ class PostInteractions extends StatelessWidget {
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           // Hashtags
-          const HashtagText(
-            text: '#Running #10K #PersonalBest',
+          Text(
+            _getHashtags(),
+            style: const TextStyle(
+              color: Color(0xFF1F2937),
+              fontSize: 16,
+            ),
           ),
           const SizedBox(height: 16),
           // Engagement bar
@@ -110,5 +116,16 @@ class PostInteractions extends StatelessWidget {
       return '${(count / 1000).toStringAsFixed(1)}K';
     }
     return count.toString();
+  }
+
+  String _getHashtags() {
+    final tags = postData?['tags'];
+    if (tags == null || tags.isEmpty) {
+      return '#Fitness #Motivation';
+    }
+    if (tags is List) {
+      return tags.map((tag) => '#$tag').join(' ');
+    }
+    return '#Fitness #Motivation';
   }
 }

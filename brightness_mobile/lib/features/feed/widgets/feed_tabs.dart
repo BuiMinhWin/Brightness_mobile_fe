@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import '../../../core/theme/app_theme.dart';
 
 class FeedTabs extends StatelessWidget {
   final String selectedTab;
@@ -29,18 +30,25 @@ class FeedTabs extends StatelessWidget {
       child: GestureDetector(
         onTap: () => onTabChanged(title),
         child: Container(
-          padding: const EdgeInsets.symmetric(vertical: 16),
+          height: 48, // Fixed height for consistent tab size
+          margin: const EdgeInsets.symmetric(
+            horizontal: 4,
+          ), // Space between tabs
+          padding: const EdgeInsets.symmetric(vertical: 12, horizontal: 16),
           decoration: BoxDecoration(
-            color: isSelected ? const Color(0xFF4CAF50) : Colors.transparent,
-            borderRadius: BorderRadius.circular(8),
+            color: isSelected ? AppTheme.feedBarColor : Colors.transparent,
+            borderRadius: BorderRadius.circular(100), // More balanced radius
           ),
-          child: Text(
-            title,
-            textAlign: TextAlign.center,
-            style: TextStyle(
-              color: isSelected ? Colors.white : const Color(0xFF6B7280),
-              fontSize: 16,
-              fontWeight: isSelected ? FontWeight.w600 : FontWeight.w400,
+          child: Center(
+            // Ensures perfect centering
+            child: Text(
+              title,
+              textAlign: TextAlign.center,
+              style: TextStyle(
+                color: isSelected ? Colors.white : const Color(0xFF6B7280),
+                fontSize: 16,
+                fontWeight: isSelected ? FontWeight.w600 : FontWeight.w400,
+              ),
             ),
           ),
         ),

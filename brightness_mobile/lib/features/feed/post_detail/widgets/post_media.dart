@@ -2,7 +2,12 @@ import 'package:flutter/material.dart';
 import 'post_stats_overlay.dart';
 
 class PostMedia extends StatelessWidget {
-  const PostMedia({super.key});
+  final Map<String, dynamic>? postData;
+
+  const PostMedia({
+    super.key,
+    this.postData,
+  });
 
   @override
   Widget build(BuildContext context) {

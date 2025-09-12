@@ -40,8 +40,14 @@ class HashtagText extends StatelessWidget {
       }
     }
 
-    return RichText(
-      text: TextSpan(children: spans),
+    return SizedBox(
+      width: double.infinity,
+      child: RichText(
+        text: TextSpan(children: spans),
+        overflow: TextOverflow.visible,
+        softWrap: true,
+        maxLines: null,
+      ),
     );
   }
 

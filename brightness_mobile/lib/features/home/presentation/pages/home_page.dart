@@ -89,14 +89,15 @@ class _HomeScreenState extends State<HomeScreen> {
                                       dailyStats: controller.dailyStats!,
                                     ),
                                   ),
-                                Positioned(
-                                  bottom: 0,
-                                  left: 0,
-                                  right: 0,
-                                  child: CalorieInfoOverlay(
-                                    dailyStats: controller.dailyStats!,
+                                if (controller.dailyStats != null)
+                                  Positioned(
+                                    bottom: 0,
+                                    left: 0,
+                                    right: 0,
+                                    child: CalorieInfoOverlay(
+                                      dailyStats: controller.dailyStats!,
+                                    ),
                                   ),
-                                ),
 
                                 // Fox Mascot ở trên, positioned ở bên phải
                                 Positioned(

@@ -9,16 +9,16 @@ class PostDetailHeader extends StatelessWidget implements PreferredSizeWidget {
       backgroundColor: Colors.white,
       elevation: 0,
       leading: IconButton(
-        icon: const Icon(
-          Icons.arrow_back_ios,
-          color: Color(0xFF1F2937),
-        ),
+        icon: const Icon(Icons.arrow_back, color: Color(0xFF1F2937)),
         onPressed: () {
           Navigator.of(context).pop();
         },
       ),
       title: Row(
+        mainAxisAlignment: MainAxisAlignment.center,
         children: [
+          Image.asset('assets/images/logo b&w-07.png', width: 24, height: 24),
+          const SizedBox(width: 8),
           const Text(
             'Post',
             style: TextStyle(
@@ -27,27 +27,11 @@ class PostDetailHeader extends StatelessWidget implements PreferredSizeWidget {
               fontWeight: FontWeight.bold,
             ),
           ),
-          const SizedBox(width: 8),
-          Container(
-            padding: const EdgeInsets.all(4),
-            decoration: BoxDecoration(
-              color: const Color(0xFF4CAF50),
-              borderRadius: BorderRadius.circular(4),
-            ),
-            child: const Icon(
-              Icons.settings,
-              color: Colors.white,
-              size: 16,
-            ),
-          ),
         ],
       ),
       actions: [
         IconButton(
-          icon: const Icon(
-            Icons.more_horiz,
-            color: Color(0xFF1F2937),
-          ),
+          icon: const Icon(Icons.more_horiz, color: Color(0xFF1F2937)),
           onPressed: () {
             _showPostOptions(context);
           },

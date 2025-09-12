@@ -26,7 +26,7 @@ class CommentsSection extends StatelessWidget {
             timestamp: comment['timestamp'],
             likes: comment['likes'],
             isLiked: comment['isLiked'],
-            replies: comment['replies'],
+            replies: List<Map<String, dynamic>>.from(comment['replies'] ?? []),
           )),
         ],
       ),

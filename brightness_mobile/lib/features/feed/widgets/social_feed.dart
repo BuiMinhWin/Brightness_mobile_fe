@@ -84,7 +84,7 @@ class _SocialFeedState extends State<SocialFeed> {
             username: post['username'] as String,
             timestamp: post['timestamp'] as String,
             content: post['content'] as String,
-            imageUrls: (post['imageUrls'] as List).cast<String>(),
+            imageUrls: List<String>.from(post['imageUrls'] ?? []),
             avatarUrl: post['avatarUrl'] as String?,
             likes: post['likes'] as int,
             comments: post['comments'] as int,
@@ -96,7 +96,7 @@ class _SocialFeedState extends State<SocialFeed> {
             onCommentPressed: () => _handleComment(post),
             onSharePressed: () => _handleShare(post),
             onBookmarkPressed: () => _handleBookmark(post),
-            onImageTap: () => _showImageGallery(post['imageUrls']),
+            onImageTap: () => _showImageGallery(List<String>.from(post['imageUrls'] ?? [])),
             onPostTap: () => _navigateToPostDetail(post),
           );
         },
@@ -108,64 +108,89 @@ class _SocialFeedState extends State<SocialFeed> {
     // Sample data - in real app, this would come from API based on selectedTab
     return [
       {
+        'id': 'post_001',
+        'userId': 'user_001',
         'username': 'Mike Johnson',
+        'userAvatar': null,
         'timestamp': '2h ago',
+        'createdAt': DateTime.now().subtract(const Duration(hours: 2)).toIso8601String(),
         'content': 'Morning workout complete! 💪 Nothing beats the feeling of endorphins after a good gym session. Ready to tackle the day! #Workout #Fitness #Motivation',
         'imageUrls': [],
-        'avatarUrl': null,
         'likes': 24,
         'comments': 8,
         'shares': 3,
         'isLiked': false,
         'isBookmarked': false,
+        'isFollowing': false,
+        'tags': ['Workout', 'Fitness', 'Motivation'],
       },
       {
+        'id': 'post_002',
+        'userId': 'user_002',
         'username': 'Sarah Chen',
+        'userAvatar': null,
         'timestamp': '4h ago',
+        'createdAt': DateTime.now().subtract(const Duration(hours: 4)).toIso8601String(),
         'content': 'Sunday meal prep is complete! 🥗 These healthy bowls are going to fuel my week. Planning and preparation is key to maintaining a healthy lifestyle. #MealPrep #HealthyEating #Nutrition',
         'imageUrls': [],
-        'avatarUrl': null,
         'likes': 42,
         'comments': 12,
         'shares': 7,
         'isLiked': true,
         'isBookmarked': true,
+        'isFollowing': true,
+        'tags': ['MealPrep', 'HealthyEating', 'Nutrition'],
       },
       {
+        'id': 'post_003',
+        'userId': 'user_003',
         'username': 'Alex Rodriguez',
+        'userAvatar': null,
         'timestamp': '6h ago',
+        'createdAt': DateTime.now().subtract(const Duration(hours: 6)).toIso8601String(),
         'content': 'Just crushed my personal record on my morning run! 🏃‍♂️ 5K in 22 minutes - feeling unstoppable! Consistency is everything. #Running #PersonalRecord #MorningMotivation',
         'imageUrls': [],
-        'avatarUrl': null,
         'likes': 18,
         'comments': 5,
         'shares': 2,
         'isLiked': false,
         'isBookmarked': false,
+        'isFollowing': false,
+        'tags': ['Running', 'PersonalRecord', 'MorningMotivation'],
       },
       {
+        'id': 'post_004',
+        'userId': 'user_004',
         'username': 'Emma Wilson',
+        'userAvatar': null,
         'timestamp': '8h ago',
+        'createdAt': DateTime.now().subtract(const Duration(hours: 8)).toIso8601String(),
         'content': 'Yoga in the park this morning was exactly what I needed. 🌅 The connection between mind and body is incredible. Taking time for mindfulness is so important. #Yoga #Mindfulness #OutdoorWorkout',
         'imageUrls': [],
-        'avatarUrl': null,
         'likes': 31,
         'comments': 9,
         'shares': 4,
         'isLiked': true,
         'isBookmarked': false,
+        'isFollowing': false,
+        'tags': ['Yoga', 'Mindfulness', 'OutdoorWorkout'],
       },
       {
+        'id': 'post_005',
+        'userId': 'user_005',
         'username': 'David Kim',
+        'userAvatar': null,
         'timestamp': '10h ago',
+        'createdAt': DateTime.now().subtract(const Duration(hours: 10)).toIso8601String(),
         'content': 'Strength training session complete! 🏋️‍♂️ Progressive overload is the key to growth. Every rep counts when you\'re building towards your goals. #Workout #StrengthTraining #Fitness',
         'imageUrls': [],
-        'avatarUrl': null,
         'likes': 15,
         'comments': 3,
         'shares': 1,
         'isLiked': false,
         'isBookmarked': true,
+        'isFollowing': true,
+        'tags': ['Workout', 'StrengthTraining', 'Fitness'],
       },
     ];
   }
@@ -259,12 +284,17 @@ class _SocialFeedState extends State<SocialFeed> {
   }
 
   void _navigateToPostDetail(Map<String, dynamic> post) {
+    print('Navigating to post detail: ${post['id']}');
     Navigator.of(context).pushNamed(
       '/post-detail',
       arguments: {
-        'postId': post['username'], // Using username as postId for demo
+        'postId': post['id'], // Using proper post ID
         'postData': post,
       },
-    );
+    ).then((result) {
+      print('Returned from post detail');
+    }).catchError((error) {
+      print('Navigation error: $error');
+    });
   }
 }

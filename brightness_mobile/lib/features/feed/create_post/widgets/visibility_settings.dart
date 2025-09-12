@@ -12,99 +12,123 @@ class VisibilitySettings extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Column(
-      crossAxisAlignment: CrossAxisAlignment.start,
+    return Row(
       children: [
-        const Text(
-          'Visibility',
-          style: TextStyle(
-            color: Color(0xFF1F2937),
-            fontSize: 16,
-            fontWeight: FontWeight.w600,
+        // Globe icon on the left
+        Icon(Icons.language, color: const Color(0xFF6B7280), size: 24),
+        const SizedBox(width: 12),
+
+        // Text content in the center
+        Expanded(
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              const Text(
+                'Visibility',
+                style: TextStyle(
+                  color: Color(0xFF1F2937),
+                  fontSize: 16,
+                  fontWeight: FontWeight.w600,
+                ),
+              ),
+              const Text(
+                'Who can see this post?',
+                style: TextStyle(color: Color(0xFF6B7280), fontSize: 14),
+              ),
+            ],
           ),
         ),
-        const SizedBox(height: 8),
-        const Text(
-          'Who can see this post?',
-          style: TextStyle(
-            color: Color(0xFF6B7280),
-            fontSize: 14,
+
+        // Toggle button on the right
+        Container(
+          width: 120,
+          height: 36,
+          decoration: BoxDecoration(
+            borderRadius: BorderRadius.circular(18),
+            color: const Color(0xFFE5E7EB),
           ),
-        ),
-        const SizedBox(height: 12),
-        Row(
-          children: [
-            Expanded(
-              child: _buildVisibilityOption(
-                title: 'Public',
-                subtitle: 'Everyone can see',
-                icon: Icons.public,
-                isSelected: isPublic,
-                onTap: () => onVisibilityChanged(true),
+          child: Stack(
+            children: [
+              // Background text labels
+              Row(
+                children: [
+                  Expanded(
+                    child: Center(
+                      child: Text(
+                        'Private',
+                        style: TextStyle(
+                          color: !isPublic
+                              ? Colors.white
+                              : const Color(0xFF9CA3AF),
+                          fontSize: 11,
+                          fontWeight: FontWeight.w500,
+                        ),
+                      ),
+                    ),
+                  ),
+                  Expanded(
+                    child: Center(
+                      child: Text(
+                        'Public',
+                        style: TextStyle(
+                          color: isPublic
+                              ? Colors.white
+                              : const Color(0xFF9CA3AF),
+                          fontSize: 11,
+                          fontWeight: FontWeight.w500,
+                        ),
+                      ),
+                    ),
+                  ),
+                ],
               ),
-            ),
-            const SizedBox(width: 12),
-            Expanded(
-              child: _buildVisibilityOption(
-                title: 'Private',
-                subtitle: 'Only you',
-                icon: Icons.lock,
-                isSelected: !isPublic,
-                onTap: () => onVisibilityChanged(false),
+              // Sliding active section
+              AnimatedAlign(
+                duration: const Duration(milliseconds: 250),
+                curve: Curves.easeInOut,
+                alignment: isPublic
+                    ? Alignment.centerRight
+                    : Alignment.centerLeft,
+                child: GestureDetector(
+                  onTap: () => onVisibilityChanged(!isPublic),
+                  child: Container(
+                    width: 60,
+                    height: 36,
+                    decoration: BoxDecoration(
+                      borderRadius: BorderRadius.circular(18),
+                      color: isPublic
+                          ? const Color(0xFF4CAF50)
+                          : const Color(0xFF6B7280),
+                    ),
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: [
+                        Icon(
+                          isPublic ? Icons.public : Icons.lock,
+                          size: 12,
+                          color: Colors.white,
+                        ),
+                        const SizedBox(width: 4),
+                        Flexible(
+                          child: Text(
+                            isPublic ? 'Public' : 'Private',
+                            style: const TextStyle(
+                              color: Colors.white,
+                              fontSize: 11,
+                              fontWeight: FontWeight.w600,
+                            ),
+                            overflow: TextOverflow.ellipsis,
+                          ),
+                        ),
+                      ],
+                    ),
+                  ),
+                ),
               ),
-            ),
-          ],
+            ],
+          ),
         ),
       ],
-    );
-  }
-
-  Widget _buildVisibilityOption({
-    required String title,
-    required String subtitle,
-    required IconData icon,
-    required bool isSelected,
-    required VoidCallback onTap,
-  }) {
-    return GestureDetector(
-      onTap: onTap,
-      child: Container(
-        padding: const EdgeInsets.all(16),
-        decoration: BoxDecoration(
-          color: isSelected ? const Color(0xFF4CAF50).withOpacity(0.1) : Colors.transparent,
-          borderRadius: BorderRadius.circular(12),
-          border: Border.all(
-            color: isSelected ? const Color(0xFF4CAF50) : const Color(0xFFE5E7EB),
-            width: 2,
-          ),
-        ),
-        child: Column(
-          children: [
-            Icon(
-              icon,
-              color: isSelected ? const Color(0xFF4CAF50) : const Color(0xFF6B7280),
-              size: 24,
-            ),
-            const SizedBox(height: 8),
-            Text(
-              title,
-              style: TextStyle(
-                color: isSelected ? const Color(0xFF4CAF50) : const Color(0xFF1F2937),
-                fontSize: 14,
-                fontWeight: FontWeight.w600,
-              ),
-            ),
-            const SizedBox(height: 2),
-            Text(
-              subtitle,
-              style: const TextStyle(
-                color: Color(0xFF6B7280),
-                fontSize: 12,
-              ),
-            ),
-          ],
-        ),
-      ),
     );
   }
 }

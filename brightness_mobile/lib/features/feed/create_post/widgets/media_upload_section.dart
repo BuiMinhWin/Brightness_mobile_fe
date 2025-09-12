@@ -36,7 +36,7 @@ class MediaUploadSection extends StatelessWidget {
       },
       child: Container(
         width: double.infinity,
-        height: 120,
+        height: 200,
         decoration: BoxDecoration(
           border: Border.all(
             color: const Color(0xFFD1D5DB),
@@ -74,10 +74,7 @@ class MediaUploadSection extends StatelessWidget {
             const SizedBox(height: 4),
             const Text(
               'Share your workout clips or progress photos',
-              style: TextStyle(
-                color: Color(0xFF6B7280),
-                fontSize: 14,
-              ),
+              style: TextStyle(color: Color(0xFF6B7280), fontSize: 14),
             ),
           ],
         ),
@@ -165,11 +162,7 @@ class MediaUploadSection extends StatelessWidget {
               ),
             ),
             child: const Center(
-              child: Icon(
-                Icons.image,
-                color: Color(0xFF6B7280),
-                size: 32,
-              ),
+              child: Icon(Icons.image, color: Color(0xFF6B7280), size: 32),
             ),
           ),
           // Remove button
@@ -189,11 +182,7 @@ class MediaUploadSection extends StatelessWidget {
                   color: Colors.red,
                   shape: BoxShape.circle,
                 ),
-                child: const Icon(
-                  Icons.close,
-                  color: Colors.white,
-                  size: 16,
-                ),
+                child: const Icon(Icons.close, color: Colors.white, size: 16),
               ),
             ),
           ),
@@ -220,11 +209,7 @@ class MediaUploadSection extends StatelessWidget {
           color: const Color(0xFFF9FAFB),
         ),
         child: const Center(
-          child: Icon(
-            Icons.add,
-            color: Color(0xFF6B7280),
-            size: 32,
-          ),
+          child: Icon(Icons.add, color: Color(0xFF6B7280), size: 32),
         ),
       ),
     );
