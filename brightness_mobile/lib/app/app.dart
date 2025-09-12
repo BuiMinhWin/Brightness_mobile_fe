@@ -83,12 +83,6 @@ class App extends StatelessWidget {
         ),
         initialRoute: AppRouter.home,
         onGenerateRoute: AppRouter.generateRoute,
-        routes: {
-          '/login': (context) => const LoginPage(),
-          '/register': (context) => const RegisterPage(),
-          '/main': (context) => const MainNavigationController(),
-          '/pricing': (context) => const PricingPage(),
-        },
       ),
     );
   }

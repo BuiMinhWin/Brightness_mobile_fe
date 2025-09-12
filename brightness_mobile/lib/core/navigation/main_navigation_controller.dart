@@ -1,3 +1,74 @@
+// import 'package:brightness_mobile/features/home/presentation/pages/home_page.dart';
+// import 'package:flutter/material.dart';
+// import '../../features/yours/presentation/pages/home_page_content.dart';
+// import '../../features/yours/presentation/pages/event_page_content.dart';
+// import '../../features/yours/presentation/pages/yours_page_content.dart';
+// import '../../features/yours/presentation/pages/video_page_content.dart';
+// import '../../features/yours/presentation/pages/leaderboard_page_content.dart';
+// import '../../shared/widgets/custom_bottom_navbar.dart';
+
+// class MainNavigationController extends StatefulWidget {
+//   const MainNavigationController({super.key});
+
+//   @override
+//   State<MainNavigationController> createState() =>
+//       _MainNavigationControllerState();
+// }
+
+// class _MainNavigationControllerState extends State<MainNavigationController> {
+//   int _currentIndex = 2; // Start with Yours page
+
+//   late PageController _pageController;
+
+//   @override
+//   void initState() {
+//     super.initState();
+//     _pageController = PageController(initialPage: _currentIndex);
+//   }
+
+//   @override
+//   void dispose() {
+//     _pageController.dispose();
+//     super.dispose();
+//   }
+
+//   void _onTabTapped(int index) {
+//     setState(() {
+//       _currentIndex = index;
+//     });
+//     _pageController.animateToPage(
+//       index,
+//       duration: const Duration(milliseconds: 300),
+//       curve: Curves.easeInOut,
+//     );
+//   }
+
+//   @override
+//   Widget build(BuildContext context) {
+//     return Scaffold(
+//       body: PageView(
+//         controller: _pageController,
+//         onPageChanged: (index) {
+//           setState(() {
+//             _currentIndex = index;
+//           });
+//         },
+//         children: [
+//           // const HomePageContent(key: ValueKey('Home')),
+//           const HomeScreen(),
+//           const EventPageContent(key: ValueKey('Event')),
+//           const YoursPageContent(key: ValueKey('Yours')),
+//           const VideoPageContent(key: ValueKey('Video')),
+//           const LeaderboardPageContent(key: ValueKey('Leaderboard')),
+//         ],
+//       ),
+//       bottomNavigationBar: CustomBottomNavBar(
+//         currentIndex: _currentIndex,
+//         onTap: _onTabTapped,
+//       ),
+//     );
+//   }
+// }
 import 'package:flutter/material.dart';
 import '../../features/yours/presentation/pages/home_page_content.dart';
 import '../../features/yours/presentation/pages/event_page_content.dart';
@@ -10,12 +81,13 @@ class MainNavigationController extends StatefulWidget {
   const MainNavigationController({super.key});
 
   @override
-  State<MainNavigationController> createState() => _MainNavigationControllerState();
+  State<MainNavigationController> createState() =>
+      _MainNavigationControllerState();
 }
 
 class _MainNavigationControllerState extends State<MainNavigationController> {
   int _currentIndex = 2; // Start with Yours page
-  
+
   late PageController _pageController;
 
   @override
@@ -31,6 +103,12 @@ class _MainNavigationControllerState extends State<MainNavigationController> {
   }
 
   void _onTabTapped(int index) {
+    if (index == 0) {
+      // Navigate back to home page instead of showing it in PageView
+      Navigator.of(context).pop();
+      return;
+    }
+
     setState(() {
       _currentIndex = index;
     });
@@ -51,18 +129,26 @@ class _MainNavigationControllerState extends State<MainNavigationController> {
             _currentIndex = index;
           });
         },
-       children: [
-        const HomePageContent(key: ValueKey('Home')),
-        const EventPageContent(key: ValueKey('Event')),
-        const YoursPageContent(key: ValueKey('Yours')),
-        const VideoPageContent(key: ValueKey('Video')),
-        const LeaderboardPageContent(key: ValueKey('Leaderboard')),
-      ],
+        children: [
+          // Create a placeholder for Home that redirects back
+          _buildHomeRedirect(),
+          const EventPageContent(key: ValueKey('Event')),
+          const YoursPageContent(key: ValueKey('Yours')),
+          const VideoPageContent(key: ValueKey('Video')),
+          const LeaderboardPageContent(key: ValueKey('Leaderboard')),
+        ],
       ),
       bottomNavigationBar: CustomBottomNavBar(
         currentIndex: _currentIndex,
         onTap: _onTabTapped,
       ),
+    );
+  }
+
+  Widget _buildHomeRedirect() {
+    return Container(
+      color: Colors.white,
+      child: const Center(child: Text('Redirecting to Home...')),
     );
   }
 }
