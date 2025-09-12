@@ -1,0 +1,100 @@
+{
+  "videos": [
+    {
+      "id": "1",
+      "title": "How to treat a pulled hamstring",
+      "description": "Learn basic first aid for muscle strain during leg day and prevent further injury",
+      "duration": "7:50",
+      "category": "Muscle Injury",
+      "categoryColor": "blue",
+      "authorName": "Dr. Sarah Mitchell",
+      "viewCount": 12500,
+      "timestamp": "2 days ago",
+      "hashtags": [
+        {"text": "Stretching", "color": "blue"},
+        {"text": "InjuryCare", "color": "blue"},
+        {"text": "FirstAid", "color": "blue"}
+      ]
+    },
+    {
+      "id": "2",
+      "title": "RICE Method for Ankle Sprains",
+      "description": "Complete guide to Rest, Ice, Compression, and Elevation for treating ankle sprains",
+      "duration": "5:30",
+      "category": "Sprains",
+      "categoryColor": "blue",
+      "authorName": "Coach Mike Johnson",
+      "viewCount": 8900,
+      "timestamp": "1 week ago",
+      "hashtags": [
+        {"text": "Sprains", "color": "blue"},
+        {"text": "InjuryCare", "color": "blue"},
+        {"text": "RICE", "color": "blue"}
+      ]
+    },
+    {
+      "id": "3",
+      "title": "Heat Exhaustion Emergency Care",
+      "description": "Recognize and treat heat exhaustion during outdoor workouts and sports",
+      "duration": "6:15",
+      "category": "Heat Exhaustion",
+      "categoryColor": "orange",
+      "authorName": "Dr. Lisa Chen",
+      "viewCount": 15600,
+      "timestamp": "3 days ago",
+      "hashtags": [
+        {"text": "HeatExhaustion", "color": "orange"},
+        {"text": "Emergency", "color": "orange"},
+        {"text": "Prevention", "color": "orange"}
+      ]
+    },
+    {
+      "id": "4",
+      "title": "Shoulder Injury Stabilization",
+      "description": "Proper techniques for stabilizing shoulder injuries during recovery",
+      "duration": "8:20",
+      "category": "Recovery",
+      "categoryColor": "purple",
+      "authorName": "Alex Rodriguez, PT",
+      "viewCount": 7200,
+      "timestamp": "5 days ago",
+      "hashtags": [
+        {"text": "Shoulder", "color": "purple"},
+        {"text": "InjuryCare", "color": "purple"},
+        {"text": "Stabilization", "color": "purple"}
+      ]
+    },
+    {
+      "id": "5",
+      "title": "Knee Pain Management Techniques",
+      "description": "Effective methods to manage and prevent knee pain during exercise",
+      "duration": "9:10",
+      "category": "Recovery",
+      "categoryColor": "purple",
+      "authorName": "Dr. Maria Santos",
+      "viewCount": 9800,
+      "timestamp": "1 week ago",
+      "hashtags": [
+        {"text": "KneePain", "color": "purple"},
+        {"text": "Recovery", "color": "purple"},
+        {"text": "Prevention", "color": "purple"}
+      ]
+    },
+    {
+      "id": "6",
+      "title": "Emergency CPR for Athletes",
+      "description": "Basic CPR techniques specifically for sports-related emergencies",
+      "duration": "12:30",
+      "category": "Emergency",
+      "categoryColor": "red",
+      "authorName": "Dr. James Wilson",
+      "viewCount": 23400,
+      "timestamp": "2 weeks ago",
+      "hashtags": [
+        {"text": "CPR", "color": "red"},
+        {"text": "Emergency", "color": "red"},
+        {"text": "Athletes", "color": "red"}
+      ]
+    }
+  ]
+}

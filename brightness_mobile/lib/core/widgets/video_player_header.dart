@@ -19,12 +19,10 @@ class VideoPlayerHeader extends StatelessWidget implements PreferredSizeWidget {
   Widget build(BuildContext context) {
     return AppBar(
       title: Row(
+        mainAxisAlignment: MainAxisAlignment.center,
         children: [
-          const Icon(
-            Icons.medical_services,
-            color: AppTheme.primaryColor,
-            size: 24,
-          ),
+          Image.asset('assets/images/logo b&w-07.png', width: 24, height: 24),
+          const SizedBox(width: 8),
           const SizedBox(width: 8),
           Text(
             title,

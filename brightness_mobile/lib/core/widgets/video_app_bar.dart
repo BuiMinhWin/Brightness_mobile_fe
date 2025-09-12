@@ -19,12 +19,9 @@ class VideoAppBar extends StatelessWidget implements PreferredSizeWidget {
   Widget build(BuildContext context) {
     return AppBar(
       title: Row(
+        mainAxisAlignment: MainAxisAlignment.center,
         children: [
-          const Icon(
-            Icons.medical_services,
-            color: AppTheme.primaryColor,
-            size: 24,
-          ),
+          Image.asset('assets/images/logo b&w-07.png', width: 24, height: 24),
           const SizedBox(width: 8),
           Text(
             title,
@@ -45,7 +42,7 @@ class VideoAppBar extends StatelessWidget implements PreferredSizeWidget {
       actions: [
         if (showFilter)
           IconButton(
-            icon: const Icon(Icons.filter_list, color: AppTheme.textPrimary),
+            icon: const Icon(Icons.filter_alt, color: AppTheme.textPrimary),
             onPressed: onFilterPressed ?? _showFilterOptions,
           ),
       ],

@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:get_it/get_it.dart';
 import '../../../../shared/models/profile_model.dart';
 import '../../../../shared/models/validation_rules.dart';
+import '../../../../shared/services/user_profile_data_service.dart';
 import '../../../../core/usecase/either_usecase.dart';
 import '../../domain/entities/profile_entity.dart';
 import '../../domain/usecases/get_profile_usecase.dart';
@@ -57,17 +58,24 @@ class EditProfileController extends ChangeNotifier {
     _clearMessages();
 
     try {
-      final result = await _getProfileUsecase.call(NoParams());
-      result.fold(
-        (failure) {
-          _setError('Failed to load profile: ${failure.message}');
-        },
-        (profileEntity) {
-          _profile = profileEntity.toModel();
-          _formData = ProfileFormData.fromProfile(_profile!);
-          _validateForm();
-        },
+      // Load profile data from JSON service
+      final editProfileData = await UserProfileDataService.getEditProfileData();
+      
+      // Convert EditProfileData to ProfileFormData
+      _formData = ProfileFormData(
+        firstName: editProfileData.firstName,
+        lastName: editProfileData.lastName,
+        email: editProfileData.email,
+        phoneNumber: editProfileData.phoneNumber,
+        dateOfBirth: editProfileData.dateOfBirth,
+        bio: editProfileData.bio,
+        location: editProfileData.location,
+        website: editProfileData.website,
+        occupation: editProfileData.occupation,
+        interests: editProfileData.interests,
       );
+      
+      _validateForm();
     } catch (e) {
       _setError('An unexpected error occurred: $e');
     } finally {
@@ -186,44 +194,32 @@ class EditProfileController extends ChangeNotifier {
     _clearMessages();
 
     try {
-      String? imageUrl = _profile?.profileImageUrl;
+      // Convert ProfileFormData to EditProfileData
+      final editProfileData = EditProfileData(
+        userId: _profile?.id ?? 'user_001',
+        firstName: _formData.firstName,
+        lastName: _formData.lastName,
+        email: _formData.email,
+        phoneNumber: _formData.phoneNumber,
+        dateOfBirth: _formData.dateOfBirth,
+        bio: _formData.bio,
+        location: _formData.location,
+        website: _formData.website,
+        occupation: _formData.occupation,
+        interests: _formData.interests,
+        profileImageUrl: _profile?.profileImageUrl,
+      );
+
+      // Save using data service
+      final success = await UserProfileDataService.saveEditProfileData(editProfileData);
       
-      // Upload image first if selected
-      if (_selectedImage != null) {
-        final uploadResult = await _uploadProfileImageUsecase.call(_selectedImage!);
-        uploadResult.fold(
-          (failure) {
-            _setError('Failed to upload image: ${failure.message}');
-            _setSaving(false);
-            return;
-          },
-          (uploadedUrl) {
-            imageUrl = uploadedUrl;
-          },
-        );
+      if (success) {
+        _setSuccess('Profile updated successfully!');
+        return true;
+      } else {
+        _setError('Failed to save profile');
+        return false;
       }
-
-      // Update profile
-      final updatedProfileModel = _formData.toProfile(
-        id: _profile?.id,
-        profileImageUrl: imageUrl,
-      );
-
-      final updatedProfileEntity = ProfileEntity.fromModel(updatedProfileModel);
-      final result = await _updateProfileUsecase.call(updatedProfileEntity);
-      
-      return result.fold(
-        (failure) {
-          _setError('Failed to update profile: ${failure.message}');
-          return false;
-        },
-        (updatedEntity) {
-          _profile = updatedEntity.toModel();
-          _selectedImage = null;
-          _setSuccess('Profile updated successfully');
-          return true;
-        },
-      );
     } catch (e) {
       _setError('An unexpected error occurred: $e');
       return false;
@@ -236,6 +232,13 @@ class EditProfileController extends ChangeNotifier {
   void resetForm() {
     if (_profile != null) {
       _formData = ProfileFormData.fromProfile(_profile!);
+      _selectedImage = null;
+      _validateForm();
+      _clearMessages();
+      notifyListeners();
+    } else {
+      // If no profile is loaded, reset to empty form
+      _formData = ProfileFormData();
       _selectedImage = null;
       _validateForm();
       _clearMessages();

@@ -1,19 +1,18 @@
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 import '../../../../core/theme/app_theme.dart';
 import '../../../../core/widgets/profile_header.dart';
 import '../../../../core/widgets/stats_row.dart';
 import '../../../../core/widgets/action_buttons.dart';
 import '../../../../core/widgets/feed_section.dart';
+import '../../../../shared/services/user_profile_data_service.dart';
+import '../controllers/navigation_controller.dart';
 
 class UserProfilePage extends StatefulWidget {
   final String? userId;
   final bool isOwnProfile;
 
-  const UserProfilePage({
-    super.key,
-    this.userId,
-    this.isOwnProfile = false,
-  });
+  const UserProfilePage({super.key, this.userId, this.isOwnProfile = false});
 
   @override
   State<UserProfilePage> createState() => _UserProfilePageState();
@@ -21,58 +20,55 @@ class UserProfilePage extends StatefulWidget {
 
 class _UserProfilePageState extends State<UserProfilePage> {
   bool _isLoading = false;
-  bool _isFriend = false;
   bool _isAddingFriend = false;
 
-  // Sample data - replace with actual API calls
-  final String _userName = "Name";
-  final String _jobTitle = "Interior Designer";
-  final String _location = "Lagos, Nigeria";
-  final String _hobby = "Fitness";
-  final String _rank = "Gold Member";
-  final int _postsCount = 122;
-  final int _likesCount = 37000;
+  // Profile data loaded from JSON
+  UserProfile? _profile;
+  List<PostData> _posts = [];
 
-  final List<PostData> _posts = [
-    PostData(
-      userName: "Linh Nguyen",
-      timestamp: "2s ago",
-      content: "I am very happy to be with Cafit in training sessions and how about you?",
-      imageBackgroundColor: const Color(0xFFFFE1E6), // Pink background
-      isLiked: true,
-      likeCount: 24,
-      commentCount: 8,
-    ),
-    PostData(
-      userName: "John Doe",
-      timestamp: "1h ago",
-      content: "Just finished an amazing workout session! Feeling energized and ready to take on the day. 💪",
-      imageBackgroundColor: const Color(0xFFE1F5FE), // Light blue background
-      isLiked: false,
-      likeCount: 15,
-      commentCount: 3,
-    ),
-    PostData(
-      userName: "Sarah Wilson",
-      timestamp: "3h ago",
-      content: "New fitness goals for this month: 1. Run 5K daily 2. Strength training 3x/week 3. Yoga for flexibility",
-      imageBackgroundColor: const Color(0xFFE8F5E8), // Light green background
-      isLiked: true,
-      likeCount: 42,
-      commentCount: 12,
-    ),
-  ];
+  @override
+  void initState() {
+    super.initState();
+    _loadProfileData();
+  }
+
+  Future<void> _loadProfileData() async {
+    setState(() {
+      _isLoading = true;
+    });
+
+    try {
+      final profile = await UserProfileDataService.getUserProfile(
+        userId: widget.userId,
+      );
+      final posts = await UserProfileDataService.getUserPosts(
+        userId: widget.userId,
+      );
+
+      if (mounted) {
+        setState(() {
+          _profile = profile;
+          _posts = posts;
+          _isLoading = false;
+        });
+      }
+    } catch (e) {
+      if (mounted) {
+        setState(() {
+          _isLoading = false;
+        });
+      }
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: AppTheme.backgroundColor,
       appBar: _buildAppBar(),
-      body: _isLoading
+      body: _isLoading || _profile == null
           ? const Center(
-              child: CircularProgressIndicator(
-                color: AppTheme.primaryColor,
-              ),
+              child: CircularProgressIndicator(color: AppTheme.primaryColor),
             )
           : _buildBody(),
     );
@@ -81,7 +77,7 @@ class _UserProfilePageState extends State<UserProfilePage> {
   PreferredSizeWidget _buildAppBar() {
     return AppBar(
       title: Text(
-        widget.isOwnProfile ? 'My Profile' : _userName,
+        widget.isOwnProfile ? 'My Profile' : (_profile?.userName ?? 'Profile'),
         style: const TextStyle(
           fontSize: 18,
           fontWeight: FontWeight.bold,
@@ -106,6 +102,12 @@ class _UserProfilePageState extends State<UserProfilePage> {
   }
 
   Widget _buildBody() {
+    if (_profile == null) {
+      return const Center(
+        child: CircularProgressIndicator(color: AppTheme.primaryColor),
+      );
+    }
+
     return SingleChildScrollView(
       child: Column(
         children: [
@@ -113,33 +115,33 @@ class _UserProfilePageState extends State<UserProfilePage> {
           Container(
             padding: const EdgeInsets.all(24),
             child: ProfileHeader(
-              name: _userName,
-              jobTitle: _jobTitle,
-              location: _location,
-              hobby: _hobby,
-              rank: _rank,
+              name: _profile!.userName,
+              jobTitle: _profile!.jobTitle,
+              location: _profile!.location,
+              hobby: _profile!.hobby,
+              rank: _profile!.rank,
               onImageTap: _handleImageTap,
             ),
           ),
-          
+
           // Stats section
           StatsRow(
-            postsCount: _postsCount,
-            likesCount: _likesCount,
+            postsCount: _profile!.postsCount,
+            likesCount: _profile!.likesCount,
           ),
-          
+
           // Action buttons
           ActionButtons(
             onEditProfile: widget.isOwnProfile ? _handleEditProfile : null,
             onAddFriend: widget.isOwnProfile ? null : _handleAddFriend,
             editButtonText: 'Edit profile',
-            addFriendButtonText: _isFriend ? 'Friends' : 'Add friend',
-            isFriend: _isFriend,
+            addFriendButtonText: _profile!.isFriend ? 'Friends' : 'Add friend',
+            isFriend: _profile!.isFriend,
             isLoading: _isAddingFriend,
           ),
-          
+
           const SizedBox(height: 24),
-          
+
           // Posts/Activity feed section
           FeedSection(
             posts: _posts,
@@ -148,7 +150,7 @@ class _UserProfilePageState extends State<UserProfilePage> {
             onLike: _handlePostLike,
             onComment: _handlePostComment,
           ),
-          
+
           const SizedBox(height: 24),
         ],
       ),
@@ -183,7 +185,10 @@ class _UserProfilePageState extends State<UserProfilePage> {
             ),
             const SizedBox(height: 24),
             ListTile(
-              leading: const Icon(Icons.camera_alt, color: AppTheme.primaryColor),
+              leading: const Icon(
+                Icons.camera_alt,
+                color: AppTheme.primaryColor,
+              ),
               title: const Text('Take Photo'),
               onTap: () {
                 Navigator.pop(context);
@@ -191,7 +196,10 @@ class _UserProfilePageState extends State<UserProfilePage> {
               },
             ),
             ListTile(
-              leading: const Icon(Icons.photo_library, color: AppTheme.primaryColor),
+              leading: const Icon(
+                Icons.photo_library,
+                color: AppTheme.primaryColor,
+              ),
               title: const Text('Choose from Gallery'),
               onTap: () {
                 Navigator.pop(context);
@@ -222,7 +230,9 @@ class _UserProfilePageState extends State<UserProfilePage> {
               Container(
                 height: 300,
                 decoration: BoxDecoration(
-                  borderRadius: const BorderRadius.vertical(top: Radius.circular(16)),
+                  borderRadius: const BorderRadius.vertical(
+                    top: Radius.circular(16),
+                  ),
                   color: AppTheme.textHint.withOpacity(0.2),
                 ),
                 child: const Center(
@@ -236,7 +246,7 @@ class _UserProfilePageState extends State<UserProfilePage> {
               Padding(
                 padding: const EdgeInsets.all(16),
                 child: Text(
-                  '$_userName\'s Profile Picture',
+                  '${_profile?.userName ?? 'User'}\'s Profile Picture',
                   style: const TextStyle(
                     fontSize: 16,
                     fontWeight: FontWeight.w600,
@@ -252,8 +262,10 @@ class _UserProfilePageState extends State<UserProfilePage> {
   }
 
   void _handleEditProfile() {
-    // Navigate to edit profile page
-    Navigator.pushNamed(context, '/edit-profile');
+    // Navigate to edit profile page using NavigationController
+    context.read<NavigationController>().navigateToEditProfile(
+      context: context,
+    );
   }
 
   void _handleAddFriend() async {
@@ -264,20 +276,39 @@ class _UserProfilePageState extends State<UserProfilePage> {
     // Simulate API call
     await Future.delayed(const Duration(seconds: 1));
 
-    setState(() {
-      _isAddingFriend = false;
-      _isFriend = !_isFriend;
-    });
+    if (_profile != null) {
+      setState(() {
+        _isAddingFriend = false;
+        _profile = UserProfile(
+          userId: _profile!.userId,
+          userName: _profile!.userName,
+          jobTitle: _profile!.jobTitle,
+          location: _profile!.location,
+          hobby: _profile!.hobby,
+          rank: _profile!.rank,
+          postsCount: _profile!.postsCount,
+          likesCount: _profile!.likesCount,
+          profileImageUrl: _profile!.profileImageUrl,
+          isOwnProfile: _profile!.isOwnProfile,
+          isFriend: !_profile!.isFriend,
+          bio: _profile!.bio,
+          joinDate: _profile!.joinDate,
+          lastActive: _profile!.lastActive,
+        );
+      });
 
-    // Show success message
-    ScaffoldMessenger.of(context).showSnackBar(
-      SnackBar(
-        content: Text(
-          _isFriend ? 'Friend request sent!' : 'Friend request cancelled',
+      // Show success message
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(
+          content: Text(
+            _profile!.isFriend
+                ? 'Friend request sent!'
+                : 'Friend request cancelled',
+          ),
+          backgroundColor: AppTheme.successColor,
         ),
-        backgroundColor: AppTheme.successColor,
-      ),
-    );
+      );
+    }
   }
 
   void _handlePostTap(PostData post) {

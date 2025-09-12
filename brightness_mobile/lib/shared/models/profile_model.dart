@@ -270,7 +270,7 @@ class ProfileFormData {
         website != null ||
         occupation != null ||
         company != null ||
-        (interests != null && interests!.isNotEmpty);
+        (interests?.isNotEmpty ?? false);
   }
 
   @override

@@ -1,0 +1,53 @@
+{
+  "profile": {
+    "userId": "user_001",
+    "userName": "NyanWya",
+    "jobTitle": "Interior Designer",
+    "location": "Lagos, Nigeria",
+    "hobby": "Fitness",
+    "rank": "Gold Member",
+    "postsCount": 122,
+    "likesCount": 37000,
+    "profileImageUrl": "https://example.com/profile_images/user_001.jpg",
+    "isOwnProfile": true,
+    "isFriend": false,
+    "bio": "Passionate about fitness and interior design. Always looking for new challenges and ways to improve myself.",
+    "joinDate": "2023-01-15",
+    "lastActive": "2 hours ago"
+  },
+  "posts": [
+    {
+      "id": "post_001",
+      "userName": "Linh Nguyen",
+      "timestamp": "2s ago",
+      "content": "I am very happy to be with Cafit in training sessions and how about you?",
+      "imageBackgroundColor": "#FFE1E6",
+      "isLiked": true,
+      "likeCount": 24,
+      "commentCount": 8,
+      "imageUrl": "https://example.com/posts/post_001.jpg"
+    },
+    {
+      "id": "post_002",
+      "userName": "John Doe",
+      "timestamp": "1h ago",
+      "content": "Just finished an amazing workout session! Feeling energized and ready to take on the day. 💪",
+      "imageBackgroundColor": "#E1F5FE",
+      "isLiked": false,
+      "likeCount": 15,
+      "commentCount": 3,
+      "imageUrl": "https://example.com/posts/post_002.jpg"
+    },
+    {
+      "id": "post_003",
+      "userName": "Sarah Wilson",
+      "timestamp": "3h ago",
+      "content": "New fitness goals for this month: 1. Run 5K daily 2. Strength training 3x/week 3. Yoga for flexibility",
+      "imageBackgroundColor": "#E8F5E8",
+      "isLiked": true,
+      "likeCount": 42,
+      "commentCount": 12,
+      "imageUrl": "https://example.com/posts/post_003.jpg"
+    }
+  ]
+}

@@ -1,0 +1,80 @@
+{
+  "profile": {
+    "userId": "user_001",
+    "firstName": "John",
+    "lastName": "Doe",
+    "email": "john.doe@example.com",
+    "password": "encrypted_password_here",
+    "dateOfBirth": "1990-05-15",
+    "location": "Nigeria",
+    "hobby": "Fitness",
+    "occupation": "Interior Designer",
+    "profileImageUrl": "https://example.com/profile_images/user_001.jpg",
+    "interests": ["Fitness", "Design", "Travel"],
+    "phoneNumber": "+234-123-456-7890",
+    "website": "https://johndoe.design",
+    "bio": "Passionate about fitness and interior design. Always looking for new challenges and ways to improve myself.",
+    "socialLinks": {
+      "instagram": "@johndoe",
+      "twitter": "@johndoe_design",
+      "linkedin": "john-doe-designer"
+    },
+    "privacySettings": {
+      "showEmail": false,
+      "showPhone": false,
+      "showLocation": true,
+      "allowMessages": true
+    }
+  },
+  "countries": [
+    {"value": "nigeria", "label": "Nigeria"},
+    {"value": "usa", "label": "United States"},
+    {"value": "uk", "label": "United Kingdom"},
+    {"value": "canada", "label": "Canada"},
+    {"value": "australia", "label": "Australia"},
+    {"value": "germany", "label": "Germany"},
+    {"value": "france", "label": "France"},
+    {"value": "japan", "label": "Japan"},
+    {"value": "china", "label": "China"},
+    {"value": "india", "label": "India"},
+    {"value": "brazil", "label": "Brazil"},
+    {"value": "mexico", "label": "Mexico"},
+    {"value": "south_africa", "label": "South Africa"},
+    {"value": "egypt", "label": "Egypt"},
+    {"value": "kenya", "label": "Kenya"}
+  ],
+  "hobbies": [
+    "Fitness",
+    "Design",
+    "Travel",
+    "Photography",
+    "Cooking",
+    "Reading",
+    "Music",
+    "Sports",
+    "Art",
+    "Technology",
+    "Gaming",
+    "Writing",
+    "Dancing",
+    "Swimming",
+    "Running"
+  ],
+  "occupations": [
+    "Interior Designer",
+    "Graphic Designer",
+    "Software Developer",
+    "Marketing Manager",
+    "Teacher",
+    "Doctor",
+    "Engineer",
+    "Artist",
+    "Writer",
+    "Consultant",
+    "Entrepreneur",
+    "Student",
+    "Freelancer",
+    "Sales Representative",
+    "Project Manager"
+  ]
+}

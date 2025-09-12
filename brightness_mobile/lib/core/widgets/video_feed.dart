@@ -10,7 +10,6 @@ class VideoFeed extends StatefulWidget {
   final VoidCallback? onLoadMore;
   final Future<void> Function()? onRefresh;
   final Function(FirstAidVideo)? onVideoTap;
-  final Function(FirstAidVideo)? onVideoPlay;
   final Function(FirstAidVideo)? onVideoShare;
 
   const VideoFeed({
@@ -21,7 +20,6 @@ class VideoFeed extends StatefulWidget {
     this.onLoadMore,
     this.onRefresh,
     this.onVideoTap,
-    this.onVideoPlay,
     this.onVideoShare,
   });
 
@@ -72,7 +70,6 @@ class _VideoFeedState extends State<VideoFeed> {
         return VideoCard(
           video: video,
           onTap: () => widget.onVideoTap?.call(video),
-          onPlay: () => widget.onVideoPlay?.call(video),
           onShare: () => widget.onVideoShare?.call(video),
         );
       },

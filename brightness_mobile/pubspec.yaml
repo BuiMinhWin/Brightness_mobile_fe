@@ -36,3 +36,5 @@ flutter:
   assets:
     # Include all images in the folder to avoid missing assets
     - assets/images/
+    # Include JSON data files
+    - assets/temps/

@@ -4,14 +4,12 @@ import '../theme/app_theme.dart';
 class VideoCard extends StatefulWidget {
   final FirstAidVideo video;
   final VoidCallback? onTap;
-  final VoidCallback? onPlay;
   final VoidCallback? onShare;
 
   const VideoCard({
     super.key,
     required this.video,
     this.onTap,
-    this.onPlay,
     this.onShare,
   });
 
@@ -59,7 +57,7 @@ class _VideoCardState extends State<VideoCard> {
 
   Widget _buildVideoThumbnail() {
     return GestureDetector(
-      onTap: widget.onPlay ?? _handlePlay,
+      onTap: widget.onTap ?? _handlePlay,
       child: Container(
         height: 200,
         width: double.infinity,
@@ -85,7 +83,7 @@ class _VideoCardState extends State<VideoCard> {
                   : _buildPlaceholderThumbnail(),
             ),
             
-            // Play Button Overlay
+            // Navigation Indicator Overlay
             Center(
               child: Container(
                 width: 60,
@@ -95,7 +93,7 @@ class _VideoCardState extends State<VideoCard> {
                   shape: BoxShape.circle,
                 ),
                 child: const Icon(
-                  Icons.play_arrow,
+                  Icons.play_circle_outline,
                   color: Colors.white,
                   size: 30,
                 ),
@@ -345,22 +343,13 @@ class _VideoCardState extends State<VideoCard> {
   }
 
   void _handlePlay() {
-    setState(() {
-      _isLoading = true;
-    });
-
-    // Simulate loading
-    Future.delayed(const Duration(seconds: 1), () {
-      if (mounted) {
-        setState(() {
-          _isLoading = false;
-          _isPlaying = true;
-        });
-        
-        // Show video player dialog
-        _showVideoPlayer();
-      }
-    });
+    // This is a fallback method - videos should only be played on the watch page
+    ScaffoldMessenger.of(context).showSnackBar(
+      const SnackBar(
+        content: Text('Tap to navigate to watch page'),
+        duration: Duration(seconds: 1),
+      ),
+    );
   }
 
   void _showVideoPlayer() {

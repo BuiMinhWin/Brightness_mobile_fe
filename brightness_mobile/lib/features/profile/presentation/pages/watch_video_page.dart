@@ -7,6 +7,7 @@ import '../../../../core/widgets/video_info.dart';
 import '../../../../core/widgets/author_info.dart';
 import '../../../../core/widgets/video_actions.dart';
 import '../../../../core/widgets/related_videos.dart';
+import '../../../../shared/services/first_aid_data_service.dart';
 import '../controllers/video_controller.dart';
 import '../controllers/navigation_controller.dart';
 
@@ -138,10 +139,30 @@ class _WatchVideoPageState extends State<WatchVideoPage> {
                 const SizedBox(height: 24),
                 
                 // Related Videos
-                RelatedVideos(
-                  videos: _convertToRelatedVideos(videoController.relatedVideos),
-                  onViewAll: _navigateToAllVideos,
-                  onVideoTap: _navigateToVideo,
+                FutureBuilder<List<RelatedVideoData>>(
+                  future: _getRelatedVideosFromService(video.id),
+                  builder: (context, snapshot) {
+                    if (snapshot.connectionState == ConnectionState.waiting) {
+                      return const Center(
+                        child: CircularProgressIndicator(
+                          color: AppTheme.primaryColor,
+                        ),
+                      );
+                    }
+                    
+                    if (snapshot.hasError) {
+                      return const Center(
+                        child: Text('Error loading related videos'),
+                      );
+                    }
+                    
+                    final relatedVideos = snapshot.data ?? [];
+                    return RelatedVideos(
+                      videos: relatedVideos,
+                      onViewAll: _navigateToAllVideos,
+                      onVideoTap: _navigateToVideo,
+                    );
+                  },
                 ),
                 
                 const SizedBox(height: 24),
@@ -219,6 +240,7 @@ class _WatchVideoPageState extends State<WatchVideoPage> {
       context.read<NavigationController>().navigateToUserProfile(
         isOwnProfile: false,
         userId: video.authorName, // In real app, use actual user ID
+        context: context,
       );
     }
   }
@@ -362,7 +384,7 @@ class _WatchVideoPageState extends State<WatchVideoPage> {
 
   void _navigateToAllVideos() {
     // Navigate to all videos page using controller
-    context.read<NavigationController>().navigateToFirstAidVideos();
+    context.read<NavigationController>().navigateToFirstAidVideos(context: context);
   }
 
   void _navigateToVideo(RelatedVideoData video) {
@@ -370,61 +392,12 @@ class _WatchVideoPageState extends State<WatchVideoPage> {
     context.read<NavigationController>().navigateToWatchVideo(
       videoId: video.id,
       videoUrl: video.videoUrl,
+      context: context,
     );
   }
 
-  List<RelatedVideoData> _convertToRelatedVideos(List<VideoModel> videos) {
-    return videos.map((video) => RelatedVideoData(
-      id: video.id,
-      title: video.title,
-      description: video.description,
-      duration: video.duration,
-      thumbnailUrl: video.thumbnailUrl,
-      authorName: video.authorName,
-      viewCount: video.viewCount,
-      timestamp: video.uploadDate,
-      videoUrl: video.videoUrl,
-    )).toList();
+  Future<List<RelatedVideoData>> _getRelatedVideosFromService(String currentVideoId) async {
+    return await FirstAidDataService.getRelatedVideos(currentVideoId, limit: 4);
   }
 
-  List<RelatedVideoData> _getRelatedVideos() {
-    return [
-      RelatedVideoData(
-        id: '2',
-        title: 'RICE Method for Ankle Sprains',
-        description: 'Complete guide to Rest, Ice, Compression, and Elevation for treating ankle sprains',
-        duration: '5:30',
-        authorName: 'Coach Mike Johnson',
-        viewCount: 8900,
-        timestamp: '1 week ago',
-      ),
-      RelatedVideoData(
-        id: '3',
-        title: 'Heat Exhaustion Emergency Care',
-        description: 'Recognize and treat heat exhaustion during outdoor workouts and sports',
-        duration: '6:15',
-        authorName: 'Dr. Lisa Chen',
-        viewCount: 15600,
-        timestamp: '3 days ago',
-      ),
-      RelatedVideoData(
-        id: '4',
-        title: 'Shoulder Injury Stabilization',
-        description: 'Proper techniques for stabilizing shoulder injuries during recovery',
-        duration: '8:20',
-        authorName: 'Alex Rodriguez, PT',
-        viewCount: 7200,
-        timestamp: '5 days ago',
-      ),
-      RelatedVideoData(
-        id: '5',
-        title: 'Knee Pain Management Techniques',
-        description: 'Effective methods to manage and prevent knee pain during exercise',
-        duration: '9:10',
-        authorName: 'Dr. Maria Santos',
-        viewCount: 9800,
-        timestamp: '1 week ago',
-      ),
-    ];
-  }
 }

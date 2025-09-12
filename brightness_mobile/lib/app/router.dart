@@ -1,3 +1,4 @@
+import 'package:brightness_mobile/features/profile/presentation/pages/user_profile_page.dart';
 import 'package:flutter/material.dart';
 
 // Core app pages
@@ -18,7 +19,7 @@ import '../features/feed/feed_screen.dart';
 import '../features/feed/post_detail_screen.dart';
 import '../features/feed/create_post_screen.dart';
 import '../features/ai_chat/ai_chat_screen.dart';
-import '../features/profile/presentation/pages/profile_demo_page.dart';
+// import '../features/profile/presentation/pages/profile_demo_page.dart';
 import '../core/navigation/main_navigation_controller.dart';
 
 class AppRouter {
@@ -119,7 +120,7 @@ class AppRouter {
         );
       case profile:
         return MaterialPageRoute(
-          builder: (_) => const ProfileDemoPage(),
+          builder: (_) => const UserProfilePage(isOwnProfile: true),
           settings: settings,
         );
       case postDetail:

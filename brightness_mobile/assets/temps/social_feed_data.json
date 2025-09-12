@@ -1,0 +1,343 @@
+{
+  "posts": [
+    {
+      "id": "post_001",
+      "userId": "user_001",
+      "username": "Mike Johnson",
+      "userAvatar": null,
+      "timestamp": "2h ago",
+      "createdAt": "2024-01-15T08:30:00Z",
+      "content": "Morning workout complete! 💪 Nothing beats the feeling of endorphins after a good gym session. Ready to tackle the day!",
+      "imageUrls": [
+        "https://images.unsplash.com/photo-1571019613454-1cb2f99b2d8b?w=800&h=600&fit=crop",
+        "https://images.unsplash.com/photo-1534258936925-c58bed479fcb?w=800&h=600&fit=crop"
+      ],
+      "likes": 24,
+      "comments": 8,
+      "shares": 3,
+      "isLiked": false,
+      "isBookmarked": false,
+      "isFollowing": false,
+      "tags": ["Workout", "Fitness", "Motivation"],
+      "category": "fitness",
+      "location": "Gym",
+      "privacy": "public",
+      "commentsList": [
+        {
+          "id": "comment_001",
+          "userId": "user_009",
+          "username": "John Smith",
+          "userAvatar": null,
+          "content": "Great job Mike! 💪 What's your workout routine?",
+          "timestamp": "1h ago",
+          "likes": 3,
+          "isLiked": false,
+          "replies": [
+            {
+              "id": "reply_001",
+              "userId": "user_001",
+              "username": "Mike Johnson",
+              "userAvatar": null,
+              "content": "Thanks John! I do 5x5 compound movements with progressive overload",
+              "timestamp": "45m ago",
+              "likes": 2,
+              "isLiked": false
+            },
+            {
+              "id": "reply_002",
+              "userId": "user_010",
+              "username": "Tom Wilson",
+              "userAvatar": null,
+              "content": "That's awesome! I've been doing similar routines",
+              "timestamp": "30m ago",
+              "likes": 1,
+              "isLiked": false
+            }
+          ]
+        },
+        {
+          "id": "comment_002",
+          "userId": "user_011",
+          "username": "Anna Davis",
+          "userAvatar": null,
+          "content": "Morning workouts are the best! Sets the tone for the whole day 🌅",
+          "timestamp": "50m ago",
+          "likes": 5,
+          "isLiked": true,
+          "replies": []
+        },
+        {
+          "id": "comment_003",
+          "userId": "user_012",
+          "username": "Chris Brown",
+          "userAvatar": null,
+          "content": "Keep it up! Consistency is key 🔥",
+          "timestamp": "25m ago",
+          "likes": 2,
+          "isLiked": false,
+          "replies": []
+        }
+      ]
+    },
+    {
+      "id": "post_002",
+      "userId": "user_002",
+      "username": "Sarah Chen",
+      "userAvatar": null,
+      "timestamp": "4h ago",
+      "createdAt": "2024-01-15T06:30:00Z",
+      "content": "Sunday meal prep is complete! 🥗 These healthy bowls are going to fuel my week. Planning and preparation is key to maintaining a healthy lifestyle.",
+      "imageUrls": [
+        "https://images.unsplash.com/photo-1512621776951-a57141f2eefd?w=800&h=600&fit=crop",
+        "https://images.unsplash.com/photo-1490645935967-10de6ba17061?w=800&h=600&fit=crop",
+        "https://images.unsplash.com/photo-1546554137-f86b9593a222?w=800&h=600&fit=crop"
+      ],
+      "likes": 42,
+      "comments": 12,
+      "shares": 7,
+      "isLiked": true,
+      "isBookmarked": true,
+      "isFollowing": true,
+      "tags": ["MealPrep", "HealthyEating", "Nutrition"],
+      "category": "nutrition",
+      "location": "Home Kitchen",
+      "privacy": "public",
+      "commentsList": [
+        {
+          "id": "comment_004",
+          "userId": "user_013",
+          "username": "Rachel Green",
+          "userAvatar": null,
+          "content": "These look amazing! Can you share the recipe? 🥗",
+          "timestamp": "3h ago",
+          "likes": 8,
+          "isLiked": true,
+          "replies": [
+            {
+              "id": "reply_003",
+              "userId": "user_002",
+              "username": "Sarah Chen",
+              "userAvatar": null,
+              "content": "Sure! It's quinoa, roasted vegetables, and tahini dressing",
+              "timestamp": "2h ago",
+              "likes": 4,
+              "isLiked": false
+            }
+          ]
+        },
+        {
+          "id": "comment_005",
+          "userId": "user_014",
+          "username": "Mark Taylor",
+          "userAvatar": null,
+          "content": "Meal prep Sunday is my favorite day! So organized 👌",
+          "timestamp": "2h ago",
+          "likes": 6,
+          "isLiked": false,
+          "replies": []
+        },
+        {
+          "id": "comment_006",
+          "userId": "user_015",
+          "username": "Jessica Lee",
+          "userAvatar": null,
+          "content": "How long do these stay fresh?",
+          "timestamp": "1h ago",
+          "likes": 2,
+          "isLiked": false,
+          "replies": [
+            {
+              "id": "reply_004",
+              "userId": "user_002",
+              "username": "Sarah Chen",
+              "userAvatar": null,
+              "content": "About 4-5 days in the fridge!",
+              "timestamp": "45m ago",
+              "likes": 3,
+              "isLiked": false
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "post_003",
+      "userId": "user_003",
+      "username": "Alex Rodriguez",
+      "userAvatar": null,
+      "timestamp": "6h ago",
+      "createdAt": "2024-01-15T04:30:00Z",
+      "content": "Just crushed my personal record on my morning run! 🏃‍♂️ 5K in 22 minutes - feeling unstoppable! Consistency is everything.",
+      "imageUrls": [
+        "https://images.unsplash.com/photo-1551698618-1dfe5d97d256?w=800&h=600&fit=crop"
+      ],
+      "likes": 18,
+      "comments": 5,
+      "shares": 2,
+      "isLiked": false,
+      "isBookmarked": false,
+      "isFollowing": false,
+      "tags": ["Running", "PersonalRecord", "MorningMotivation"],
+      "category": "running",
+      "location": "Central Park",
+      "privacy": "public",
+      "commentsList": []
+    },
+    {
+      "id": "post_004",
+      "userId": "user_004",
+      "username": "Emma Wilson", 
+      "userAvatar": null,
+      "timestamp": "8h ago",
+      "createdAt": "2024-01-15T02:30:00Z",
+      "content": "Yoga in the park this morning was exactly what I needed. 🌅 The connection between mind and body is incredible. Taking time for mindfulness is so important.",
+      "imageUrls": [
+        "https://images.unsplash.com/photo-1506126613408-eca07ce68773?w=800&h=600&fit=crop",
+        "https://images.unsplash.com/photo-1544367567-0f2fcb009e0b?w=800&h=600&fit=crop"
+      ],
+      "likes": 31,
+      "comments": 9,
+      "shares": 4,
+      "isLiked": true,
+      "isBookmarked": false,
+      "isFollowing": false,
+      "tags": ["Yoga", "Mindfulness", "OutdoorWorkout"],
+      "category": "yoga",
+      "location": "Riverside Park",
+      "privacy": "public",
+      "commentsList": []
+    },
+    {
+      "id": "post_005",
+      "userId": "user_005",
+      "username": "David Kim",
+      "userAvatar": null,
+      "timestamp": "10h ago",
+      "createdAt": "2024-01-15T00:30:00Z",
+      "content": "Strength training session complete! 🏋️‍♂️ Progressive overload is the key to growth. Every rep counts when you're building towards your goals.",
+      "imageUrls": [
+        "https://images.unsplash.com/photo-1581009146145-b5ef050c2e1e?w=800&h=600&fit=crop",
+        "https://images.unsplash.com/photo-1571019613454-1cb2f99b2d8b?w=800&h=600&fit=crop",
+        "https://images.unsplash.com/photo-1534258936925-c58bed479fcb?w=800&h=600&fit=crop"
+      ],
+      "likes": 15,
+      "comments": 3,
+      "shares": 1,
+      "isLiked": false,
+      "isBookmarked": true,
+      "isFollowing": true,
+      "tags": ["Workout", "StrengthTraining", "Fitness"],
+      "category": "strength",
+      "location": "CrossFit Box",
+      "privacy": "public",
+      "commentsList": []
+    },
+    {
+      "id": "post_006",
+      "userId": "user_006",
+      "username": "Lisa Martinez",
+      "userAvatar": null,
+      "timestamp": "12h ago",
+      "createdAt": "2024-01-14T22:30:00Z",
+      "content": "Meditation session this evening was so peaceful. 🧘‍♀️ Taking care of mental health is just as important as physical health.",
+      "imageUrls": [
+        "https://images.unsplash.com/photo-1506905925346-21bda4d32df4?w=800&h=600&fit=crop"
+      ],
+      "likes": 28,
+      "comments": 7,
+      "shares": 5,
+      "isLiked": false,
+      "isBookmarked": true,
+      "isFollowing": false,
+      "tags": ["Meditation", "MentalHealth", "Wellness"],
+      "category": "wellness",
+      "location": "Home",
+      "privacy": "public",
+      "commentsList": []
+    },
+    {
+      "id": "post_007",
+      "userId": "user_007",
+      "username": "James Thompson",
+      "userAvatar": null,
+      "timestamp": "14h ago",
+      "createdAt": "2024-01-14T20:30:00Z",
+      "content": "Cycling through the countryside today was absolutely beautiful! 🚴‍♂️ Fresh air, scenic views, and a great workout.",
+      "imageUrls": [
+        "https://images.unsplash.com/photo-1558618047-3c8c76ca7d13?w=800&h=600&fit=crop",
+        "https://images.unsplash.com/photo-1558618047-3c8c76ca7d13?w=800&h=600&fit=crop"
+      ],
+      "likes": 22,
+      "comments": 6,
+      "shares": 3,
+      "isLiked": true,
+      "isBookmarked": false,
+      "isFollowing": true,
+      "tags": ["Cycling", "Outdoor", "Adventure"],
+      "category": "cycling",
+      "location": "Countryside Trail",
+      "privacy": "public",
+      "commentsList": []
+    },
+    {
+      "id": "post_008",
+      "userId": "user_008",
+      "username": "Maria Garcia",
+      "userAvatar": null,
+      "timestamp": "16h ago",
+      "createdAt": "2024-01-14T18:30:00Z",
+      "content": "Swimming laps this morning felt amazing! 🏊‍♀️ Water workouts are so refreshing and low-impact. Perfect for recovery days.",
+      "imageUrls": [
+        "https://images.unsplash.com/photo-1530549387789-4c1017266635?w=800&h=600&fit=crop",
+        "https://images.unsplash.com/photo-1578662996442-48f60103fc96?w=800&h=600&fit=crop",
+        "https://images.unsplash.com/photo-1544551763-46a013bb70d5?w=800&h=600&fit=crop"
+      ],
+      "likes": 19,
+      "comments": 4,
+      "shares": 2,
+      "isLiked": false,
+      "isBookmarked": false,
+      "isFollowing": false,
+      "tags": ["Swimming", "Recovery", "WaterWorkout"],
+      "category": "swimming",
+      "location": "Community Pool",
+      "privacy": "public",
+      "commentsList": []
+    }
+  ],
+  "categories": [
+    "all",
+    "fitness",
+    "nutrition",
+    "running",
+    "yoga",
+    "strength",
+    "wellness",
+    "cycling",
+    "swimming"
+  ],
+  "trendingTags": [
+    "Workout",
+    "Fitness",
+    "Motivation",
+    "MealPrep",
+    "HealthyEating",
+    "Nutrition",
+    "Running",
+    "PersonalRecord",
+    "MorningMotivation",
+    "Yoga",
+    "Mindfulness",
+    "OutdoorWorkout",
+    "StrengthTraining",
+    "Meditation",
+    "MentalHealth",
+    "Wellness",
+    "Cycling",
+    "Outdoor",
+    "Adventure",
+    "Swimming",
+    "Recovery",
+    "WaterWorkout"
+  ]
+}

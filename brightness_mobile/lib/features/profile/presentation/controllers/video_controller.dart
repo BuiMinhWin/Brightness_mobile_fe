@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import '../../../../shared/services/first_aid_data_service.dart';
 
 // Video Model
 class VideoModel {
@@ -224,54 +225,41 @@ class VideoController extends ChangeNotifier {
   final _VideoRepository _videoRepository = _VideoRepository();
 }
 
-// Mock Video Repository (this is what touches the database)
+// Video Repository that uses FirstAidDataService (this is what touches the database)
 class _VideoRepository {
   Future<VideoModel> getVideoById(String id) async {
-    // Simulate database call
-    await Future.delayed(const Duration(seconds: 1));
-    
-    return VideoModel(
-      id: id,
-      title: 'How to Treat a Muscle Cramp Mid-Workout',
-      description: 'Learn essential first aid techniques for treating muscle cramps...',
-      duration: '03:45',
-      videoUrl: 'https://example.com/video.mp4',
-      thumbnailUrl: 'https://example.com/thumbnail.jpg',
-      authorName: 'Dr. Sarah Mitchell',
-      authorCredentials: 'Sports Medicine Specialist',
-      authorAvatarUrl: 'https://example.com/avatar.jpg',
-      viewCount: 12500,
-      likeCount: 890,
-      uploadDate: 'March 2025',
-      categories: ['First Aid', 'Muscle Injury', 'Exercise'],
-      isBookmarked: false,
-      isSavedOffline: false,
-      createdAt: DateTime.now().subtract(const Duration(days: 30)),
-      updatedAt: DateTime.now(),
-    );
+    // Load video from JSON data service
+    final video = await FirstAidDataService.getVideoById(id);
+    if (video == null) {
+      throw Exception('Video not found');
+    }
+    return video;
   }
   
   Future<List<VideoModel>> getRelatedVideos(String videoId) async {
-    // Simulate database call
-    await Future.delayed(const Duration(milliseconds: 500));
+    // Load related videos from JSON data service
+    final relatedVideosData = await FirstAidDataService.getRelatedVideos(videoId, limit: 4);
     
-    return [
-      VideoModel(
-        id: '2',
-        title: 'RICE Method for Ankle Sprains',
-        description: 'Complete guide to Rest, Ice, Compression...',
-        duration: '5:30',
-        authorName: 'Coach Mike Johnson',
-        authorCredentials: 'Physical Therapist',
-        viewCount: 8900,
-        likeCount: 450,
-        uploadDate: '1 week ago',
-        categories: ['Sprains', 'RICE Method'],
-        createdAt: DateTime.now().subtract(const Duration(days: 7)),
-        updatedAt: DateTime.now().subtract(const Duration(days: 7)),
-      ),
-      // More related videos...
-    ];
+    // Convert RelatedVideoData to VideoModel
+    return relatedVideosData.map((relatedVideo) => VideoModel(
+      id: relatedVideo.id,
+      title: relatedVideo.title,
+      description: relatedVideo.description,
+      duration: relatedVideo.duration,
+      videoUrl: relatedVideo.videoUrl,
+      thumbnailUrl: relatedVideo.thumbnailUrl,
+      authorName: relatedVideo.authorName,
+      authorCredentials: 'Medical Professional', // Default credential
+      authorAvatarUrl: 'https://example.com/avatars/${relatedVideo.authorName.toLowerCase().replaceAll(' ', '_')}.jpg',
+      viewCount: relatedVideo.viewCount,
+      likeCount: (relatedVideo.viewCount * 0.1).round(), // Estimate likes as 10% of views
+      uploadDate: relatedVideo.timestamp,
+      categories: ['First Aid'], // Default category
+      isBookmarked: false,
+      isSavedOffline: false,
+      createdAt: DateTime.now().subtract(const Duration(days: 1)),
+      updatedAt: DateTime.now(),
+    )).toList();
   }
   
   Future<void> updateBookmarkStatus(String videoId, bool isBookmarked) async {

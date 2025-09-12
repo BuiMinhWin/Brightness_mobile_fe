@@ -20,11 +20,9 @@ class NavigationController extends ChangeNotifier {
     required String routeName,
     required Widget page,
     Object? arguments,
+    required BuildContext context,
     bool replace = false,
   }) async {
-    final context = navigatorKey.currentContext;
-    if (context == null) return null;
-    
     // Add to history
     if (!replace) {
       _navigationHistory.add(_currentRoute);
@@ -55,6 +53,7 @@ class NavigationController extends ChangeNotifier {
     required String videoId,
     String? videoUrl,
     Map<String, dynamic>? videoData,
+    required BuildContext context,
   }) async {
     await navigateTo(
       routeName: '/watch-video',
@@ -67,19 +66,22 @@ class NavigationController extends ChangeNotifier {
         videoId: videoId,
         videoUrl: videoUrl,
       ),
+      context: context,
     );
   }
   
-  Future<void> navigateToFirstAidVideos() async {
+  Future<void> navigateToFirstAidVideos({required BuildContext context}) async {
     await navigateTo(
       routeName: '/first-aid-videos',
       page: const FirstAidVideosPage(),
+      context: context,
     );
   }
   
   Future<void> navigateToUserProfile({
     required bool isOwnProfile,
     String? userId,
+    required BuildContext context,
   }) async {
     await navigateTo(
       routeName: '/user-profile',
@@ -88,13 +90,15 @@ class NavigationController extends ChangeNotifier {
         'userId': userId,
       },
       page: UserProfilePage(isOwnProfile: isOwnProfile),
+      context: context,
     );
   }
   
-  Future<void> navigateToEditProfile() async {
+  Future<void> navigateToEditProfile({required BuildContext context}) async {
     await navigateTo(
       routeName: '/edit-profile',
       page: const EditProfilePage(),
+      context: context,
     );
   }
   

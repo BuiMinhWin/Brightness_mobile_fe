@@ -1,0 +1,28 @@
+{
+  "categories": [
+    {
+      "id": "all",
+      "name": "All"
+    },
+    {
+      "id": "muscle_injury",
+      "name": "Muscle Injury"
+    },
+    {
+      "id": "heat_exhaustion",
+      "name": "Heat Exhaustion"
+    },
+    {
+      "id": "recovery",
+      "name": "Recovery"
+    },
+    {
+      "id": "sprains",
+      "name": "Sprains"
+    },
+    {
+      "id": "emergency",
+      "name": "Emergency"
+    }
+  ]
+}

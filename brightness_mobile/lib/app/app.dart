@@ -13,6 +13,9 @@ import '../features/onboarding/presentation/controllers/onboarding_controller.da
 import '../features/pricing/presentation/pages/pricing_page.dart';
 import '../features/auth/presentation/pages/login_page.dart';
 import '../core/navigation/main_navigation_controller.dart';
+import '../features/profile/presentation/controllers/navigation_controller.dart';
+import '../features/profile/presentation/controllers/edit_profile_controller.dart';
+import '../features/profile/presentation/controllers/video_controller.dart';
 import 'di.dart' as di;
 
 class App extends StatelessWidget {
@@ -35,6 +38,15 @@ class App extends StatelessWidget {
         ),
         ChangeNotifierProvider<RegisterController>(
           create: (_) => di.sl<RegisterController>(),
+        ),
+        ChangeNotifierProvider<NavigationController>(
+          create: (_) => di.sl<NavigationController>(),
+        ),
+        ChangeNotifierProvider<EditProfileController>(
+          create: (_) => di.sl<EditProfileController>(),
+        ),
+        ChangeNotifierProvider<VideoController>(
+          create: (_) => di.sl<VideoController>(),
         ),
       ],
       child: MaterialApp(
