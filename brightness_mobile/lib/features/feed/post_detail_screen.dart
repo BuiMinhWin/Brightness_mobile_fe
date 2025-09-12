@@ -1,11 +1,5 @@
 import 'package:flutter/material.dart';
 import 'post_detail/widgets/post_detail_header.dart';
-import 'post_detail/widgets/post_author_info.dart';
-import 'post_detail/widgets/post_content_detail.dart';
-import 'post_detail/widgets/post_media.dart';
-import 'post_detail/widgets/post_interactions.dart';
-import 'post_detail/widgets/comments_section.dart';
-import 'post_detail/widgets/user_posts_preview.dart';
 import 'post_detail/widgets/comment_input.dart';
 
 class PostDetailScreen extends StatefulWidget {

@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import '../../widgets/hashtag_text.dart';
 
 class PostContentDetail extends StatelessWidget {
   final Map<String, dynamic>? postData;
