@@ -6,11 +6,7 @@ class DropdownOption {
   final String label;
   final dynamic data;
 
-  const DropdownOption({
-    required this.value,
-    required this.label,
-    this.data,
-  });
+  const DropdownOption({required this.value, required this.label, this.data});
 
   @override
   bool operator ==(Object other) {
@@ -80,8 +76,11 @@ class _CustomDropdownFieldState extends State<CustomDropdownField> {
   void _filterOptions() {
     if (widget.showSearch && _searchQuery != null && _searchQuery!.isNotEmpty) {
       _filteredOptions = widget.options
-          .where((option) =>
-              option.label.toLowerCase().contains(_searchQuery!.toLowerCase()))
+          .where(
+            (option) => option.label.toLowerCase().contains(
+              _searchQuery!.toLowerCase(),
+            ),
+          )
           .toList();
     } else {
       _filteredOptions = widget.options;
@@ -99,7 +98,9 @@ class _CustomDropdownFieldState extends State<CustomDropdownField> {
   DropdownOption? _getSelectedOption() {
     if (widget.value == null) return null;
     try {
-      return widget.options.firstWhere((option) => option.value == widget.value);
+      return widget.options.firstWhere(
+        (option) => option.value == widget.value,
+      );
     } catch (e) {
       return null;
     }
@@ -155,12 +156,14 @@ class _CustomDropdownFieldState extends State<CustomDropdownField> {
       children: [
         DropdownButtonFormField<String>(
           initialValue: widget.value,
-          onChanged: widget.enabled ? (value) {
-            widget.onChanged?.call(value);
-            if (_hasError) {
-              _validateField();
-            }
-          } : null,
+          onChanged: widget.enabled
+              ? (value) {
+                  widget.onChanged?.call(value);
+                  if (_hasError) {
+                    _validateField();
+                  }
+                }
+              : null,
           validator: (value) {
             final error = widget.validator?.call(value);
             setState(() {
@@ -178,9 +181,7 @@ class _CustomDropdownFieldState extends State<CustomDropdownField> {
               color: AppTheme.textSecondary,
             ),
             isError: _hasError,
-          ).copyWith(
-            helperText: widget.helperText,
-          ),
+          ).copyWith(helperText: widget.helperText),
           isExpanded: widget.isExpanded,
           items: _filteredOptions.map((DropdownOption option) {
             return DropdownMenuItem<String>(
@@ -203,10 +204,7 @@ class _CustomDropdownFieldState extends State<CustomDropdownField> {
         ),
         if (_hasError && _errorText != null) ...[
           const SizedBox(height: AppTheme.spacingXS),
-          Text(
-            _errorText!,
-            style: AppTheme.textStyleError,
-          ),
+          Text(_errorText!, style: AppTheme.textStyleError),
         ],
       ],
     );
@@ -241,10 +239,12 @@ class CustomDropdownFieldWithSearch extends StatefulWidget {
   });
 
   @override
-  State<CustomDropdownFieldWithSearch> createState() => _CustomDropdownFieldWithSearchState();
+  State<CustomDropdownFieldWithSearch> createState() =>
+      _CustomDropdownFieldWithSearchState();
 }
 
-class _CustomDropdownFieldWithSearchState extends State<CustomDropdownFieldWithSearch> {
+class _CustomDropdownFieldWithSearchState
+    extends State<CustomDropdownFieldWithSearch> {
   bool _hasError = false;
   String? _errorText;
   bool _isOpen = false;
@@ -260,8 +260,10 @@ class _CustomDropdownFieldWithSearchState extends State<CustomDropdownFieldWithS
   void _filterOptions() {
     if (_searchQuery.isNotEmpty) {
       _filteredOptions = widget.options
-          .where((option) =>
-              option.label.toLowerCase().contains(_searchQuery.toLowerCase()))
+          .where(
+            (option) =>
+                option.label.toLowerCase().contains(_searchQuery.toLowerCase()),
+          )
           .toList();
     } else {
       _filteredOptions = widget.options;
@@ -279,7 +281,9 @@ class _CustomDropdownFieldWithSearchState extends State<CustomDropdownFieldWithS
   DropdownOption? _getSelectedOption() {
     if (widget.value == null) return null;
     try {
-      return widget.options.firstWhere((option) => option.value == widget.value);
+      return widget.options.firstWhere(
+        (option) => option.value == widget.value,
+      );
     } catch (e) {
       return null;
     }
@@ -317,7 +321,9 @@ class _CustomDropdownFieldWithSearchState extends State<CustomDropdownFieldWithS
               color: AppTheme.backgroundColor,
               borderRadius: BorderRadius.circular(AppTheme.radiusM),
               border: Border.all(
-                color: _hasError ? AppTheme.borderErrorColor : AppTheme.borderColor,
+                color: _hasError
+                    ? AppTheme.borderErrorColor
+                    : AppTheme.borderColor,
               ),
             ),
             padding: const EdgeInsets.symmetric(
@@ -348,10 +354,7 @@ class _CustomDropdownFieldWithSearchState extends State<CustomDropdownFieldWithS
         ),
         if (_hasError && _errorText != null) ...[
           const SizedBox(height: AppTheme.spacingXS),
-          Text(
-            _errorText!,
-            style: AppTheme.textStyleError,
-          ),
+          Text(_errorText!, style: AppTheme.textStyleError),
         ],
       ],
     );
@@ -388,8 +391,10 @@ class _SearchDialogState extends State<_SearchDialog> {
   void _filterOptions() {
     if (_searchQuery.isNotEmpty) {
       _filteredOptions = widget.options
-          .where((option) =>
-              option.label.toLowerCase().contains(_searchQuery.toLowerCase()))
+          .where(
+            (option) =>
+                option.label.toLowerCase().contains(_searchQuery.toLowerCase()),
+          )
           .toList();
     } else {
       _filteredOptions = widget.options;
@@ -426,7 +431,7 @@ class _SearchDialogState extends State<_SearchDialog> {
                 itemBuilder: (context, index) {
                   final option = _filteredOptions[index];
                   final isSelected = option.value == widget.selectedValue;
-                  
+
                   return ListTile(
                     title: Text(option.label),
                     selected: isSelected,

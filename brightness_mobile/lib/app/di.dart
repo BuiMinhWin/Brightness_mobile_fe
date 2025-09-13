@@ -6,6 +6,8 @@ import 'package:http/http.dart' as http;
 
 // Core
 import '../core/config/app_config.dart';
+import '../core/network/dio_client.dart';
+import '../core/services/token_storage.dart';
 
 // Auth feature
 import '../features/auth/data/sources/auth_remote_data_source.dart';
@@ -40,6 +42,10 @@ Future<void> init() async {
   sl.registerLazySingleton<http.Client>(
     () => http.Client(),
   );
+
+  // Token storage + Dio client (for new API flows)
+  sl.registerLazySingleton<TokenStorage>(() => InMemoryTokenStorage());
+  sl.registerLazySingleton<DioClient>(() => DioClient(config: sl(), tokenStorage: sl()));
 
   // Auth feature
   await _initAuth();

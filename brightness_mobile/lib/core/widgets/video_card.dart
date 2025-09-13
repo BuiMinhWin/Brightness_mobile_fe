@@ -6,12 +6,7 @@ class VideoCard extends StatefulWidget {
   final VoidCallback? onTap;
   final VoidCallback? onShare;
 
-  const VideoCard({
-    super.key,
-    required this.video,
-    this.onTap,
-    this.onShare,
-  });
+  const VideoCard({super.key, required this.video, this.onTap, this.onShare});
 
   @override
   State<VideoCard> createState() => _VideoCardState();
@@ -41,13 +36,13 @@ class _VideoCardState extends State<VideoCard> {
         children: [
           // Video Thumbnail with iFrame
           _buildVideoThumbnail(),
-          
+
           // Video Information
           _buildVideoInfo(),
-          
+
           // Author and Stats
           _buildAuthorInfo(),
-          
+
           // Hashtags
           _buildHashtags(),
         ],
@@ -69,7 +64,9 @@ class _VideoCardState extends State<VideoCard> {
           children: [
             // Video Thumbnail/Preview
             ClipRRect(
-              borderRadius: const BorderRadius.vertical(top: Radius.circular(12)),
+              borderRadius: const BorderRadius.vertical(
+                top: Radius.circular(12),
+              ),
               child: widget.video.thumbnailUrl != null
                   ? Image.network(
                       widget.video.thumbnailUrl!,
@@ -82,7 +79,7 @@ class _VideoCardState extends State<VideoCard> {
                     )
                   : _buildPlaceholderThumbnail(),
             ),
-            
+
             // Navigation Indicator Overlay
             Center(
               child: Container(
@@ -99,7 +96,7 @@ class _VideoCardState extends State<VideoCard> {
                 ),
               ),
             ),
-            
+
             // Duration Overlay
             Positioned(
               bottom: 8,
@@ -131,7 +128,7 @@ class _VideoCardState extends State<VideoCard> {
                 ),
               ),
             ),
-            
+
             // Medical Cross Icon
             Positioned(
               top: 8,
@@ -205,7 +202,7 @@ class _VideoCardState extends State<VideoCard> {
             overflow: TextOverflow.ellipsis,
           ),
           const SizedBox(height: 8),
-          
+
           // Description
           Text(
             widget.video.description,
@@ -250,7 +247,7 @@ class _VideoCardState extends State<VideoCard> {
                 : _buildPlaceholderAvatar(),
           ),
           const SizedBox(width: 8),
-          
+
           // Author Name
           Expanded(
             child: Text(
@@ -262,7 +259,7 @@ class _VideoCardState extends State<VideoCard> {
               ),
             ),
           ),
-          
+
           // View Count and Timestamp
           Column(
             crossAxisAlignment: CrossAxisAlignment.end,
@@ -320,11 +317,7 @@ class _VideoCardState extends State<VideoCard> {
   }
 
   Widget _buildPlaceholderAvatar() {
-    return const Icon(
-      Icons.person,
-      size: 16,
-      color: AppTheme.textHint,
-    );
+    return const Icon(Icons.person, size: 16, color: AppTheme.textHint);
   }
 
   IconData _getCategoryIcon(String category) {
@@ -398,16 +391,13 @@ class _VideoCardState extends State<VideoCard> {
                   ],
                 ),
               ),
-              
+
               // Close Button
               Positioned(
                 top: 8,
                 right: 8,
                 child: IconButton(
-                  icon: const Icon(
-                    Icons.close,
-                    color: Colors.white,
-                  ),
+                  icon: const Icon(Icons.close, color: Colors.white),
                   onPressed: () {
                     Navigator.of(context).pop();
                     setState(() {
@@ -461,8 +451,5 @@ class HashtagData {
   final String text;
   final Color color;
 
-  const HashtagData({
-    required this.text,
-    required this.color,
-  });
+  const HashtagData({required this.text, required this.color});
 }
