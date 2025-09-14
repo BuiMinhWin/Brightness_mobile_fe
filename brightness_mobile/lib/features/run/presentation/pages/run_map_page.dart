@@ -15,17 +15,17 @@ class RunMapPage extends StatelessWidget {
 
   // Example path coordinates for the dotted routes
   List<LatLng> get _pinkPath => const [
-        LatLng(37.7760, -122.4255),
-        LatLng(37.7750, -122.4230),
-        LatLng(37.7740, -122.4200),
-      ];
+    LatLng(37.7760, -122.4255),
+    LatLng(37.7750, -122.4230),
+    LatLng(37.7740, -122.4200),
+  ];
 
   List<LatLng> get _blackPath => const [
-        LatLng(37.7732, -122.4170),
-        LatLng(37.7722, -122.4150),
-        LatLng(37.7715, -122.4120),
-        LatLng(37.7718, -122.4105),
-      ];
+    LatLng(37.7732, -122.4170),
+    LatLng(37.7722, -122.4150),
+    LatLng(37.7715, -122.4120),
+    LatLng(37.7718, -122.4105),
+  ];
 
   // Create evenly spaced points along each segment for dotted effect
   List<LatLng> _dotsFromPath(List<LatLng> path, {int dotsPerSegment = 10}) {
@@ -66,7 +66,8 @@ class RunMapPage extends StatelessWidget {
               initialCenter: _center,
               initialZoom: 15,
               interactionOptions: const InteractionOptions(
-                flags: InteractiveFlag.pinchZoom |
+                flags:
+                    InteractiveFlag.pinchZoom |
                     InteractiveFlag.drag |
                     InteractiveFlag.doubleTapZoom,
               ),
@@ -75,6 +76,8 @@ class RunMapPage extends StatelessWidget {
               TileLayer(
                 urlTemplate: _tileTemplate,
                 subdomains: const ['a', 'b', 'c', 'd'],
+                // Enable high-res tiles when on high-density displays
+                retinaMode: RetinaMode.isHighDensity(context),
                 userAgentPackageName: 'com.example.brightness_mobile',
               ),
               // Pink dotted route
@@ -175,7 +178,11 @@ class RunMapPage extends StatelessWidget {
                     borderRadius: BorderRadius.circular(24),
                     child: const Padding(
                       padding: EdgeInsets.all(8.0),
-                      child: Icon(Icons.arrow_back, size: 24, color: Colors.black87),
+                      child: Icon(
+                        Icons.arrow_back,
+                        size: 24,
+                        color: Colors.black87,
+                      ),
                     ),
                   ),
                 ],
@@ -201,7 +208,10 @@ class RunMapPage extends StatelessWidget {
                   ),
                 ],
               ),
-              child: const Icon(Icons.navigation_rounded, color: Colors.black87),
+              child: const Icon(
+                Icons.navigation_rounded,
+                color: Colors.black87,
+              ),
             ),
           ),
 
@@ -211,105 +221,116 @@ class RunMapPage extends StatelessWidget {
             child: GestureDetector(
               onTap: () => Navigator.of(context).pushNamed(AppRouter.runDetail),
               child: Container(
-              decoration: const BoxDecoration(
-                color: Colors.white,
-                borderRadius: BorderRadius.only(
-                  topLeft: Radius.circular(28),
-                  topRight: Radius.circular(28),
+                decoration: const BoxDecoration(
+                  color: Colors.white,
+                  borderRadius: BorderRadius.only(
+                    topLeft: Radius.circular(28),
+                    topRight: Radius.circular(28),
+                  ),
+                  boxShadow: [
+                    BoxShadow(
+                      color: Color(0x1F000000),
+                      blurRadius: 12,
+                      offset: Offset(0, -4),
+                    ),
+                  ],
                 ),
-                boxShadow: [
-                  BoxShadow(
-                    color: Color(0x1F000000),
-                    blurRadius: 12,
-                    offset: Offset(0, -4),
-                  )
-                ],
-              ),
-              padding: const EdgeInsets.fromLTRB(20, 18, 20, 32),
-              width: double.infinity,
-              child: Column(
-                mainAxisSize: MainAxisSize.min,
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  Row(
-                    crossAxisAlignment: CrossAxisAlignment.center,
-                    children: [
-                      // Overlapped avatars
-                      SizedBox(
-                        width: 84,
-                        height: 36,
-                        child: Stack(
-                          clipBehavior: Clip.none,
-                          children: const [
-                            _Avatar(url: 'https://images.unsplash.com/photo-1547425260-76bcadfb4f2d?w=120&q=80&auto=format&fit=crop'),
-                            _Avatar(offset: 24, url: 'https://images.unsplash.com/photo-1544005313-94ddf0286df2?w=120&q=80&auto=format&fit=crop'),
-                            _Avatar(offset: 48, url: 'https://images.unsplash.com/photo-1544005310-0e09f9d6d63f?w=120&q=80&auto=format&fit=crop'),
-                          ],
-                        ),
-                      ),
-                      const SizedBox(width: 12),
-                      Expanded(
-                        child: Column(
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children: [
-                            Text(
-                              'Indoor Run',
-                              style: theme.textTheme.titleMedium?.copyWith(
-                                color: dark,
-                                fontWeight: FontWeight.w700,
-                                fontSize: 20,
+                padding: const EdgeInsets.fromLTRB(20, 18, 20, 32),
+                width: double.infinity,
+                child: Column(
+                  mainAxisSize: MainAxisSize.min,
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Row(
+                      crossAxisAlignment: CrossAxisAlignment.center,
+                      children: [
+                        // Overlapped avatars
+                        SizedBox(
+                          width: 84,
+                          height: 36,
+                          child: Stack(
+                            clipBehavior: Clip.none,
+                            children: const [
+                              _Avatar(
+                                url: 'https://picsum.photos/seed/user1/120',
                               ),
-                            ),
-                            const SizedBox(height: 4),
-                            Text(
-                              '20km',
-                              style: theme.textTheme.bodyMedium?.copyWith(
-                                color: label,
-                                fontWeight: FontWeight.w500,
+                              _Avatar(
+                                offset: 24,
+                                url: 'https://picsum.photos/seed/user2/120',
                               ),
-                            ),
-                          ],
+                              _Avatar(
+                                offset: 48,
+                                url: 'https://picsum.photos/seed/user3/120',
+                              ),
+                            ],
+                          ),
                         ),
-                      ),
-                      const Icon(Icons.more_vert, color: Colors.black54),
-                    ],
-                  ),
-                  const SizedBox(height: 16),
-                  const Divider(height: 1),
-                  const SizedBox(height: 16),
-                  Row(
-                    crossAxisAlignment: CrossAxisAlignment.center,
-                    children: [
-                      Container(
-                        width: 56,
-                        height: 56,
-                        decoration: BoxDecoration(
-                          color: statGreenBg,
-                          borderRadius: BorderRadius.circular(16),
+                        const SizedBox(width: 12),
+                        Expanded(
+                          child: Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              Text(
+                                'Indoor Run',
+                                style: theme.textTheme.titleMedium?.copyWith(
+                                  color: dark,
+                                  fontWeight: FontWeight.w700,
+                                  fontSize: 20,
+                                ),
+                              ),
+                              const SizedBox(height: 4),
+                              Text(
+                                '20km',
+                                style: theme.textTheme.bodyMedium?.copyWith(
+                                  color: label,
+                                  fontWeight: FontWeight.w500,
+                                ),
+                              ),
+                            ],
+                          ),
                         ),
-                        child: Icon(Icons.directions_run_rounded, color: statGreen),
-                      ),
-                      const SizedBox(width: 16),
-                      Expanded(
-                        child: Row(
-                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                          children: [
-                            _StatBlock(
-                              label: 'Elapsed time',
-                              value: '00 : 30 : 24',
-                            ),
-                            _StatBlock(
-                              label: 'Distance',
-                              value: '12.5km/20km',
-                            ),
-                          ],
+                        const Icon(Icons.more_vert, color: Colors.black54),
+                      ],
+                    ),
+                    const SizedBox(height: 16),
+                    const Divider(height: 1),
+                    const SizedBox(height: 16),
+                    Row(
+                      crossAxisAlignment: CrossAxisAlignment.center,
+                      children: [
+                        Container(
+                          width: 56,
+                          height: 56,
+                          decoration: BoxDecoration(
+                            color: statGreenBg,
+                            borderRadius: BorderRadius.circular(16),
+                          ),
+                          child: Icon(
+                            Icons.directions_run_rounded,
+                            color: statGreen,
+                          ),
                         ),
-                      ),
-                    ],
-                  ),
-                ],
+                        const SizedBox(width: 16),
+                        Expanded(
+                          child: Row(
+                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                            children: [
+                              _StatBlock(
+                                label: 'Elapsed time',
+                                value: '00 : 30 : 24',
+                              ),
+                              _StatBlock(
+                                label: 'Distance',
+                                value: '12.5km/20km',
+                              ),
+                            ],
+                          ),
+                        ),
+                      ],
+                    ),
+                  ],
+                ),
               ),
-            ),
             ),
           ),
         ],
@@ -342,7 +363,21 @@ class _Avatar extends StatelessWidget {
             ),
           ],
         ),
-        child: CircleAvatar(backgroundImage: NetworkImage(url)),
+        child: ClipOval(
+          child: Image.network(
+            url,
+            width: 36,
+            height: 36,
+            fit: BoxFit.cover,
+            filterQuality: FilterQuality.medium,
+            errorBuilder: (context, error, stackTrace) => const ColoredBox(
+              color: Color(0xFFE5E7EB),
+              child: Center(
+                child: Icon(Icons.person, size: 16, color: Color(0xFF6B7280)),
+              ),
+            ),
+          ),
+        ),
       ),
     );
   }
@@ -363,17 +398,17 @@ class _StatBlock extends StatelessWidget {
         Text(
           label,
           style: Theme.of(context).textTheme.bodySmall?.copyWith(
-                color: labelColor,
-                fontWeight: FontWeight.w600,
-              ),
+            color: labelColor,
+            fontWeight: FontWeight.w600,
+          ),
         ),
         const SizedBox(height: 8),
         Text(
           value,
           style: Theme.of(context).textTheme.titleMedium?.copyWith(
-                color: valueColor,
-                fontWeight: FontWeight.w800,
-              ),
+            color: valueColor,
+            fontWeight: FontWeight.w800,
+          ),
         ),
       ],
     );

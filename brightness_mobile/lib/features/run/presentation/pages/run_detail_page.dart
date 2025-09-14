@@ -273,10 +273,13 @@ class _AvatarStack extends StatelessWidget {
             child: CircleAvatar(
               radius: size / 2,
               backgroundColor: Colors.white,
-              child: CircleAvatar(
-                radius: size / 2 - 2,
-                backgroundImage: const NetworkImage(
-                  'https://images.unsplash.com/photo-1506794778202-cad84cf45f1d?w=120&q=80&auto=format&fit=crop',
+              child: ClipOval(
+                child: Image.network(
+                  'https://picsum.photos/seed/userA/120',
+                  width: size,
+                  height: size,
+                  fit: BoxFit.cover,
+                  errorBuilder: (context, error, stackTrace) => const Icon(Icons.person, size: 16, color: Color(0xFF6B7280)),
                 ),
               ),
             ),
@@ -286,10 +289,13 @@ class _AvatarStack extends StatelessWidget {
             child: CircleAvatar(
               radius: size / 2,
               backgroundColor: Colors.white,
-              child: CircleAvatar(
-                radius: size / 2 - 2,
-                backgroundImage: const NetworkImage(
-                  'https://images.unsplash.com/photo-1544005313-94ddf0286df2?w=120&q=80&auto=format&fit=crop',
+              child: ClipOval(
+                child: Image.network(
+                  'https://picsum.photos/seed/userB/120',
+                  width: size,
+                  height: size,
+                  fit: BoxFit.cover,
+                  errorBuilder: (context, error, stackTrace) => const Icon(Icons.person, size: 16, color: Color(0xFF6B7280)),
                 ),
               ),
             ),
@@ -299,10 +305,13 @@ class _AvatarStack extends StatelessWidget {
             child: CircleAvatar(
               radius: size / 2,
               backgroundColor: Colors.white,
-              child: CircleAvatar(
-                radius: size / 2 - 2,
-                backgroundImage: const NetworkImage(
-                  'https://images.unsplash.com/photo-1544005310-0e09f9d6d63f?w=120&q=80&auto=format&fit=crop',
+              child: ClipOval(
+                child: Image.network(
+                  'https://picsum.photos/seed/userC/120',
+                  width: size,
+                  height: size,
+                  fit: BoxFit.cover,
+                  errorBuilder: (context, error, stackTrace) => const Icon(Icons.person, size: 16, color: Color(0xFF6B7280)),
                 ),
               ),
             ),
