@@ -1,98 +1,3 @@
-// import 'package:brightness_mobile/features/home/presentation/pages/home_page.dart';
-// import 'package:brightness_mobile/features/profile/presentation/pages/first_aid_videos_page.dart';
-// import 'package:flutter/material.dart';
-// import 'package:provider/provider.dart';
-// import '../../features/yours/presentation/pages/home_page_content.dart';
-// import '../../features/yours/presentation/pages/event_page_content.dart';
-// import '../../features/yours/presentation/pages/yours_page_content.dart';
-// // import '../../features/yours/presentation/pages/video_page_content.dart';
-// import '../../features/yours/presentation/pages/leaderboard_page_content.dart';
-// import '../../shared/widgets/custom_bottom_navbar.dart';
-// import '../../features/profile/presentation/controllers/navigation_controller.dart';
-// import '../../features/profile/presentation/controllers/video_controller.dart';
-// import '../../features/profile/presentation/controllers/edit_profile_controller.dart';
-// import '../../app/di.dart' as di;
-
-// class MainNavigationController extends StatefulWidget {
-//   const MainNavigationController({super.key});
-
-//   @override
-//   State<MainNavigationController> createState() =>
-//       _MainNavigationControllerState();
-// }
-
-// class _MainNavigationControllerState extends State<MainNavigationController> {
-//   int _currentIndex = 2; // Start with Yours page
-
-//   late PageController _pageController;
-
-//   @override
-//   void initState() {
-//     super.initState();
-//     _pageController = PageController(initialPage: _currentIndex);
-//   }
-
-//   @override
-//   void dispose() {
-//     _pageController.dispose();
-//     super.dispose();
-//   }
-
-//   void _onTabTapped(int index) {
-//     if (index == 0) {
-//       // Navigate back to home page instead of showing it in PageView
-//       Navigator.of(context).pop();
-//       return;
-//     }
-
-//     setState(() {
-//       _currentIndex = index;
-//     });
-//     _pageController.animateToPage(
-//       index,
-//       duration: const Duration(milliseconds: 300),
-//       curve: Curves.easeInOut,
-//     );
-//   }
-
-//   @override
-//   Widget build(BuildContext context) {
-//     return MultiProvider(
-//       providers: [
-//         ChangeNotifierProvider<NavigationController>(
-//           create: (_) => di.sl<NavigationController>(),
-//         ),
-//         ChangeNotifierProvider<VideoController>(
-//           create: (_) => di.sl<VideoController>(),
-//         ),
-//         ChangeNotifierProvider<EditProfileController>(
-//           create: (_) => di.sl<EditProfileController>(),
-//         ),
-//       ],
-//       child: Scaffold(
-//         body: PageView(
-//           controller: _pageController,
-//           onPageChanged: (index) {
-//             setState(() {
-//               _currentIndex = index;
-//             });
-//           },
-//           children: [
-//             const HomeScreen(),
-//             const EventPageContent(key: ValueKey('Event')),
-//             const YoursPageContent(key: ValueKey('Yours')),
-//             const FirstAidVideosPage(key: ValueKey('Video')),
-//             const LeaderboardPageContent(key: ValueKey('Leaderboard')),
-//           ],
-//         ),
-//         bottomNavigationBar: CustomBottomNavBar(
-//           currentIndex: _currentIndex,
-//           onTap: _onTabTapped,
-//         ),
-//       ),
-//     );
-//   }
-// }
 import 'package:brightness_mobile/features/home/presentation/pages/home_page.dart';
 import 'package:brightness_mobile/features/profile/presentation/pages/first_aid_videos_page.dart';
 import 'package:flutter/material.dart';
@@ -119,14 +24,13 @@ class _MainNavigationControllerState extends State<MainNavigationController> {
   bool _showBottomNavBar = true; // Control navbar visibility
 
   late PageController _pageController;
-  late Widget _pageView; // ✅ store PageView instance once
+  late Widget _pageView;
 
   @override
   void initState() {
     super.initState();
     _pageController = PageController(initialPage: 1); // Yours page = index 1
 
-    // ✅ Create PageView once and reuse it with unique ValueKeys
     _pageView = PageView(
       controller: _pageController,
       onPageChanged: _onPageChanged,
@@ -258,7 +162,6 @@ class _MainNavigationControllerState extends State<MainNavigationController> {
       );
     }
 
-    // ✅ reuse the PageView created in initState
     return _pageView;
   }
 
