@@ -180,7 +180,9 @@ class CustomBottomNavBar extends StatelessWidget {
               duration: const Duration(milliseconds: 200),
               child: Icon(
                 isActive ? activeIcon : icon,
-                key: ValueKey(isActive),
+                key: ValueKey(
+                  '${label}_$isActive',
+                ), // Use unique key combining label and state
                 color: isActive
                     ? (isSpecial ? AppColors.white : AppColors.primary)
                     : AppTheme.textSecondary,
