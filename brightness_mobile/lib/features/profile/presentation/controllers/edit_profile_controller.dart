@@ -4,8 +4,6 @@ import 'package:get_it/get_it.dart';
 import '../../../../shared/models/profile_model.dart';
 import '../../../../shared/models/validation_rules.dart';
 import '../../../../shared/services/user_profile_data_service.dart';
-import '../../../../core/usecase/either_usecase.dart';
-import '../../domain/entities/profile_entity.dart';
 import '../../domain/usecases/get_profile_usecase.dart';
 import '../../domain/usecases/update_profile_usecase.dart';
 import '../../domain/usecases/upload_profile_image_usecase.dart';

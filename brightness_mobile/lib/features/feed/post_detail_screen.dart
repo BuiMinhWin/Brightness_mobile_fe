@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import '../../../shared/services/social_feed_data_service.dart';
 import 'post_detail/widgets/post_detail_header.dart';
-import 'post_detail/widgets/comment_input.dart';
 
 class PostDetailScreen extends StatefulWidget {
   final String postId;
