@@ -1,3 +1,4 @@
+import 'package:brightness_mobile/core/navigation/main_navigation_controller.dart';
 import 'package:flutter/material.dart';
 import '../theme/app_theme.dart';
 
@@ -37,7 +38,16 @@ class VideoAppBar extends StatelessWidget implements PreferredSizeWidget {
       elevation: 0,
       leading: IconButton(
         icon: const Icon(Icons.arrow_back, color: AppTheme.textPrimary),
-        onPressed: onBackPressed ?? () => Navigator.of(context).pop(),
+        onPressed:
+            onBackPressed ??
+            () {
+              Navigator.of(context).pushAndRemoveUntil(
+                MaterialPageRoute(
+                  builder: (_) => const MainNavigationController(),
+                ),
+                (route) => false,
+              );
+            },
       ),
       actions: [
         if (showFilter)
