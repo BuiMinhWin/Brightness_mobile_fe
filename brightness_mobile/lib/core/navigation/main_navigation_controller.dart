@@ -79,13 +79,10 @@ class _MainNavigationControllerState extends State<MainNavigationController> {
     switch (index) {
       case 1: // Event
         pageIndex = 0;
-        break;
       case 2: // Yours
         pageIndex = 1;
-        break;
       case 4: // Leaderboard
         pageIndex = 2;
-        break;
       default:
         pageIndex = 1;
     }
@@ -107,13 +104,10 @@ class _MainNavigationControllerState extends State<MainNavigationController> {
     switch (pageIndex) {
       case 0:
         navIndex = 1; // Event page
-        break;
       case 1:
         navIndex = 2; // Yours page
-        break;
       case 2:
         navIndex = 4; // Leaderboard page
-        break;
       default:
         navIndex = 2; // Default to Yours page
     }
