@@ -2,5 +2,6 @@
     "dart.hotReloadOnSave": "all",
     "dart.flutterHotReloadOnSave": "all",
     "editor.formatOnSave": true,
-    "files.autoSave": "afterDelay"
+    "files.autoSave": "afterDelay",
+    "java.configuration.updateBuildConfiguration": "interactive"
 }

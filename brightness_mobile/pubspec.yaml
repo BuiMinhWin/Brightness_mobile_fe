@@ -3,7 +3,7 @@ description: "Ứng dụng di động cho dự án Brightness, giúp kết nối
 publish_to: "none" # Ngăn chặn việc publish tình cờ lên pub.dev
 
 # QUAN TRỌNG: Luôn tăng số sau dấu '+' (build number) mỗi khi build để upload lên store.
-version: 0.1.0+1
+version: 0.1.0+2
 
 environment:
   # Dùng một khoảng SDK rộng hơn để tương thích tốt hơn
