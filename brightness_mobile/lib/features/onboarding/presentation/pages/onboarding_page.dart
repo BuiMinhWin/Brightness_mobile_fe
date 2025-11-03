@@ -70,7 +70,7 @@ class OnboardingScreen extends StatelessWidget {
                               color: AppColors.white,
                               boxShadow: [
                                 BoxShadow(
-                                  color: Colors.black.withOpacity(0.05),
+                                  color: Colors.black.withAlpha(13),
                                   blurRadius: 10,
                                   offset: const Offset(0, -5),
                                 ),
@@ -93,7 +93,7 @@ class OnboardingScreen extends StatelessWidget {
                                       backgroundColor: AppColors.primary,
                                     ),
                                   );
-                                } else if (controller.error != null) {
+                                } else if (controller.error != null && context.mounted) {
                                   ScaffoldMessenger.of(context).showSnackBar(
                                     SnackBar(
                                       content: Text(controller.error!),
@@ -136,7 +136,7 @@ class OnboardingScreen extends StatelessWidget {
                 width: 50,
                 height: 50,
                 decoration: BoxDecoration(
-                  color: Colors.white.withOpacity(0.2),
+                  color: Colors.white.withAlpha(51),
                   shape: BoxShape.circle,
                 ),
                 child: const Icon(

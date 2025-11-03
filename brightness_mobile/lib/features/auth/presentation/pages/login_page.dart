@@ -63,7 +63,7 @@ Widget _buildBackground() {
           child: Transform.translate(
             offset: const Offset(60, -140),
             child: Transform.scale(
-              scale: 1.5, 
+              scale: 1.5,
               child: SvgPicture.asset(
                 'assets/images/Background_login.svg',
                 fit: BoxFit.cover,
@@ -121,7 +121,7 @@ Widget _buildBackground() {
           width: 120,
           height: 120,
           decoration: BoxDecoration(
-            color: AppColors.white.withOpacity(0.0),
+            color: AppColors.white.withAlpha(0),
             shape: BoxShape.circle,
           ),
           child: ClipOval(
@@ -193,11 +193,11 @@ Widget _buildBackground() {
                 fillColor: Colors.transparent,
                 hintText: 'Email or User Name',
                 hintStyle: AppTextStyles.body1.copyWith(
-                  color: AppColors.white.withOpacity(0.7),
+                  color: AppColors.white.withAlpha(178),
                 ),
                 prefixIcon: Icon(
                   Icons.person_outline,
-                  color: AppColors.white.withOpacity(0.7),
+                  color: AppColors.white.withAlpha(178),
                 ),
                 enabledBorder: OutlineInputBorder(
                   borderRadius: BorderRadius.circular(25),
@@ -233,11 +233,11 @@ Widget _buildBackground() {
                 fillColor: Colors.transparent,
                 hintText: 'Password',
                 hintStyle: AppTextStyles.body1.copyWith(
-                  color: AppColors.white.withOpacity(0.7),
+                  color: AppColors.white.withAlpha(178),
                 ),
                 prefixIcon: Icon(
                   Icons.person_outline,
-                  color: AppColors.white.withOpacity(0.7),
+                  color: AppColors.white.withAlpha(178),
                 ),
                 enabledBorder: OutlineInputBorder(
                   borderRadius: BorderRadius.circular(25),
@@ -270,7 +270,7 @@ Widget _buildBackground() {
         child: Text(
           'Forget Password ?',
           style: AppTextStyles.body1.copyWith(
-            color: AppColors.white.withOpacity(0.9),
+            color: AppColors.white.withAlpha(230),
             fontWeight: AppTheme.fontWeightMedium,
           ),
         ),
@@ -405,7 +405,7 @@ Widget _buildBackground() {
         shape: BoxShape.circle,
         boxShadow: [
           BoxShadow(
-            color: AppTheme.textPrimary.withOpacity(0.1),
+            color: AppTheme.textPrimary.withAlpha(26),
             blurRadius: 8,
             offset: const Offset(0, 2),
           ),
@@ -458,7 +458,7 @@ class CircularPatternPainter extends CustomPainter {
   @override
   void paint(Canvas canvas, Size size) {
     final paint = Paint()
-      ..color = AppColors.white.withOpacity(opacity)
+      ..color = AppColors.white.withAlpha((255 * opacity).round())
       ..style = PaintingStyle.stroke
       ..strokeWidth = 1.5;
 
@@ -473,7 +473,7 @@ class CircularPatternPainter extends CustomPainter {
 
     // Add some decorative dots
     final dotPaint = Paint()
-      ..color = AppColors.white.withOpacity(opacity * 0.7)
+      ..color = AppColors.white.withAlpha((255 * opacity * 0.7).round())
       ..style = PaintingStyle.fill;
 
     for (int i = 0; i < 8; i++) {

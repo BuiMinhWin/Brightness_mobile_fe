@@ -33,7 +33,7 @@ class ProfileHeader extends StatelessWidget {
             height: 120,
             decoration: BoxDecoration(
               shape: BoxShape.circle,
-              color: AppTheme.textHint.withOpacity(0.2), // Light gray background
+              color: AppTheme.textHint.withAlpha(51), // Light gray background
               border: Border.all(
                 color: AppTheme.borderColor,
                 width: 2,
@@ -110,7 +110,7 @@ class ProfileHeader extends StatelessWidget {
                 Container(
                   padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 6),
                   decoration: BoxDecoration(
-                    color: AppTheme.primaryColor.withOpacity(0.1),
+                    color: AppTheme.primaryColor.withAlpha(26),
                     borderRadius: BorderRadius.circular(16),
                   ),
                   child: Text(
@@ -128,7 +128,7 @@ class ProfileHeader extends StatelessWidget {
                 Container(
                   padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 6),
                   decoration: BoxDecoration(
-                    color: AppTheme.secondaryColor.withOpacity(0.3),
+                    color: AppTheme.secondaryColor.withAlpha(77),
                     borderRadius: BorderRadius.circular(16),
                   ),
                   child: Text(

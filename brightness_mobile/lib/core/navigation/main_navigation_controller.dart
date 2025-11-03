@@ -173,28 +173,28 @@ class _MainNavigationControllerState extends State<MainNavigationController> {
           create: (_) => di.sl<EditProfileController>(),
         ),
       ],
-      child: WillPopScope(
-        onWillPop: () async {
+      child: PopScope(
+        canPop: false,
+        onPopInvokedWithResult: (bool didPop, Object? result) {
+          if (didPop) {
+            return;
+          }
           // Handle back button
           if (!_showBottomNavBar) {
             // If navbar is hidden (Home or Video page), go back to Yours page
             _onTabTapped(2);
-            return false;
           } else if (_currentIndex != 2) {
             // If navbar is shown but not on Yours page, go to Yours page
             _onTabTapped(2);
-            return false;
           }
-          // If on Yours page with navbar, allow normal back navigation
-          return true;
         },
         child: Scaffold(
           body: _buildCurrentPage(),
           bottomNavigationBar: _showBottomNavBar
               ? CustomBottomNavBar(
-                  currentIndex: _currentIndex,
-                  onTap: _onTabTapped,
-                )
+            currentIndex: _currentIndex,
+            onTap: _onTabTapped,
+          )
               : null,
         ),
       ),

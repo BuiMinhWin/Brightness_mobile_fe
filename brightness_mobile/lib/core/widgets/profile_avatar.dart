@@ -87,7 +87,7 @@ class _ProfileAvatarState extends State<ProfileAvatar> {
               child: Container(
                 decoration: BoxDecoration(
                   shape: BoxShape.circle,
-                  color: Colors.black.withOpacity(0.3),
+                  color: Colors.black.withAlpha(77),
                 ),
                 child: const Center(
                   child: CircularProgressIndicator(
@@ -399,7 +399,7 @@ class _AdvancedProfileAvatarState extends State<AdvancedProfileAvatar> {
               child: Container(
                 decoration: BoxDecoration(
                   borderRadius: widget.borderRadius ?? BorderRadius.circular(widget.size / 2),
-                  color: Colors.black.withOpacity(0.3),
+                  color: Colors.black.withAlpha(77),
                 ),
                 child: const Center(
                   child: CircularProgressIndicator(

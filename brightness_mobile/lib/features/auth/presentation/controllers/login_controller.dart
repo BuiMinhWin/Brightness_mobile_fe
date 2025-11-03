@@ -1,12 +1,17 @@
-
+import 'package:brightness_mobile/app/router.dart';
 import 'package:flutter/material.dart';
 import '../../domain/usecases/login_usecase.dart';
+import '../../domain/usecases/logout_usecase.dart';
 
 class LoginController extends ChangeNotifier {
   final LoginUseCase _loginUseCase;
+  final LogoutUseCase _logoutUseCase;
 
-  LoginController({required LoginUseCase loginUseCase})
-      : _loginUseCase = loginUseCase;
+  LoginController({
+    required LoginUseCase loginUseCase,
+    required LogoutUseCase logoutUseCase,
+  })  : _loginUseCase = loginUseCase,
+        _logoutUseCase = logoutUseCase;
 
   final TextEditingController emailController = TextEditingController();
   final TextEditingController passwordController = TextEditingController();
@@ -82,45 +87,98 @@ class LoginController extends ChangeNotifier {
           _errorMessage = failure.message;
           _isLoading = false;
           notifyListeners();
-          
+
           // Show error snackbar
-          ScaffoldMessenger.of(context).showSnackBar(
-            SnackBar(
-              content: Text(_errorMessage!),
-              backgroundColor: Colors.red,
-              behavior: SnackBarBehavior.floating,
-            ),
-          );
+          if (context.mounted) {
+            ScaffoldMessenger.of(context).showSnackBar(
+              SnackBar(
+                content: Text(_errorMessage!),
+                backgroundColor: Colors.red,
+                behavior: SnackBarBehavior.floating,
+              ),
+            );
+          }
         },
         (authToken) {
           _isLoading = false;
           notifyListeners();
-          
+
           // Navigate to home or dashboard
-          // Navigator.pushReplacementNamed(context, '/home');
-          
-          // Show success message
-          ScaffoldMessenger.of(context).showSnackBar(
-            const SnackBar(
-              content: Text('Login successful!'),
-              backgroundColor: Colors.green,
-              behavior: SnackBarBehavior.floating,
-            ),
-          );
+          if (context.mounted) {
+            Navigator.pushReplacementNamed(context, AppRouter.home);
+          }
         },
       );
     } catch (e) {
       _isLoading = false;
       _errorMessage = 'An unexpected error occurred';
       notifyListeners();
-      
-      ScaffoldMessenger.of(context).showSnackBar(
-        SnackBar(
-          content: Text(_errorMessage!),
-          backgroundColor: Colors.red,
-          behavior: SnackBarBehavior.floating,
-        ),
+
+      if (context.mounted) {
+        ScaffoldMessenger.of(context).showSnackBar(
+          SnackBar(
+            content: Text(_errorMessage!),
+            backgroundColor: Colors.red,
+            behavior: SnackBarBehavior.floating,
+          ),
+        );
+      }
+    }
+  }
+
+  // Logout method
+  Future<void> logout(BuildContext context) async {
+    _errorMessage = null;
+    notifyListeners();
+
+    try {
+      final result = await _logoutUseCase.execute();
+
+      result.fold(
+        (failure) {
+          _errorMessage = failure.message;
+          notifyListeners();
+
+          if (context.mounted) {
+            ScaffoldMessenger.of(context).showSnackBar(
+              SnackBar(
+                content: Text(_errorMessage!),
+                backgroundColor: Colors.red,
+                behavior: SnackBarBehavior.floating,
+              ),
+            );
+          }
+        },
+        (_) {
+          emailController.clear();
+          passwordController.clear();
+          _agreeToTerms = false;
+          _isLoading = false;
+          _isPasswordVisible = false;
+          _errorMessage = null;
+          notifyListeners();
+
+          if (context.mounted) {
+            Navigator.of(context).pushNamedAndRemoveUntil(
+              AppRouter.login,
+              (route) => false,
+            );
+          }
+        },
       );
+    } catch (e) {
+      _errorMessage = 'Failed to log out. Please try again.';
+      notifyListeners();
+
+      if (context.mounted) {
+        ScaffoldMessenger.of(context).showSnackBar(
+          SnackBar(
+            content: Text(_errorMessage!),
+            backgroundColor: Colors.red,
+            behavior: SnackBarBehavior.floating,
+          ),
+        );
+      }
     }
   }
 
@@ -129,10 +187,10 @@ class LoginController extends ChangeNotifier {
     // Implement Google sign in
     _isLoading = true;
     notifyListeners();
-    
+
     // Simulate API call
     await Future.delayed(const Duration(seconds: 2));
-    
+
     _isLoading = false;
     notifyListeners();
   }
@@ -141,10 +199,10 @@ class LoginController extends ChangeNotifier {
     // Implement Facebook sign in
     _isLoading = true;
     notifyListeners();
-    
+
     // Simulate API call
     await Future.delayed(const Duration(seconds: 2));
-    
+
     _isLoading = false;
     notifyListeners();
   }

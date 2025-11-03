@@ -1,13 +1,14 @@
+import 'package:dio/dio.dart';
 
-import 'dart:convert';
-// ignore: depend_on_referenced_packages
-import 'package:http/http.dart' as http;
 import '../models/auth_token_model.dart';
 import '../models/user_model.dart';
 import '../../../../core/errors/exception.dart';
-import '../../../../core/config/app_config.dart';
+import '../../../../core/network/dio_client.dart';
+import '../../../../core/services/token_storage.dart';
+import '../../../../core/utils/jwt_utils.dart';
 
 abstract class AuthRemoteDataSource {
+  Future<bool> isUserLoggedIn();
   Future<AuthTokenModel> login({
     required String emailOrUsername,
     required String password,
@@ -19,24 +20,49 @@ abstract class AuthRemoteDataSource {
   Future<AuthTokenModel> refreshToken({required String refreshToken});
   Future<UserModel> getCurrentUser();
   Future<void> forgotPassword({required String email});
-  Future<void> resetPassword({required String token, required String newPassword});
-  Future<UserModel> register({
+  Future<void> resetPassword(
+      {required String token, required String newPassword});
+  Future<void> register({
     required String email,
     required String password,
     String? username,
     String? fullName,
-    String? phoneNumber, DateTime? dateOfBirth, String? gender, String? profilePicture, 
+    String? phoneNumber,
+    DateTime? dateOfBirth,
+    String? gender,
+    String? profilePicture,
   });
 }
 
 class AuthRemoteDataSourceImpl implements AuthRemoteDataSource {
-  final http.Client client;
-  final AppConfig config;
+  final TokenStorage tokenStorage;
+  final Dio _authDio;
 
   AuthRemoteDataSourceImpl({
-    required this.client,
-    required this.config,
-  });
+    required DioClient dioClient,
+    required this.tokenStorage,
+  }) : _authDio = dioClient.forAuthService();
+
+  @override
+  Future<bool> isUserLoggedIn() async {
+    final accessToken = await tokenStorage.getAccessToken();
+    if (accessToken != null && !JwtUtils.isTokenExpired(accessToken)) {
+      return true;
+    }
+
+    final refreshTokenValue = await tokenStorage.getRefreshToken();
+    if (refreshTokenValue != null) {
+      try {
+        await refreshToken(refreshToken: refreshTokenValue);
+        return true;
+      } catch (e) {
+        await _clearTokens();
+        return false;
+      }
+    }
+
+    return false;
+  }
 
   @override
   Future<AuthTokenModel> login({
@@ -44,279 +70,235 @@ class AuthRemoteDataSourceImpl implements AuthRemoteDataSource {
     required String password,
   }) async {
     try {
-      final response = await client.post(
-        Uri.parse('${config.authBaseUrl}/auth/login'),
-        headers: {
-          'Content-Type': 'application/json',
-          'Accept': 'application/json',
-        },
-        body: json.encode({
+      final response = await _authDio.post(
+        '/Authentication/login',
+        data: {
+          'email': emailOrUsername,
           'email_or_username': emailOrUsername,
           'password': password,
-        }),
+        },
       );
 
+      final body = _asMap(response.data);
       if (response.statusCode == 200) {
-        final data = json.decode(response.body);
-        return AuthTokenModel.fromJson(data['data'] ?? data);
-      } else if (response.statusCode == 401) {
-        throw AuthException(
-          message: 'Invalid credentials',
-          statusCode: response.statusCode,
-        );
-      } else {
-        final errorData = json.decode(response.body);
-        throw ServerException(
-          message: errorData['message'] ?? 'Login failed',
-          statusCode: response.statusCode,
-        );
+        final payload = _asMap(body['data'] ?? body);
+        final token = AuthTokenModel.fromJson(payload);
+        await _persistTokens(token);
+        return token;
       }
-    } catch (e) {
-      if (e is AuthException || e is ServerException) {
-        rethrow;
+
+      final message = body['message'] ?? 'Login failed';
+      if (response.statusCode == 401) {
+        throw AuthException(message: message, statusCode: response.statusCode);
       }
-      throw NetworkException(message: 'Network error occurred');
+      throw ServerException(message: message, statusCode: response.statusCode);
+    } on DioException catch (e) {
+      _handleDioError(e);
     }
   }
 
   @override
-  Future<AuthTokenModel> loginWithGoogle() async {
-    try {
-      final response = await client.post(
-        Uri.parse('${config.authBaseUrl}/auth/google'),
-        headers: {
-          'Content-Type': 'application/json',
-          'Accept': 'application/json',
-        },
-      );
-
-      if (response.statusCode == 200) {
-        final data = json.decode(response.body);
-        return AuthTokenModel.fromJson(data['data'] ?? data);
-      } else {
-        final errorData = json.decode(response.body);
-        throw ServerException(
-          message: errorData['message'] ?? 'Google sign in failed',
-          statusCode: response.statusCode,
-        );
-      }
-    } catch (e) {
-      if (e is ServerException) rethrow;
-      throw NetworkException(message: 'Network error occurred');
-    }
+  Future<AuthTokenModel> loginWithGoogle() {
+    throw const ServerException(
+      message: 'Google sign-in is not available yet.',
+      statusCode: 501,
+    );
   }
 
   @override
-  Future<AuthTokenModel> loginWithFacebook() async {
-    try {
-      final response = await client.post(
-        Uri.parse('${config.authBaseUrl}/auth/facebook'),
-        headers: {
-          'Content-Type': 'application/json',
-          'Accept': 'application/json',
-        },
-      );
-
-      if (response.statusCode == 200) {
-        final data = json.decode(response.body);
-        return AuthTokenModel.fromJson(data['data'] ?? data);
-      } else {
-        final errorData = json.decode(response.body);
-        throw ServerException(
-          message: errorData['message'] ?? 'Facebook sign in failed',
-          statusCode: response.statusCode,
-        );
-      }
-    } catch (e) {
-      if (e is ServerException) rethrow;
-      throw NetworkException(message: 'Network error occurred');
-    }
+  Future<AuthTokenModel> loginWithFacebook() {
+    throw const ServerException(
+      message: 'Facebook sign-in is not available yet.',
+      statusCode: 501,
+    );
   }
 
   @override
   Future<void> logout() async {
+    final refresh = await tokenStorage.getRefreshToken();
     try {
-      final response = await client.post(
-        Uri.parse('${config.authBaseUrl}/auth/logout'),
-        headers: {
-          'Content-Type': 'application/json',
-          'Accept': 'application/json',
-        },
+      await _authDio.post(
+        '/Authentication/revoke',
+        data: refresh != null && refresh.isNotEmpty
+            ? {'refreshToken': refresh}
+            : null,
       );
-
-      if (response.statusCode != 200) {
-        final errorData = json.decode(response.body);
-        throw ServerException(
-          message: errorData['message'] ?? 'Logout failed',
-          statusCode: response.statusCode,
-        );
-      }
-    } catch (e) {
-      if (e is ServerException) rethrow;
-      throw NetworkException(message: 'Network error occurred');
+    } on DioException catch (e) {
+      _handleDioError(e, swallowAuthErrors: true);
+    } finally {
+      await _clearTokens();
     }
   }
 
   @override
   Future<AuthTokenModel> refreshToken({required String refreshToken}) async {
     try {
-      final response = await client.post(
-        Uri.parse('${config.authBaseUrl}/auth/refresh'),
-        headers: {
-          'Content-Type': 'application/json',
-          'Accept': 'application/json',
+      final response = await _authDio.post(
+        '/Authentication/refresh',
+        data: {
+          'refreshToken': refreshToken,
         },
-        body: json.encode({
-          'refresh_token': refreshToken,
-        }),
       );
 
+      final body = _asMap(response.data);
       if (response.statusCode == 200) {
-        final data = json.decode(response.body);
-        return AuthTokenModel.fromJson(data['data'] ?? data);
-      } else {
-        final errorData = json.decode(response.body);
-        throw ServerException(
-          message: errorData['message'] ?? 'Token refresh failed',
-          statusCode: response.statusCode,
-        );
+        final payload = _asMap(body['data'] ?? body);
+        final token = AuthTokenModel.fromJson(payload);
+        await _persistTokens(token);
+        return token;
       }
-    } catch (e) {
-      if (e is ServerException) rethrow;
-      throw NetworkException(message: 'Network error occurred');
+
+      final message = body['message'] ?? 'Token refresh failed';
+      throw ServerException(message: message, statusCode: response.statusCode);
+    } on DioException catch (e) {
+      _handleDioError(e);
     }
   }
 
   @override
   Future<UserModel> getCurrentUser() async {
-    try {
-      final response = await client.get(
-        Uri.parse('${config.userBaseUrl}/users/me'),
-        headers: {
-          'Content-Type': 'application/json',
-          'Accept': 'application/json',
-        },
-      );
+    final accessToken = await tokenStorage.getAccessToken();
+    if (accessToken == null || accessToken.isEmpty) {
+      throw const AuthException(message: 'Access token is missing');
+    }
 
+    final userId = JwtUtils.extractUserId(accessToken);
+    if (userId == null) {
+      throw const AuthException(message: 'Cannot extract user id from token');
+    }
+
+    try {
+      final response = await _authDio.get('/Authentication/$userId');
       if (response.statusCode == 200) {
-        final data = json.decode(response.body);
-        return UserModel.fromJson(data['data'] ?? data);
-      } else {
-        final errorData = json.decode(response.body);
-        throw ServerException(
-          message: errorData['message'] ?? 'Failed to get user',
-          statusCode: response.statusCode,
-        );
+        final payload = _asMap(response.data);
+        return UserModel.fromJson(payload);
       }
-    } catch (e) {
-      if (e is ServerException) rethrow;
-      throw NetworkException(message: 'Network error occurred');
+
+      if (response.statusCode == 404) {
+        throw ServerException(message: 'User not found', statusCode: 404);
+      }
+
+      final body = _asMap(response.data);
+      throw ServerException(
+        message: body['message'] ?? 'Failed to fetch user profile',
+        statusCode: response.statusCode,
+      );
+    } on DioException catch (e) {
+      _handleDioError(e);
     }
   }
 
   @override
-  Future<void> forgotPassword({required String email}) async {
-    try {
-      final response = await client.post(
-        Uri.parse('${config.authBaseUrl}/auth/forgot-password'),
-        headers: {
-          'Content-Type': 'application/json',
-          'Accept': 'application/json',
-        },
-        body: json.encode({
-          'email': email,
-        }),
-      );
-
-      if (response.statusCode != 200) {
-        final errorData = json.decode(response.body);
-        throw ServerException(
-          message: errorData['message'] ?? 'Failed to send reset email',
-          statusCode: response.statusCode,
-        );
-      }
-    } catch (e) {
-      if (e is ServerException) rethrow;
-      throw NetworkException(message: 'Network error occurred');
-    }
+  Future<void> forgotPassword({required String email}) {
+    throw const ServerException(
+      message: 'Password recovery is not available yet.',
+      statusCode: 501,
+    );
   }
 
   @override
   Future<void> resetPassword({
     required String token,
     required String newPassword,
+  }) {
+    throw const ServerException(
+      message: 'Password recovery is not available yet.',
+      statusCode: 501,
+    );
+  }
+
+  @override
+  Future<void> register({
+    required String email,
+    required String password,
+    String? username,
+    String? fullName,
+    String? phoneNumber,
+    DateTime? dateOfBirth,
+    String? gender,
+    String? profilePicture,
   }) async {
     try {
-      final response = await client.post(
-        Uri.parse('${config.authBaseUrl}/auth/reset-password'),
-        headers: {
-          'Content-Type': 'application/json',
-          'Accept': 'application/json',
+      final response = await _authDio.post(
+        '/Authentication/register',
+        data: {
+          'email': email,
+          'password': password,
+          'userName': username,
+          'fullName': fullName,
+          'phoneNumber': phoneNumber,
+          'dateOfBirth': dateOfBirth?.toIso8601String(),
+          'gender': gender,
+          'profilePicture': profilePicture,
         },
-        body: json.encode({
-          'token': token,
-          'new_password': newPassword,
-        }),
       );
 
-      if (response.statusCode != 200) {
-        final errorData = json.decode(response.body);
-        throw ServerException(
-          message: errorData['message'] ?? 'Failed to reset password',
-          statusCode: response.statusCode,
-        );
+      final body = _asMap(response.data);
+      if (response.statusCode == 200 || response.statusCode == 201) {
+        final flag = body['flag'] ?? body['success'];
+        if (flag is bool && !flag) {
+          throw ServerException(
+            message: body['message'] ?? 'Registration failed',
+            statusCode: response.statusCode,
+          );
+        }
+        return;
       }
-    } catch (e) {
-      if (e is ServerException) rethrow;
-      throw NetworkException(message: 'Network error occurred');
-    }
-  }
 
-
-// Update the interface to match your database fields
-@override
-Future<UserModel> register({
-  DateTime? dateOfBirth,
-  required String email,
-  String? fullName,
-  String? gender,
-  required String password,
-  String? phoneNumber,
-  String? profilePicture,
-  String? username,
-}) async {
-  try {
-    final response = await client.post(
-      Uri.parse('${config.authBaseUrl}/auth/register'),
-      headers: {
-        'Content-Type': 'application/json',
-        'Accept': 'application/json',
-      },
-      body: json.encode({
-        'email': email,
-        'password': password,
-        'username': username,
-        'full_name': fullName,
-        'phone_number': phoneNumber,
-        'date_of_birth': dateOfBirth?.toIso8601String(),
-        'gender': gender,
-        'profile_picture': profilePicture,
-      }),
-    );
-
-    if (response.statusCode == 201 || response.statusCode == 200) {
-      final data = json.decode(response.body);
-      return UserModel.fromJson(data['data'] ?? data);
-    } else {
-      final errorData = json.decode(response.body);
       throw ServerException(
-        message: errorData['message'] ?? 'Registration failed',
+        message: body['message'] ?? 'Registration failed',
         statusCode: response.statusCode,
       );
+    } on DioException catch (e) {
+      _handleDioError(e);
     }
-  } catch (e) {
-    if (e is ServerException) rethrow;
-    throw NetworkException(message: 'Network error occurred');
   }
-}
+
+  // ------------------------------------------------------------------------
+  // Helpers
+  Future<void> _persistTokens(AuthTokenModel token) async {
+    await tokenStorage.setAccessToken(token.accessToken);
+    await tokenStorage.setRefreshToken(token.refreshToken);
+  }
+
+  Future<void> _clearTokens() async {
+    await tokenStorage.setAccessToken(null);
+    await tokenStorage.setRefreshToken(null);
+  }
+
+  Never _handleDioError(
+    DioException error, {
+    bool swallowAuthErrors = false,
+  }) {
+    if (error.type == DioExceptionType.connectionError ||
+        error.type == DioExceptionType.connectionTimeout ||
+        error.type == DioExceptionType.receiveTimeout ||
+        error.type == DioExceptionType.sendTimeout ||
+        error.type == DioExceptionType.badCertificate) {
+      throw const NetworkException(
+        message: 'Unable to reach the server. Please check your connection.',
+      );
+    }
+
+    final status = error.response?.statusCode;
+    final body = _asMap(error.response?.data);
+    final message =
+        body['message'] ?? error.message ?? 'Unexpected server error.';
+
+    if (!swallowAuthErrors && status == 401) {
+      throw AuthException(message: message, statusCode: status);
+    }
+
+    throw ServerException(message: message, statusCode: status);
+  }
+
+  Map<String, dynamic> _asMap(dynamic source) {
+    if (source is Map<String, dynamic>) {
+      return source;
+    }
+    if (source is Map) {
+      return Map<String, dynamic>.from(source);
+    }
+    return {};
+  }
 }

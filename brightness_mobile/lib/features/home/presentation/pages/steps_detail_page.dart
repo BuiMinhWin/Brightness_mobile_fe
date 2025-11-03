@@ -41,11 +41,11 @@ class StepsDetailPage extends StatelessWidget {
                               horizontal: 24,
                             ),
                             decoration: BoxDecoration(
-                              color: Colors.white.withOpacity(0),
+                              color: Colors.white.withAlpha(0),
                               borderRadius: BorderRadius.circular(16),
                               boxShadow: [
                                 BoxShadow(
-                                  color: Colors.black.withOpacity(0),
+                                  color: Colors.black.withAlpha(0),
                                   blurRadius: 10,
                                   offset: const Offset(0, 4),
                                 ),
@@ -251,7 +251,7 @@ class StepsDetailPage extends StatelessWidget {
                               borderRadius: BorderRadius.circular(22),
                               boxShadow: [
                                 BoxShadow(
-                                  color: Colors.black.withOpacity(0.06),
+                                  color: Colors.black.withAlpha(15),
                                   blurRadius: 12,
                                   offset: const Offset(0, 5),
                                 ),
@@ -319,7 +319,7 @@ class StepsDetailPage extends StatelessWidget {
         borderRadius: BorderRadius.circular(16),
         boxShadow: [
           BoxShadow(
-            color: Colors.black.withOpacity(0.04),
+            color: Colors.black.withAlpha(10),
             blurRadius: 12,
             offset: const Offset(0, 6),
           ),
@@ -551,7 +551,7 @@ class HeaderBackgroundPainter extends CustomPainter {
     shape.close();
 
     // Subtle shadow under the header
-    canvas.drawShadow(shape, Colors.black.withOpacity(0.10), 8, false);
+    canvas.drawShadow(shape, Colors.black.withAlpha(26), 8, false);
 
     // Fill header background
     final fill = Paint()

@@ -24,7 +24,8 @@ class DioClient {
     );
 
     // Logging (dev/stg only)
-    dio.interceptors.add(SimpleLoggingInterceptor(enabled: config.enableLogging));
+    dio.interceptors
+        .add(SimpleLoggingInterceptor(enabled: config.enableLogging));
 
     // Auth header
     if (tokenStorage != null) {
@@ -35,9 +36,19 @@ class DioClient {
   // Optionally provide clients pointing to specific service base URLs
   Dio forAuthService() => _withBaseUrl(config.authBaseUrl);
   Dio forUserService() => _withBaseUrl(config.userBaseUrl);
-  Dio forCatalogService() => _withBaseUrl(config.catalogBaseUrl);
-  Dio forOrderService() => _withBaseUrl(config.orderBaseUrl);
-  Dio forPaymentService() => _withBaseUrl(config.paymentBaseUrl);
+  Dio forMeasurementService() => _withBaseUrl(config.measurementBaseUrl);
+  Dio forChallengeService() => _withBaseUrl(config.challengeBaseUrl);
+  Dio forSocialService() => _withBaseUrl(config.socialBaseUrl);
+  Dio forBillingService() => _withBaseUrl(config.billingBaseUrl);
+  Dio forMediaService() => _withBaseUrl(config.mediaBaseUrl);
+  Dio forChatService() => _withBaseUrl(config.chatBaseUrl);
+  Dio forPersonalCoachService() => _withBaseUrl(config.personalCoachBaseUrl);
+  Dio forAiOcrService() => _withBaseUrl(config.aiOcrBaseUrl);
+
+  // Legacy helpers retained for backwards compatibility
+  Dio forCatalogService() => forMeasurementService();
+  Dio forOrderService() => forChallengeService();
+  Dio forPaymentService() => forBillingService();
 
   Dio _withBaseUrl(String baseUrl) {
     final newDio = Dio(BaseOptions(

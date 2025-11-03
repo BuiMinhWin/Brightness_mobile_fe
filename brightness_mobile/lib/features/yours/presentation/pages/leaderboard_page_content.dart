@@ -117,7 +117,7 @@ class _LeaderboardPageContentState extends State<LeaderboardPageContent> {
       ),
       padding: const EdgeInsets.all(AppTheme.spacingXS),
       decoration: BoxDecoration(
-        color: AppColors.white.withOpacity(0.2),
+        color: AppColors.white.withAlpha(51),
         borderRadius: BorderRadius.circular(AppTheme.radiusXL),
       ),
       child: Row(
@@ -214,7 +214,7 @@ class _LeaderboardPageContentState extends State<LeaderboardPageContent> {
             vertical: AppTheme.spacingXS,
           ),
           decoration: BoxDecoration(
-            color: AppColors.white.withOpacity(0.9),
+            color: AppColors.white.withAlpha(230),
             borderRadius: BorderRadius.circular(AppTheme.radiusM),
           ),
           child: Text(

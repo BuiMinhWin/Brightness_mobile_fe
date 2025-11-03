@@ -29,7 +29,7 @@ class _AdditionalTasksCardState extends State<AdditionalTasksCard> {
         borderRadius: BorderRadius.circular(AppTheme.radiusM),
         boxShadow: [
           BoxShadow(
-            color: AppColors.textPrimary.withOpacity(0.1),
+            color: AppColors.textPrimary.withAlpha(26),
             blurRadius: 10,
             offset: const Offset(0, 2),
           ),

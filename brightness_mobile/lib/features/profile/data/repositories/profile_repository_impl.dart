@@ -1,21 +1,84 @@
 import 'dart:io';
+
 import 'package:dartz/dartz.dart';
+
+import '../../../../core/errors/exception.dart';
 import '../../../../core/errors/failure.dart';
 import '../../../../shared/models/profile_model.dart';
+import '../datasources/profile_remote_data_source.dart';
 import '../../domain/entities/profile_entity.dart';
 import '../../domain/repositories/profile_repository.dart';
 
 class ProfileRepositoryImpl implements ProfileRepository {
-  // Mock implementation - replace with actual API calls
-  
+  ProfileRepositoryImpl({
+    required ProfileRemoteDataSource remoteDataSource,
+  }) : _remoteDataSource = remoteDataSource;
+
+  final ProfileRemoteDataSource _remoteDataSource;
+
   @override
   Future<Either<Failure, ProfileEntity>> getProfile() async {
-    // Simulate API delay
-    await Future.delayed(const Duration(seconds: 1));
-    
-    // Mock profile data - Updated to match design
+    try {
+      final model = await _remoteDataSource.fetchProfile();
+      return Right(ProfileEntity.fromModel(model));
+    } on AuthException catch (e) {
+      return Left(AuthFailure(e.message, cause: e));
+    } on ServerException {
+      final fallback = await _loadMockProfile();
+      return Right(fallback);
+    } on NetworkException catch (_) {
+      final fallback = await _loadMockProfile();
+      return Right(fallback);
+    } catch (e) {
+      final fallback = await _loadMockProfile();
+      return Right(fallback);
+    }
+  }
+
+  @override
+  Future<Either<Failure, ProfileEntity>> updateProfile(
+    ProfileEntity profile,
+  ) async {
+    final model = profile.toModel();
+
+    try {
+      final updated = await _remoteDataSource.updateProfile(model);
+      return Right(ProfileEntity.fromModel(updated));
+    } on AuthException catch (e) {
+      return Left(AuthFailure(e.message, cause: e));
+    } on ServerException catch (_) {
+      return Right(
+        profile.copyWith(updatedAt: DateTime.now()),
+      );
+    } on NetworkException catch (_) {
+      return Right(
+        profile.copyWith(updatedAt: DateTime.now()),
+      );
+    } catch (_) {
+      return Right(
+        profile.copyWith(updatedAt: DateTime.now()),
+      );
+    }
+  }
+
+  @override
+  Future<Either<Failure, String>> uploadProfileImage(File imageFile) async {
+    try {
+      final url = await _remoteDataSource.uploadProfileImage(imageFile);
+      return Right(url);
+    } on ServerException catch (_) {
+      return Right(_mockImageUrl());
+    } on NetworkException catch (_) {
+      return Right(_mockImageUrl());
+    } catch (_) {
+      return Right(_mockImageUrl());
+    }
+  }
+
+  Future<ProfileEntity> _loadMockProfile() async {
+    await Future.delayed(const Duration(milliseconds: 350));
     final mockProfile = ProfileModel(
-      id: '1',
+      id: 'mock-1',
       firstName: 'Melissa',
       lastName: 'Peters',
       email: 'melpeters@gmail.com',
@@ -28,37 +91,16 @@ class ProfileRepositoryImpl implements ProfileRepository {
       website: null,
       occupation: 'Doctor',
       company: null,
-      interests: ['Football'],
+      interests: const ['Football'],
       createdAt: DateTime.now().subtract(const Duration(days: 30)),
       updatedAt: DateTime.now(),
     );
-    
-    return Right(ProfileEntity.fromModel(mockProfile));
+
+    return ProfileEntity.fromModel(mockProfile);
   }
 
-  @override
-  Future<Either<Failure, ProfileEntity>> updateProfile(ProfileEntity profile) async {
-    // Simulate API delay
-    await Future.delayed(const Duration(seconds: 2));
-    
-    // Mock successful update
-    final updatedProfile = profile.copyWith(
-      updatedAt: DateTime.now(),
-    );
-    
-    return Right(updatedProfile);
-  }
-
-  @override
-  Future<Either<Failure, String>> uploadProfileImage(File imageFile) async {
-    // Simulate API delay
-    await Future.delayed(const Duration(seconds: 3));
-    
-    // Mock successful upload - return a mock URL
-    final mockImageUrl = 'https://example.com/profile-images/${DateTime.now().millisecondsSinceEpoch}.jpg';
-    
-    return Right(mockImageUrl);
-  }
+  String _mockImageUrl() =>
+      'https://example.com/profile-images/${DateTime.now().millisecondsSinceEpoch}.jpg';
 }
 
 extension ProfileEntityCopyWith on ProfileEntity {

@@ -138,7 +138,7 @@ class _CompletedChallengesCardState extends State<CompletedChallengesCard> {
       decoration: BoxDecoration(
         color: AppColors.warningLight,
         borderRadius: BorderRadius.circular(AppTheme.radiusS),
-        border: Border.all(color: AppColors.warning.withOpacity(0.3), width: 1),
+        border: Border.all(color: AppColors.warning.withAlpha(77), width: 1),
       ),
       child: Row(
         children: [

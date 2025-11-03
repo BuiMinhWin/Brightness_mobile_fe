@@ -113,8 +113,8 @@ class UserPostsPreview extends StatelessWidget {
         'timestamp': '2d ago',
         'icon': Icons.directions_run,
         'gradientColors': [
-          const Color(0xFF4CAF50).withOpacity(0.8),
-          const Color(0xFF2196F3).withOpacity(0.8),
+          const Color(0xFF4CAF50).withAlpha(204),
+          const Color(0xFF2196F3).withAlpha(204),
         ],
       },
       {
@@ -122,8 +122,8 @@ class UserPostsPreview extends StatelessWidget {
         'timestamp': '4d ago',
         'icon': Icons.terrain,
         'gradientColors': [
-          const Color(0xFFFF9800).withOpacity(0.8),
-          const Color(0xFF4CAF50).withOpacity(0.8),
+          const Color(0xFFFF9800).withAlpha(204),
+          const Color(0xFF4CAF50).withAlpha(204),
         ],
       },
       {
@@ -131,8 +131,8 @@ class UserPostsPreview extends StatelessWidget {
         'timestamp': '1w ago',
         'icon': Icons.timeline,
         'gradientColors': [
-          const Color(0xFF9C27B0).withOpacity(0.8),
-          const Color(0xFF2196F3).withOpacity(0.8),
+          const Color(0xFF9C27B0).withAlpha(204),
+          const Color(0xFF2196F3).withAlpha(204),
         ],
       },
       {
@@ -140,8 +140,8 @@ class UserPostsPreview extends StatelessWidget {
         'timestamp': '1w ago',
         'icon': Icons.speed,
         'gradientColors': [
-          const Color(0xFFE91E63).withOpacity(0.8),
-          const Color(0xFFFF9800).withOpacity(0.8),
+          const Color(0xFFE91E63).withAlpha(204),
+          const Color(0xFFFF9800).withAlpha(204),
         ],
       },
     ];

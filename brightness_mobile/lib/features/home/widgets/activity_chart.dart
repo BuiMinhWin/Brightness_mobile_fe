@@ -16,11 +16,11 @@ class ActivityChart extends StatelessWidget {
       height: 200,
       padding: const EdgeInsets.all(20),
       decoration: BoxDecoration(
-        color: AppColors.white.withOpacity(opacity.clamp(0.0, 1.0)),
+        color: AppColors.white.withAlpha((255 * opacity.clamp(0.0, 1.0)).round()),
         borderRadius: BorderRadius.circular(20),
         boxShadow: [
           BoxShadow(
-            color: Colors.black.withOpacity(opacity.clamp(0.0, 1.0)),
+            color: Colors.black.withAlpha((255 * opacity.clamp(0.0, 1.0)).round()),
             blurRadius: 10,
             offset: const Offset(0, 5),
           ),
@@ -69,7 +69,7 @@ class ActivityChart extends StatelessWidget {
                             borderRadius: BorderRadius.circular(12),
                             boxShadow: [
                               BoxShadow(
-                                color: Colors.black.withOpacity(0.25),
+                                color: Colors.black.withAlpha(64),
                                 blurRadius: 6,
                                 spreadRadius: 0,
                                 offset: const Offset(0, 3),

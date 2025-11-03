@@ -1,13 +1,17 @@
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 
 import '../../../../core/theme/app_colors.dart';
 import '../../../../core/theme/app_text_styles.dart';
+import '../../../auth/presentation/controllers/login_controller.dart';
 
 class SettingsPage extends StatelessWidget {
   const SettingsPage({super.key});
 
   @override
   Widget build(BuildContext context) {
+    final loginController = context.read<LoginController>();
+
     return Scaffold(
       backgroundColor: AppColors.white,
       body: SafeArea(
@@ -60,10 +64,14 @@ class SettingsPage extends StatelessWidget {
               // Actions
               const Text('Actions', style: AppTextStyles.h2),
               const SizedBox(height: 8),
-              const _SettingsCard(children: [
-                _RowItem(icon: Icons.flag_outlined, label: 'Report a problem'),
-                _Divider(),
-                _RowItem(icon: Icons.logout, label: 'Log out'),
+              _SettingsCard(children: [
+                const _RowItem(icon: Icons.flag_outlined, label: 'Report a problem'),
+                const _Divider(),
+                _RowItem(
+                  icon: Icons.logout,
+                  label: 'Log out',
+                  onTap: () => loginController.logout(context),
+                ),
               ]),
               const SizedBox(height: 24),
             ],
@@ -94,11 +102,12 @@ class _SettingsCard extends StatelessWidget {
 class _RowItem extends StatelessWidget {
   final IconData icon;
   final String label;
-  const _RowItem({required this.icon, required this.label});
+  final VoidCallback? onTap;
+  const _RowItem({required this.icon, required this.label, this.onTap});
   @override
   Widget build(BuildContext context) {
     return InkWell(
-      onTap: () {},
+      onTap: onTap ?? () {},
       child: Padding(
         padding: const EdgeInsets.symmetric(horizontal: 14, vertical: 14),
         child: Row(
@@ -123,7 +132,7 @@ class _Divider extends StatelessWidget {
   const _Divider();
   @override
   Widget build(BuildContext context) {
-    return Divider(height: 1, thickness: 1, color: AppColors.border.withOpacity(0.7));
+    return Divider(height: 1, thickness: 1, color: AppColors.border.withAlpha(178));
   }
 }
 

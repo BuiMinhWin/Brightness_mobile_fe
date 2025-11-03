@@ -40,7 +40,7 @@ class PostCard extends StatelessWidget {
         borderRadius: BorderRadius.circular(16),
         boxShadow: [
           BoxShadow(
-            color: Colors.black.withOpacity(0.05),
+            color: Colors.black.withAlpha(13),
             blurRadius: 10,
             offset: const Offset(0, 2),
           ),
@@ -76,7 +76,7 @@ class PostCard extends StatelessWidget {
             height: 40,
             decoration: BoxDecoration(
               shape: BoxShape.circle,
-              color: AppTheme.textHint.withOpacity(0.2),
+              color: AppTheme.textHint.withAlpha(51),
             ),
             child: userAvatarUrl != null && userAvatarUrl!.isNotEmpty
                 ? ClipOval(

@@ -57,7 +57,7 @@ class ChatMessage extends StatelessWidget {
                   Text(
                     _formatTime(timestamp),
                     style: TextStyle(
-                      color: isAI ? const Color(0xFF6B7280) : Colors.white.withOpacity(0.7),
+                      color: isAI ? const Color(0xFF6B7280) : Colors.white.withAlpha(178),
                       fontSize: 12,
                     ),
                   ),

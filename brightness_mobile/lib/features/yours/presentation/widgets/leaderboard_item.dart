@@ -33,7 +33,7 @@ class LeaderboardItem extends StatelessWidget {
         ),
         boxShadow: [
           BoxShadow(
-            color: AppColors.shadow.withOpacity(0.05),
+            color: AppColors.shadow.withAlpha(13),
             blurRadius: AppTheme.shadowBlur,
             offset: const Offset(0, AppTheme.shadowOffset),
           ),
@@ -132,7 +132,7 @@ class LeaderboardItem extends StatelessWidget {
   }
 
   Color _getRankColorBackground() {
-    return _getRankColor().withOpacity(0.1);
+    return _getRankColor().withAlpha(26);
   }
 
   /// Avatar gradient colors
@@ -155,7 +155,7 @@ class LeaderboardItem extends StatelessWidget {
   }
 
   Color _getTrendColorBackground() {
-    return _getTrendColor().withOpacity(0.1);
+    return _getTrendColor().withAlpha(26);
   }
 
   IconData _getTrendIcon() {

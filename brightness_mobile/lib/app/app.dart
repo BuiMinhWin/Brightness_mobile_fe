@@ -1,3 +1,5 @@
+import 'package:brightness_mobile/features/auth/data/sources/auth_remote_data_source.dart';
+import 'package:brightness_mobile/features/auth/presentation/pages/auth_wrapper.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
@@ -23,6 +25,9 @@ class App extends StatelessWidget {
   Widget build(BuildContext context) {
     return MultiProvider(
       providers: [
+        Provider<AuthRemoteDataSource>(
+          create: (_) => di.sl<AuthRemoteDataSource>(),
+        ),
         ChangeNotifierProvider<OnboardingController>(
           create: (_) => di.sl<OnboardingController>(),
         ),
@@ -89,7 +94,7 @@ class App extends StatelessWidget {
           ),
           useMaterial3: true,
         ),
-        initialRoute: AppRouter.home,
+        home: const AuthWrapper(),
         onGenerateRoute: AppRouter.generateRoute,
       ),
     );

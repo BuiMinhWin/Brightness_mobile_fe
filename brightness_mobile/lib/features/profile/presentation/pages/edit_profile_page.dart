@@ -184,7 +184,7 @@ class _EditProfilePageState extends State<EditProfilePage> {
               : null,
           onChanged: (value) {
             // Handle name splitting if needed
-            final parts = value.split(' ') ?? [];
+            final parts = value.split(' ');
             if (parts.isNotEmpty) {
               controller.updateField('firstName', parts[0]);
               if (parts.length > 1) {

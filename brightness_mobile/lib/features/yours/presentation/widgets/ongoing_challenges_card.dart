@@ -149,7 +149,7 @@ class _OngoingChallengesCardState extends State<OngoingChallengesCard> {
         color: AppColors.greenlight,
         borderRadius: BorderRadius.circular(AppTheme.radiusS),
         border: Border.all(
-          color: AppColors.success.withOpacity(0.2),
+          color: AppColors.success.withAlpha(51),
           width: 1,
         ),
       ),

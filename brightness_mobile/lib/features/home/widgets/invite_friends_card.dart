@@ -23,7 +23,7 @@ class InviteFriendsCard extends StatelessWidget {
             width: 50,
             height: 50,
             decoration: BoxDecoration(
-              color: Colors.white.withOpacity(0.2),
+              color: Colors.white.withAlpha(51),
               shape: BoxShape.circle,
             ),
             child: const Icon(Icons.favorite, color: AppColors.white, size: 24),
@@ -38,7 +38,7 @@ class InviteFriendsCard extends StatelessWidget {
                 Text(
                   "Invite your friends",
                   style: AppTextStyles.body2.copyWith(
-                    color: AppColors.white.withOpacity(0.8),
+                    color: AppColors.white.withAlpha(204),
                   ),
                 ),
                 const SizedBox(height: 4),

@@ -17,7 +17,7 @@ class HowToParticipateCard extends StatelessWidget {
         borderRadius: BorderRadius.circular(AppTheme.radiusL),
         boxShadow: [
           BoxShadow(
-            color: AppColors.black.withOpacity(0.1),
+            color: AppColors.black.withAlpha(26),
             blurRadius: 10,
             offset: const Offset(0, 2),
           ),

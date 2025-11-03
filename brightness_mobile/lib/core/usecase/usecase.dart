@@ -10,6 +10,6 @@ class NoParams {
 }
 
 
-abstract class UseCaseRegister<Type, Params> {
-  Future<Either<Failure, Type>> call(Params params);
+abstract class UseCaseRegister<T, Params> {
+  Future<Either<Failure, T>> call(Params params);
 }

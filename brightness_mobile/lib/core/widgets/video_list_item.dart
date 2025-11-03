@@ -60,7 +60,7 @@ class VideoListItem extends StatelessWidget {
       height: 80,
       decoration: BoxDecoration(
         borderRadius: BorderRadius.circular(6),
-        color: AppTheme.textHint.withOpacity(0.1),
+        color: AppTheme.textHint.withAlpha(26),
       ),
       child: Stack(
         children: [
@@ -87,7 +87,7 @@ class VideoListItem extends StatelessWidget {
             child: Container(
               padding: const EdgeInsets.symmetric(horizontal: 4, vertical: 2),
               decoration: BoxDecoration(
-                color: Colors.black.withOpacity(0.7),
+                color: Colors.black.withAlpha(178),
                 borderRadius: BorderRadius.circular(3),
               ),
               child: Text(
@@ -110,7 +110,7 @@ class VideoListItem extends StatelessWidget {
       width: 120,
       height: 80,
       decoration: BoxDecoration(
-        color: AppTheme.textHint.withOpacity(0.1),
+        color: AppTheme.textHint.withAlpha(26),
         borderRadius: BorderRadius.circular(6),
       ),
       child: const Center(

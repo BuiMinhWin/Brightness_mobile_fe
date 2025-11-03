@@ -9,6 +9,9 @@ class AuthInterceptor extends Interceptor {
 
   @override
   void onRequest(RequestOptions options, RequestInterceptorHandler handler) async {
+    // Add the Api-Gateway header to every request
+    options.headers['Api-Gateway'] = 'Signed';
+
     final token = await tokenStorage.getAccessToken();
     if (token != null && token.isNotEmpty) {
       options.headers['Authorization'] = 'Bearer $token';
@@ -16,4 +19,3 @@ class AuthInterceptor extends Interceptor {
     handler.next(options);
   }
 }
-

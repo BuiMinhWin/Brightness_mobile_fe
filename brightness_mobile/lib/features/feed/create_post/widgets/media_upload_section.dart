@@ -156,8 +156,8 @@ class MediaUploadSection extends StatelessWidget {
                 begin: Alignment.topLeft,
                 end: Alignment.bottomRight,
                 colors: [
-                  const Color(0xFF4CAF50).withOpacity(0.3),
-                  const Color(0xFF2196F3).withOpacity(0.3),
+                  const Color(0xFF4CAF50).withAlpha(77),
+                  const Color(0xFF2196F3).withAlpha(77),
                 ],
               ),
             ),

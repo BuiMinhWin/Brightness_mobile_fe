@@ -50,7 +50,7 @@ class ProfileDemoPage extends StatelessWidget {
         borderRadius: BorderRadius.circular(AppTheme.radiusL),
         boxShadow: [
           BoxShadow(
-            color: Colors.black.withOpacity(0.05),
+            color: Colors.black.withAlpha(13),
             blurRadius: 10,
             offset: const Offset(0, 2),
           ),
@@ -201,7 +201,7 @@ class ProfileDemoPage extends StatelessWidget {
             Container(
               padding: const EdgeInsets.all(AppTheme.spacingM),
               decoration: BoxDecoration(
-                color: AppTheme.primaryColor.withOpacity(0.1),
+                color: AppTheme.primaryColor.withAlpha(26),
                 borderRadius: BorderRadius.circular(AppTheme.radiusM),
               ),
               child: Icon(

@@ -1,8 +1,7 @@
-
+import 'package:brightness_mobile/core/services/shared_prefs_token_storage.dart';
 import 'package:brightness_mobile/features/auth/domain/usecases/register_usecase.dart';
 import 'package:brightness_mobile/features/auth/presentation/controllers/register_controller.dart';
 import 'package:get_it/get_it.dart';
-import 'package:http/http.dart' as http;
 
 // Core
 import '../core/config/app_config.dart';
@@ -22,6 +21,7 @@ import 'package:brightness_mobile/features/onboarding/di.dart';
 import 'package:brightness_mobile/features/onboarding/presentation/controllers/onboarding_controller.dart';
 import 'package:brightness_mobile/features/home/data/datasources/fitness_data_datasource.dart';
 import 'package:brightness_mobile/features/home/presentation/controllers/home_controller.dart';
+import 'package:brightness_mobile/features/profile/data/datasources/profile_remote_data_source.dart';
 import 'package:brightness_mobile/features/profile/data/repositories/profile_repository_impl.dart';
 import 'package:brightness_mobile/features/profile/domain/repositories/profile_repository.dart';
 import 'package:brightness_mobile/features/profile/domain/usecases/get_profile_usecase.dart';
@@ -39,13 +39,12 @@ Future<void> init() async {
     () => AppConfig.fromEnvironment(),
   );
 
-  sl.registerLazySingleton<http.Client>(
-    () => http.Client(),
-  );
-
   // Token storage + Dio client (for new API flows)
-  sl.registerLazySingleton<TokenStorage>(() => InMemoryTokenStorage());
-  sl.registerLazySingleton<DioClient>(() => DioClient(config: sl(), tokenStorage: sl()));
+  final tokenStorage = await SharedPrefsTokenStorage.create();
+  sl.registerSingleton<TokenStorage>(tokenStorage);
+
+  sl.registerLazySingleton<DioClient>(
+      () => DioClient(config: sl(), tokenStorage: sl()));
 
   // Auth feature
   await _initAuth();
@@ -54,7 +53,10 @@ Future<void> init() async {
 Future<void> _initAuth() async {
   // Controllers (Presentation Layer)
   sl.registerFactory<LoginController>(
-    () => LoginController(loginUseCase: sl()),
+    () => LoginController(
+      loginUseCase: sl(),
+      logoutUseCase: sl(),
+    ),
   );
 
   // Use Cases (Domain Layer)
@@ -90,15 +92,27 @@ Future<void> _initAuth() async {
   sl.registerFactory<OnboardingController>(() => OnboardingController(sl()));
 
   // Features: Home
-  sl.registerLazySingleton<FitnessDataDatasource>(() => FitnessDataDatasource());
+  sl.registerLazySingleton<FitnessDataDatasource>(
+      () => FitnessDataDatasource());
   sl.registerFactory<HomeController>(() => HomeController(sl()));
   // Features: Profile
-  sl.registerLazySingleton<ProfileRepository>(() => ProfileRepositoryImpl());
+  sl.registerLazySingleton<ProfileRemoteDataSource>(
+    () => ProfileRemoteDataSourceImpl(
+      dioClient: sl(),
+      tokenStorage: sl(),
+      config: sl(),
+    ),
+  );
+  sl.registerLazySingleton<ProfileRepository>(
+    () => ProfileRepositoryImpl(remoteDataSource: sl()),
+  );
   sl.registerFactory<GetProfileUsecase>(() => GetProfileUsecase(sl()));
   sl.registerFactory<UpdateProfileUsecase>(() => UpdateProfileUsecase(sl()));
-  sl.registerFactory<UploadProfileImageUsecase>(() => UploadProfileImageUsecase(sl()));
-  sl.registerFactory<EditProfileController>(() => createEditProfileController());
-  
+  sl.registerFactory<UploadProfileImageUsecase>(
+      () => UploadProfileImageUsecase(sl()));
+  sl.registerFactory<EditProfileController>(
+      () => createEditProfileController());
+
   // Video and Navigation Controllers
   sl.registerFactory<VideoController>(() => VideoController());
   sl.registerFactory<NavigationController>(() => NavigationController());
@@ -106,8 +120,8 @@ Future<void> _initAuth() async {
   // Data Sources (Data Layer)
   sl.registerLazySingleton<AuthRemoteDataSource>(
     () => AuthRemoteDataSourceImpl(
-      client: sl(),
-      config: sl(),
+      dioClient: sl(),
+      tokenStorage: sl(),
     ),
   );
 }

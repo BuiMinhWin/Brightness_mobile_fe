@@ -23,7 +23,7 @@ class DietPlanCard extends StatelessWidget {
         borderRadius: BorderRadius.circular(AppTheme.radiusL),
         boxShadow: [
           BoxShadow(
-            color: AppColors.shadow.withOpacity(0.08),
+            color: AppColors.shadow.withAlpha(20),
             blurRadius: 12,
             offset: const Offset(0, 4),
           ),
@@ -94,7 +94,7 @@ class DietPlanCard extends StatelessWidget {
               child: Container(
                 height: 6,
                 decoration: BoxDecoration(
-                  color: AppColors.successLight.withOpacity(0.4),
+                  color: AppColors.successLight.withAlpha(102),
                   borderRadius: BorderRadius.circular(3),
                 ),
                 child: FractionallySizedBox(

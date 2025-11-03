@@ -18,11 +18,11 @@ class StatsOverview extends StatelessWidget {
     return Container(
       padding: const EdgeInsets.all(24),
       decoration: BoxDecoration(
-        color: AppColors.white.withOpacity(opacity.clamp(0.0, 1.0)),
+        color: AppColors.white.withAlpha((255 * opacity.clamp(0.0, 1.0)).round()),
         borderRadius: BorderRadius.circular(20),
         boxShadow: [
           BoxShadow(
-            color: Colors.white.withOpacity(opacity.clamp(0.0, 1.0)),
+            color: AppColors.white.withAlpha((255 * opacity.clamp(0.0, 1.0)).round()),
             blurRadius: 10,
             offset: const Offset(0, 5),
           ),

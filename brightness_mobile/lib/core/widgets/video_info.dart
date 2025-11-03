@@ -60,7 +60,7 @@ class VideoInfo extends StatelessWidget {
         Container(
           padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 4),
           decoration: BoxDecoration(
-            color: AppTheme.primaryColor.withOpacity(0.1),
+            color: AppTheme.primaryColor.withAlpha(26),
             borderRadius: BorderRadius.circular(4),
           ),
           child: Row(
@@ -101,7 +101,7 @@ class VideoInfo extends StatelessWidget {
     return Container(
       padding: const EdgeInsets.all(12),
       decoration: BoxDecoration(
-        color: AppTheme.textHint.withOpacity(0.05),
+        color: AppTheme.textHint.withAlpha(13),
         borderRadius: BorderRadius.circular(8),
         border: Border.all(
           color: AppTheme.borderColor,

@@ -184,7 +184,7 @@ class RewardsAndPrizesCard extends StatelessWidget {
         color: bgColor,
         borderRadius: BorderRadius.circular(AppTheme.radiusM),
         border: Border.all(
-          color: iconColor.withOpacity(0.3),
+          color: iconColor.withAlpha(77),
           width: 1,
         ),
       ),

@@ -43,7 +43,7 @@ class CalorieInfoOverlay extends StatelessWidget {
               height: 250,
               decoration: BoxDecoration(
                 shape: BoxShape.circle,
-                color: darkTeal.withOpacity(0.78),
+                color: darkTeal.withAlpha(199),
               ),
             ),
           ),
@@ -60,7 +60,7 @@ class CalorieInfoOverlay extends StatelessWidget {
                   child: Text(
                     "Today, ${now.day} ${_monthAbbrev(now.month)}",
                     style: AppTextStyles.body2.copyWith(
-                      color: darkTeal.withOpacity(0.9),
+                      color: darkTeal.withAlpha(230),
                     ),
                   ),
                 ),

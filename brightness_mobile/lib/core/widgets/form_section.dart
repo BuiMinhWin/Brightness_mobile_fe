@@ -76,7 +76,7 @@ class FormSection extends StatelessWidget {
             : null,
         boxShadow: [
           BoxShadow(
-            color: Colors.black.withOpacity(0.05),
+            color: Colors.black.withAlpha(13),
             blurRadius: 10,
             offset: const Offset(0, 2),
           ),
@@ -116,7 +116,7 @@ class FormSection extends StatelessWidget {
             : null,
         boxShadow: [
           BoxShadow(
-            color: Colors.black.withOpacity(0.05),
+            color: Colors.black.withAlpha(13),
             blurRadius: 10,
             offset: const Offset(0, 2),
           ),
@@ -330,7 +330,7 @@ class FormSectionWithIcon extends StatelessWidget {
             Container(
               padding: const EdgeInsets.all(AppTheme.spacingS),
               decoration: BoxDecoration(
-                color: iconBackgroundColor ?? AppTheme.primaryColor.withOpacity(0.1),
+                color: iconBackgroundColor ?? AppTheme.primaryColor.withAlpha(26),
                 borderRadius: BorderRadius.circular(AppTheme.radiusM),
               ),
               child: Icon(

@@ -1,14 +1,15 @@
-
 class AuthToken {
   final String accessToken;
   final String refreshToken;
   final DateTime expiresAt;
+  final DateTime? refreshTokenExpiresAt;
   final String tokenType;
 
   const AuthToken({
     required this.accessToken,
     required this.refreshToken,
     required this.expiresAt,
+    this.refreshTokenExpiresAt,
     this.tokenType = 'Bearer',
   });
 
@@ -22,6 +23,7 @@ class AuthToken {
           accessToken == other.accessToken &&
           refreshToken == other.refreshToken &&
           expiresAt == other.expiresAt &&
+          refreshTokenExpiresAt == other.refreshTokenExpiresAt &&
           tokenType == other.tokenType;
 
   @override
@@ -29,6 +31,6 @@ class AuthToken {
       accessToken.hashCode ^
       refreshToken.hashCode ^
       expiresAt.hashCode ^
+      (refreshTokenExpiresAt?.hashCode ?? 0) ^
       tokenType.hashCode;
 }
-

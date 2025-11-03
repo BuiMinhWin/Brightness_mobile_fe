@@ -162,7 +162,7 @@ class _MainVideoPlayerState extends State<MainVideoPlayer> {
     return Container(
       width: double.infinity,
       height: 250,
-      color: Colors.black.withOpacity(0.7),
+      color: Colors.black.withAlpha(178),
       child: const Center(
         child: CircularProgressIndicator(
           color: Colors.white,
@@ -180,10 +180,10 @@ class _MainVideoPlayerState extends State<MainVideoPlayer> {
           begin: Alignment.topCenter,
           end: Alignment.bottomCenter,
           colors: [
-            Colors.black.withOpacity(0.3),
+            Colors.black.withAlpha(77),
             Colors.transparent,
             Colors.transparent,
-            Colors.black.withOpacity(0.7),
+            Colors.black.withAlpha(178),
           ],
         ),
       ),
@@ -236,7 +236,7 @@ class _MainVideoPlayerState extends State<MainVideoPlayer> {
         width: 80,
         height: 80,
         decoration: BoxDecoration(
-          color: Colors.black.withOpacity(0.5),
+          color: Colors.black.withAlpha(128),
           shape: BoxShape.circle,
         ),
         child: Icon(
@@ -311,7 +311,7 @@ class _MainVideoPlayerState extends State<MainVideoPlayer> {
     return SliderTheme(
       data: SliderTheme.of(context).copyWith(
         activeTrackColor: AppTheme.primaryColor,
-        inactiveTrackColor: Colors.white.withOpacity(0.3),
+        inactiveTrackColor: Colors.white.withAlpha(77),
         thumbColor: AppTheme.primaryColor,
         thumbShape: const RoundSliderThumbShape(enabledThumbRadius: 6),
         trackHeight: 3,

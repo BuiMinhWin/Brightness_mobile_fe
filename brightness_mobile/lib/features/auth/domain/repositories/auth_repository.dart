@@ -31,7 +31,7 @@ abstract class AuthRepository {
     required String newPassword,
   });
 
-  Future<Either<Failure, User>> register({
+  Future<Either<Failure, void>> register({
     required String email,
     required String password,
     String? username,

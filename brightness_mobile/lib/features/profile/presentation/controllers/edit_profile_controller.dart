@@ -1,25 +1,12 @@
 import 'dart:io';
 import 'package:flutter/material.dart';
-import 'package:get_it/get_it.dart';
 import '../../../../shared/models/profile_model.dart';
 import '../../../../shared/models/validation_rules.dart';
 import '../../../../shared/services/user_profile_data_service.dart';
-import '../../domain/usecases/get_profile_usecase.dart';
-import '../../domain/usecases/update_profile_usecase.dart';
-import '../../domain/usecases/upload_profile_image_usecase.dart';
 
 class EditProfileController extends ChangeNotifier {
-  final GetProfileUsecase _getProfileUsecase;
-  final UpdateProfileUsecase _updateProfileUsecase;
-  final UploadProfileImageUsecase _uploadProfileImageUsecase;
 
-  EditProfileController({
-    required GetProfileUsecase getProfileUsecase,
-    required UpdateProfileUsecase updateProfileUsecase,
-    required UploadProfileImageUsecase uploadProfileImageUsecase,
-  }) : _getProfileUsecase = getProfileUsecase,
-       _updateProfileUsecase = updateProfileUsecase,
-       _uploadProfileImageUsecase = uploadProfileImageUsecase;
+  EditProfileController();
 
   // State variables
   ProfileModel? _profile;
@@ -314,9 +301,5 @@ class EditProfileController extends ChangeNotifier {
 
 // Factory function for dependency injection
 EditProfileController createEditProfileController() {
-  return EditProfileController(
-    getProfileUsecase: GetIt.instance<GetProfileUsecase>(),
-    updateProfileUsecase: GetIt.instance<UpdateProfileUsecase>(),
-    uploadProfileImageUsecase: GetIt.instance<UploadProfileImageUsecase>(),
-  );
+  return EditProfileController();
 }

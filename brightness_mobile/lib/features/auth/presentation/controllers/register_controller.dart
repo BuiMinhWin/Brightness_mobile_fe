@@ -16,7 +16,8 @@ class RegisterController extends ChangeNotifier {
   final TextEditingController phoneController = TextEditingController();
   final TextEditingController dateOfBirthController = TextEditingController();
   final TextEditingController passwordController = TextEditingController();
-  final TextEditingController confirmPasswordController = TextEditingController();
+  final TextEditingController confirmPasswordController =
+      TextEditingController();
 
   // State variables
   bool _isLoading = false;
@@ -196,8 +197,9 @@ class RegisterController extends ChangeNotifier {
           _errorMessage = failure.message;
           _isLoading = false;
           notifyListeners();
-          
+
           // Show error snackbar
+          if (!context.mounted) return;
           ScaffoldMessenger.of(context).showSnackBar(
             SnackBar(
               content: Text(_errorMessage!),
@@ -206,10 +208,11 @@ class RegisterController extends ChangeNotifier {
             ),
           );
         },
-        (user) {
+        (_) {
           _isLoading = false;
           notifyListeners();
-          
+          if (!context.mounted) return;
+
           // Show success message
           ScaffoldMessenger.of(context).showSnackBar(
             const SnackBar(
@@ -218,7 +221,7 @@ class RegisterController extends ChangeNotifier {
               behavior: SnackBarBehavior.floating,
             ),
           );
-          
+
           // Navigate back to login page
           Navigator.pushReplacementNamed(context, '/login');
         },
@@ -227,7 +230,8 @@ class RegisterController extends ChangeNotifier {
       _isLoading = false;
       _errorMessage = 'An unexpected error occurred';
       notifyListeners();
-      
+      if (!context.mounted) return;
+
       ScaffoldMessenger.of(context).showSnackBar(
         SnackBar(
           content: Text(_errorMessage!),
@@ -242,10 +246,10 @@ class RegisterController extends ChangeNotifier {
   Future<void> signUpWithGoogle() async {
     _isLoading = true;
     notifyListeners();
-    
+
     // TODO: Implement Google sign up
     await Future.delayed(const Duration(seconds: 2));
-    
+
     _isLoading = false;
     notifyListeners();
   }
@@ -253,10 +257,10 @@ class RegisterController extends ChangeNotifier {
   Future<void> signUpWithFacebook() async {
     _isLoading = true;
     notifyListeners();
-    
+
     // TODO: Implement Facebook sign up
     await Future.delayed(const Duration(seconds: 2));
-    
+
     _isLoading = false;
     notifyListeners();
   }

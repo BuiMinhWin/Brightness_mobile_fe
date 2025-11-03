@@ -129,7 +129,7 @@ class RegisterPage extends StatelessWidget {
           width: 100,
           height: 100,
           decoration: BoxDecoration(
-            color: AppColors.white.withOpacity(0.0),
+            color: AppColors.white.withAlpha(0),
             shape: BoxShape.circle,
           ),
           child: ClipOval(
@@ -210,11 +210,11 @@ class RegisterPage extends StatelessWidget {
                 fillColor: Colors.transparent,
                 hintText: 'Password',
                 hintStyle: AppTextStyles.body1.copyWith(
-                  color: AppColors.white.withOpacity(0.7),
+                  color: AppColors.white.withAlpha(178),
                 ),
                 prefixIcon: Icon(
                   Icons.person_outline,
-                  color: AppColors.white.withOpacity(0.7),
+                  color: AppColors.white.withAlpha(178),
                 ),
                 enabledBorder: OutlineInputBorder(
                   borderRadius: BorderRadius.circular(25),
@@ -251,11 +251,11 @@ class RegisterPage extends StatelessWidget {
                 fillColor: Colors.transparent,
                 hintText: 'Confirm Password',
                 hintStyle: AppTextStyles.body1.copyWith(
-                  color: AppColors.white.withOpacity(0.7),
+                  color: AppColors.white.withAlpha(178),
                 ),
                 prefixIcon: Icon(
                   Icons.person_outline,
-                  color: AppColors.white.withOpacity(0.7),
+                  color: AppColors.white.withAlpha(178),
                 ),
                 enabledBorder: OutlineInputBorder(
                   borderRadius: BorderRadius.circular(25),
@@ -294,17 +294,17 @@ class RegisterPage extends StatelessWidget {
     decoration: InputDecoration(
       hintText: hintText,
       hintStyle: AppTextStyles.body1.copyWith(
-        color: AppColors.white.withOpacity(0.7),
+        color: AppColors.white.withAlpha(178),
       ),
       prefixIcon: Icon(
         icon,
-        color: AppColors.white.withOpacity(0.7),
+        color: AppColors.white.withAlpha(178),
       ),
       suffixIcon: isPassword
           ? IconButton(
               icon: Icon(
                 isPasswordVisible ? Icons.visibility : Icons.visibility_off,
-                color: AppColors.white.withOpacity(0.7),
+                color: AppColors.white.withAlpha(178),
               ),
               onPressed: onSuffixTap,
             )
@@ -462,7 +462,7 @@ class RegisterPage extends StatelessWidget {
         shape: BoxShape.circle,
         boxShadow: [
           BoxShadow(
-            color: AppTheme.textPrimary.withOpacity(0.1),
+            color: AppTheme.textPrimary.withAlpha(26),
             blurRadius: 8,
             offset: const Offset(0, 2),
           ),
@@ -515,7 +515,7 @@ class CircularPatternPainter extends CustomPainter {
   @override
   void paint(Canvas canvas, Size size) {
     final paint = Paint()
-      ..color = AppColors.white.withOpacity(opacity)
+      ..color = AppColors.white.withAlpha((opacity * 255).round())
       ..style = PaintingStyle.stroke
       ..strokeWidth = 1.5;
 
@@ -530,7 +530,7 @@ class CircularPatternPainter extends CustomPainter {
 
     // Add some decorative dots
     final dotPaint = Paint()
-      ..color = AppColors.white.withOpacity(opacity * 0.7)
+      ..color = AppColors.white.withAlpha((opacity * 0.7 * 255).round())
       ..style = PaintingStyle.fill;
 
     for (int i = 0; i < 8; i++) {

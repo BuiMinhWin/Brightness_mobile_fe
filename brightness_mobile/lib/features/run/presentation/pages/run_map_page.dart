@@ -120,7 +120,7 @@ class RunMapPage extends StatelessWidget {
                         ),
                         boxShadow: [
                           BoxShadow(
-                            color: Colors.black.withOpacity(0.25),
+                            color: Colors.black.withAlpha(64),
                             blurRadius: 8,
                             offset: const Offset(0, 4),
                           ),
@@ -148,7 +148,7 @@ class RunMapPage extends StatelessWidget {
                         color: Colors.white,
                         boxShadow: [
                           BoxShadow(
-                            color: Colors.black.withOpacity(0.10),
+                            color: Colors.black.withAlpha(26),
                             blurRadius: 8,
                             offset: const Offset(0, 4),
                           ),
@@ -202,7 +202,7 @@ class RunMapPage extends StatelessWidget {
                 shape: BoxShape.circle,
                 boxShadow: [
                   BoxShadow(
-                    color: Colors.black.withOpacity(0.10),
+                    color: Colors.black.withAlpha(26),
                     blurRadius: 10,
                     offset: const Offset(0, 4),
                   ),
@@ -357,7 +357,7 @@ class _Avatar extends StatelessWidget {
           border: Border.all(color: Colors.white, width: 3),
           boxShadow: [
             BoxShadow(
-              color: Colors.black.withOpacity(0.08),
+              color: Colors.black.withAlpha(20),
               blurRadius: 8,
               offset: const Offset(0, 3),
             ),

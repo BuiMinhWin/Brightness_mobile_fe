@@ -13,9 +13,6 @@ class VideoCard extends StatefulWidget {
 }
 
 class _VideoCardState extends State<VideoCard> {
-  bool _isPlaying = false;
-  bool _isLoading = false;
-
   @override
   Widget build(BuildContext context) {
     return Container(
@@ -25,7 +22,7 @@ class _VideoCardState extends State<VideoCard> {
         borderRadius: BorderRadius.circular(12),
         boxShadow: [
           BoxShadow(
-            color: Colors.black.withOpacity(0.05),
+            color: Colors.black.withAlpha(13),
             blurRadius: 10,
             offset: const Offset(0, 2),
           ),
@@ -58,7 +55,7 @@ class _VideoCardState extends State<VideoCard> {
         width: double.infinity,
         decoration: BoxDecoration(
           borderRadius: const BorderRadius.vertical(top: Radius.circular(12)),
-          color: AppTheme.textHint.withOpacity(0.1),
+          color: AppTheme.textHint.withAlpha(26),
         ),
         child: Stack(
           children: [
@@ -86,7 +83,7 @@ class _VideoCardState extends State<VideoCard> {
                 width: 60,
                 height: 60,
                 decoration: BoxDecoration(
-                  color: Colors.black.withOpacity(0.7),
+                  color: Colors.black.withAlpha(178),
                   shape: BoxShape.circle,
                 ),
                 child: const Icon(
@@ -104,7 +101,7 @@ class _VideoCardState extends State<VideoCard> {
               child: Container(
                 padding: const EdgeInsets.symmetric(horizontal: 6, vertical: 2),
                 decoration: BoxDecoration(
-                  color: Colors.black.withOpacity(0.7),
+                  color: Colors.black.withAlpha(178),
                   borderRadius: BorderRadius.circular(4),
                 ),
                 child: Row(
@@ -136,7 +133,7 @@ class _VideoCardState extends State<VideoCard> {
               child: Container(
                 padding: const EdgeInsets.all(4),
                 decoration: BoxDecoration(
-                  color: AppTheme.primaryColor.withOpacity(0.9),
+                  color: AppTheme.primaryColor.withAlpha(230),
                   borderRadius: BorderRadius.circular(4),
                 ),
                 child: const Icon(
@@ -157,7 +154,7 @@ class _VideoCardState extends State<VideoCard> {
       width: double.infinity,
       height: 200,
       decoration: BoxDecoration(
-        color: widget.video.categoryColor.withOpacity(0.1),
+        color: widget.video.categoryColor.withAlpha(26),
         borderRadius: const BorderRadius.vertical(top: Radius.circular(12)),
       ),
       child: Center(
@@ -230,7 +227,7 @@ class _VideoCardState extends State<VideoCard> {
             height: 32,
             decoration: BoxDecoration(
               shape: BoxShape.circle,
-              color: AppTheme.textHint.withOpacity(0.2),
+              color: AppTheme.textHint.withAlpha(51),
             ),
             child: widget.video.authorAvatarUrl != null
                 ? ClipOval(
@@ -295,10 +292,10 @@ class _VideoCardState extends State<VideoCard> {
           return Container(
             padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 4),
             decoration: BoxDecoration(
-              color: hashtag.color.withOpacity(0.1),
+              color: hashtag.color.withAlpha(26),
               borderRadius: BorderRadius.circular(12),
               border: Border.all(
-                color: hashtag.color.withOpacity(0.3),
+                color: hashtag.color.withAlpha(77),
                 width: 1,
               ),
             ),
@@ -341,74 +338,6 @@ class _VideoCardState extends State<VideoCard> {
       const SnackBar(
         content: Text('Tap to navigate to watch page'),
         duration: Duration(seconds: 1),
-      ),
-    );
-  }
-
-  void _showVideoPlayer() {
-    showDialog(
-      context: context,
-      barrierDismissible: true,
-      builder: (context) => Dialog(
-        backgroundColor: Colors.transparent,
-        child: Container(
-          width: double.infinity,
-          height: 300,
-          decoration: BoxDecoration(
-            color: Colors.black,
-            borderRadius: BorderRadius.circular(12),
-          ),
-          child: Stack(
-            children: [
-              // Video Player Placeholder
-              Center(
-                child: Column(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: [
-                    const Icon(
-                      Icons.play_circle_filled,
-                      color: Colors.white,
-                      size: 64,
-                    ),
-                    const SizedBox(height: 16),
-                    Text(
-                      'Video Player',
-                      style: const TextStyle(
-                        color: Colors.white,
-                        fontSize: 18,
-                        fontWeight: FontWeight.w600,
-                      ),
-                    ),
-                    const SizedBox(height: 8),
-                    Text(
-                      widget.video.title,
-                      style: const TextStyle(
-                        color: Colors.white70,
-                        fontSize: 14,
-                      ),
-                      textAlign: TextAlign.center,
-                    ),
-                  ],
-                ),
-              ),
-
-              // Close Button
-              Positioned(
-                top: 8,
-                right: 8,
-                child: IconButton(
-                  icon: const Icon(Icons.close, color: Colors.white),
-                  onPressed: () {
-                    Navigator.of(context).pop();
-                    setState(() {
-                      _isPlaying = false;
-                    });
-                  },
-                ),
-              ),
-            ],
-          ),
-        ),
       ),
     );
   }

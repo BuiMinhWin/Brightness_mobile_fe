@@ -23,7 +23,7 @@ class EventCard extends StatelessWidget {
         borderRadius: BorderRadius.circular(AppTheme.radiusL),
         boxShadow: [
           BoxShadow(
-            color: AppColors.shadow.withOpacity(0.1),
+            color: AppColors.shadow.withAlpha(26),
             blurRadius: 10,
             offset: const Offset(0, 2),
           ),

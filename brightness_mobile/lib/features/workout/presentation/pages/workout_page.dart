@@ -95,7 +95,7 @@ class _CalendarHeader extends StatelessWidget {
               width: 120,
               height: 6,
               decoration: BoxDecoration(
-                color: Colors.white.withOpacity(0.9),
+                color: Colors.white.withAlpha(230),
                 borderRadius: BorderRadius.circular(3),
               ),
             ),
@@ -187,7 +187,7 @@ class _CalendarGrid extends StatelessWidget {
                 height: 36,
                 child: DecoratedBox(
                   decoration: BoxDecoration(
-                    color: _CalendarHeader.kPill.withOpacity(0.35),
+                    color: _CalendarHeader.kPill.withAlpha(89),
                     borderRadius: BorderRadius.circular(24),
                   ),
                 ),
@@ -317,7 +317,7 @@ class _MessageCard extends StatelessWidget {
         border: Border.all(color: AppColors.border),
         boxShadow: [
           BoxShadow(
-            color: Colors.black.withOpacity(0.04),
+            color: Colors.black.withAlpha(10),
             blurRadius: 8,
             offset: const Offset(0, 4),
           ),
@@ -364,7 +364,7 @@ class _ActivityTile extends StatelessWidget {
         color: AppColors.white,
         borderRadius: BorderRadius.circular(22),
         border: Border.all(color: AppColors.border),
-        boxShadow: [BoxShadow(color: Colors.black.withOpacity(0.04), blurRadius: 8, offset: const Offset(0, 4))],
+        boxShadow: [BoxShadow(color: Colors.black.withAlpha(10), blurRadius: 8, offset: const Offset(0, 4))],
       ),
       child: Row(
         children: [

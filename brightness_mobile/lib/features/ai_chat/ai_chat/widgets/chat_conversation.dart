@@ -78,7 +78,7 @@ class ChatConversation extends StatelessWidget {
           width: 8,
           height: 8,
           decoration: BoxDecoration(
-            color: const Color(0xFF6B7280).withOpacity(opacity),
+            color: const Color(0xFF6B7280).withAlpha((255 * opacity).round()),
             shape: BoxShape.circle,
           ),
         );

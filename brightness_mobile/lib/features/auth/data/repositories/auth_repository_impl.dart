@@ -1,16 +1,15 @@
-
 import '../../domain/entities/auth_token.dart';
 import '../../domain/entities/user.dart';
 import '../../domain/repositories/auth_repository.dart';
 import '../sources/auth_remote_data_source.dart';
-import '../../../../core/errors/failure.dart';
 import '../../../../core/errors/exception.dart';
+import '../../../../core/errors/failure.dart';
 import '../../../../core/utils/either.dart';
 
 class AuthRepositoryImpl implements AuthRepository {
   final AuthRemoteDataSource remoteDataSource;
 
-  AuthRepositoryImpl({required this.remoteDataSource});
+  const AuthRepositoryImpl({required this.remoteDataSource});
 
   @override
   Future<Either<Failure, AuthToken>> login({
@@ -18,51 +17,47 @@ class AuthRepositoryImpl implements AuthRepository {
     required String password,
   }) async {
     try {
-      final result = await remoteDataSource.login(
+      final token = await remoteDataSource.login(
         emailOrUsername: emailOrUsername,
         password: password,
       );
-      return Right(result);
+      return Right(token);
     } on AuthException catch (e) {
-       return Left(AuthFailure(e.toString())); 
+      return Left(AuthFailure(e.message, cause: e));
     } on ServerException catch (e) {
-      return Left(ServerFailure(e.toString()));
+      return Left(ServerFailure(e.message, cause: e));
     } on NetworkException catch (e) {
-      return Left(NetworkFailure(e.toString()));
+      return Left(NetworkFailure(e.message, cause: e));
     } catch (e) {
-      return Left(ServerFailure('An unexpected error occurred',
-      ));
+      return Left(ServerFailure('An unexpected error occurred', cause: e));
     }
   }
 
   @override
   Future<Either<Failure, AuthToken>> loginWithGoogle() async {
     try {
-      final result = await remoteDataSource.loginWithGoogle();
-      return Right(result);
+      final token = await remoteDataSource.loginWithGoogle();
+      return Right(token);
     } on ServerException catch (e) {
-       return Left(ServerFailure(e.toString()));
+      return Left(ServerFailure(e.message, cause: e));
     } on NetworkException catch (e) {
-      return Left(NetworkFailure(e.toString()));
+      return Left(NetworkFailure(e.message, cause: e));
     } catch (e) {
-       return Left(ServerFailure('An unexpected error occurred',
-      ));
+      return Left(ServerFailure('An unexpected error occurred', cause: e));
     }
   }
 
   @override
   Future<Either<Failure, AuthToken>> loginWithFacebook() async {
     try {
-      final result = await remoteDataSource.loginWithFacebook();
-      return Right(result);
+      final token = await remoteDataSource.loginWithFacebook();
+      return Right(token);
     } on ServerException catch (e) {
-      return Left(ServerFailure(e.toString())
-      );
+      return Left(ServerFailure(e.message, cause: e));
     } on NetworkException catch (e) {
-      return Left(NetworkFailure(e.toString()));
+      return Left(NetworkFailure(e.message, cause: e));
     } catch (e) {
-      return Left(ServerFailure('An unexpected error occurred',
-      ));
+      return Left(ServerFailure('An unexpected error occurred', cause: e));
     }
   }
 
@@ -72,13 +67,11 @@ class AuthRepositoryImpl implements AuthRepository {
       await remoteDataSource.logout();
       return const Right(null);
     } on ServerException catch (e) {
-      return Left(ServerFailure(e.toString())
-      );
+      return Left(ServerFailure(e.message, cause: e));
     } on NetworkException catch (e) {
-      return Left(NetworkFailure(e.toString()));
+      return Left(NetworkFailure(e.message, cause: e));
     } catch (e) {
-      return Left(ServerFailure('An unexpected error occurred',
-      ));
+      return Left(ServerFailure('An unexpected error occurred', cause: e));
     }
   }
 
@@ -87,34 +80,30 @@ class AuthRepositoryImpl implements AuthRepository {
     required String refreshToken,
   }) async {
     try {
-      final result = await remoteDataSource.refreshToken(
+      final token = await remoteDataSource.refreshToken(
         refreshToken: refreshToken,
       );
-      return Right(result);
+      return Right(token);
     } on ServerException catch (e) {
-      return Left(ServerFailure(e.toString())
-      );
+      return Left(ServerFailure(e.message, cause: e));
     } on NetworkException catch (e) {
-      return Left(NetworkFailure(e.toString()));
+      return Left(NetworkFailure(e.message, cause: e));
     } catch (e) {
-      return Left(ServerFailure('An unexpected error occurred',
-      ));
+      return Left(ServerFailure('An unexpected error occurred', cause: e));
     }
   }
 
   @override
   Future<Either<Failure, User>> getCurrentUser() async {
     try {
-      final result = await remoteDataSource.getCurrentUser();
-      return Right(result);
+      final user = await remoteDataSource.getCurrentUser();
+      return Right(user);
     } on ServerException catch (e) {
-      return Left(ServerFailure(e.toString())
-      );
+      return Left(ServerFailure(e.message, cause: e));
     } on NetworkException catch (e) {
-      return Left(NetworkFailure(e.toString()));
+      return Left(NetworkFailure(e.message, cause: e));
     } catch (e) {
-      return Left(ServerFailure('An unexpected error occurred',
-      ));
+      return Left(ServerFailure('An unexpected error occurred', cause: e));
     }
   }
 
@@ -126,13 +115,11 @@ class AuthRepositoryImpl implements AuthRepository {
       await remoteDataSource.forgotPassword(email: email);
       return const Right(null);
     } on ServerException catch (e) {
-     return Left(ServerFailure(e.toString())
-      );
+      return Left(ServerFailure(e.message, cause: e));
     } on NetworkException catch (e) {
-      return Left(NetworkFailure(e.toString()));
+      return Left(NetworkFailure(e.message, cause: e));
     } catch (e) {
-      return Left(ServerFailure('An unexpected error occurred',
-      ));
+      return Left(ServerFailure('An unexpected error occurred', cause: e));
     }
   }
 
@@ -148,67 +135,16 @@ class AuthRepositoryImpl implements AuthRepository {
       );
       return const Right(null);
     } on ServerException catch (e) {
-      return Left(ServerFailure(e.toString())
-      );
+      return Left(ServerFailure(e.message, cause: e));
     } on NetworkException catch (e) {
-      return Left(NetworkFailure(e.toString()));
+      return Left(NetworkFailure(e.message, cause: e));
     } catch (e) {
-      return Left(ServerFailure('An unexpected error occurred',
-      ));
+      return Left(ServerFailure('An unexpected error occurred', cause: e));
     }
   }
 
-  // @override
-  // Future<Either<Failure, User>> register({
-  //   DateTime? dateOfBirth,
-  //   required String email,
-  //   String? fullName,
-  //   String? gender,
-  //   required String password,
-  //   String? phoneNumber,
-  //   String? profilePicture,
-  //   String? username,
-  // }) async {
-  //   try {
-  //     final userModel = await remoteDataSource.register(
-  //       // Change 'dateOfBirth' to the correct parameter name if needed, or add it to the register method definition.
-  //       dateOfBirth: dateOfBirth,
-  //       email: email,
-  //       fullName: fullName,
-  //       gender: gender,
-  //       password: password,
-  //       phoneNumber: phoneNumber,
-  //       profilePicture: profilePicture,
-  //       username: username,
-  //     );
-  //     return Right(userModel);
-  //   } catch (e) {
-  //     return Left(AuthFailure(e.toString())); // ✅
-  //   }
-  // }
-
-  // @override
-  // Future<Either<Failure, User>> getCurrentUser() async {
-  //   try {
-  //     final userModel = await remoteDataSource.getCurrentUser();
-  //     return Right(userModel);
-  //   } catch (e) {
-  //     return Left(AuthFailure(e.toString())); // ✅
-  //   }
-  // }
-
-  // @override
-  // Future<Either<Failure, void>> logout() async {
-  //   try {
-  //     await remoteDataSource.logout();
-  //     return const Right(null);
-  //   } catch (e) {
-  //     return Left(AuthFailure(e.toString())); // ✅
-  //   }
-  // }
-
-   @override
-  Future<Either<Failure, User>> register({
+  @override
+  Future<Either<Failure, void>> register({
     required String email,
     required String password,
     String? username,
@@ -219,7 +155,7 @@ class AuthRepositoryImpl implements AuthRepository {
     String? profilePicture,
   }) async {
     try {
-      final user = await remoteDataSource.register(
+      await remoteDataSource.register(
         email: email,
         password: password,
         username: username,
@@ -229,13 +165,13 @@ class AuthRepositoryImpl implements AuthRepository {
         dateOfBirth: dateOfBirth,
         profilePicture: profilePicture,
       );
-      return Right(user);
+      return const Right(null);
     } on ServerException catch (e) {
-      return Left(ServerFailure(e.toString()));
+      return Left(ServerFailure(e.message, cause: e));
     } on NetworkException catch (e) {
-      return Left(NetworkFailure(e.toString()));
+      return Left(NetworkFailure(e.message, cause: e));
     } catch (e) {
-      return Left(ServerFailure('Registration failed'));
+      return Left(ServerFailure('Registration failed', cause: e));
     }
   }
 }

@@ -31,7 +31,7 @@ class AuthorInfo extends StatelessWidget {
               height: 50,
               decoration: BoxDecoration(
                 shape: BoxShape.circle,
-                color: AppTheme.textHint.withOpacity(0.2),
+                color: AppTheme.textHint.withAlpha(51),
                 border: Border.all(
                   color: AppTheme.borderColor,
                   width: 2,

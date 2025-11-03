@@ -95,17 +95,6 @@ class _CustomDropdownFieldState extends State<CustomDropdownField> {
     });
   }
 
-  DropdownOption? _getSelectedOption() {
-    if (widget.value == null) return null;
-    try {
-      return widget.options.firstWhere(
-        (option) => option.value == widget.value,
-      );
-    } catch (e) {
-      return null;
-    }
-  }
-
   Widget _buildDropdownItem(DropdownOption option) {
     return Container(
       padding: const EdgeInsets.symmetric(
@@ -120,37 +109,8 @@ class _CustomDropdownFieldState extends State<CustomDropdownField> {
     );
   }
 
-  Widget _buildSearchField() {
-    if (!widget.showSearch) return const SizedBox.shrink();
-
-    return Container(
-      padding: const EdgeInsets.all(AppTheme.spacingM),
-      child: TextField(
-        decoration: InputDecoration(
-          hintText: widget.searchHint ?? 'Search...',
-          prefixIcon: const Icon(Icons.search),
-          border: OutlineInputBorder(
-            borderRadius: BorderRadius.circular(AppTheme.radiusM),
-          ),
-          contentPadding: const EdgeInsets.symmetric(
-            horizontal: AppTheme.spacingM,
-            vertical: AppTheme.spacingS,
-          ),
-        ),
-        onChanged: (value) {
-          setState(() {
-            _searchQuery = value;
-            _filterOptions();
-          });
-        },
-      ),
-    );
-  }
-
   @override
   Widget build(BuildContext context) {
-    final selectedOption = _getSelectedOption();
-
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
@@ -247,28 +207,6 @@ class _CustomDropdownFieldWithSearchState
     extends State<CustomDropdownFieldWithSearch> {
   bool _hasError = false;
   String? _errorText;
-  bool _isOpen = false;
-  String _searchQuery = '';
-  List<DropdownOption> _filteredOptions = [];
-
-  @override
-  void initState() {
-    super.initState();
-    _filteredOptions = widget.options;
-  }
-
-  void _filterOptions() {
-    if (_searchQuery.isNotEmpty) {
-      _filteredOptions = widget.options
-          .where(
-            (option) =>
-                option.label.toLowerCase().contains(_searchQuery.toLowerCase()),
-          )
-          .toList();
-    } else {
-      _filteredOptions = widget.options;
-    }
-  }
 
   void _validateField() {
     final error = widget.validator?.call(widget.value);

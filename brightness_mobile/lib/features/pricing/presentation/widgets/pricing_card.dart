@@ -37,7 +37,7 @@ class PricingCardWidget extends StatelessWidget {
             : Border.all(color: AppTheme.borderColor),
         boxShadow: [
           BoxShadow(
-            color: AppTheme.textPrimary.withOpacity(0.1),
+            color: AppTheme.textPrimary.withAlpha(26),
             blurRadius: 10,
             offset: const Offset(0, 4),
           ),

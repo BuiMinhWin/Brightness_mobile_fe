@@ -148,7 +148,7 @@ class PricingPage extends StatelessWidget {
         borderRadius: BorderRadius.circular(AppTheme.radiusL),
         boxShadow: [
           BoxShadow(
-            color: Colors.black.withOpacity(0.15),
+            color: Colors.black.withAlpha(38),
             blurRadius: 15,
             offset: const Offset(0, 5),
           ),
@@ -209,7 +209,7 @@ class PricingPage extends StatelessWidget {
                 shape: RoundedRectangleBorder(
                   borderRadius: BorderRadius.circular(25),
                 ),
-                disabledBackgroundColor: buttonColor.withOpacity(0.7),
+                disabledBackgroundColor: buttonColor.withAlpha(178),
               ),
               child: Text(
                 buttonText,

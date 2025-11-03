@@ -233,7 +233,7 @@ class _UserProfilePageState extends State<UserProfilePage> {
                   borderRadius: const BorderRadius.vertical(
                     top: Radius.circular(16),
                   ),
-                  color: AppTheme.textHint.withOpacity(0.2),
+                  color: AppTheme.textHint.withAlpha(51),
                 ),
                 child: const Center(
                   child: Icon(
@@ -298,16 +298,18 @@ class _UserProfilePageState extends State<UserProfilePage> {
       });
 
       // Show success message
-      ScaffoldMessenger.of(context).showSnackBar(
-        SnackBar(
-          content: Text(
-            _profile!.isFriend
-                ? 'Friend request sent!'
-                : 'Friend request cancelled',
+      if(mounted){
+        ScaffoldMessenger.of(context).showSnackBar(
+          SnackBar(
+            content: Text(
+              _profile!.isFriend
+                  ? 'Friend request sent!'
+                  : 'Friend request cancelled',
+            ),
+            backgroundColor: AppTheme.successColor,
           ),
-          backgroundColor: AppTheme.successColor,
-        ),
-      );
+        );
+      }
     }
   }
 
@@ -396,12 +398,14 @@ class _UserProfilePageState extends State<UserProfilePage> {
           TextButton(
             onPressed: () {
               Navigator.pop(context);
-              ScaffoldMessenger.of(context).showSnackBar(
-                const SnackBar(
-                  content: Text('User reported successfully'),
-                  backgroundColor: AppTheme.successColor,
-                ),
-              );
+              if(mounted){
+                ScaffoldMessenger.of(context).showSnackBar(
+                  const SnackBar(
+                    content: Text('User reported successfully'),
+                    backgroundColor: AppTheme.successColor,
+                  ),
+                );
+              }
             },
             child: const Text('Report'),
           ),
@@ -424,12 +428,14 @@ class _UserProfilePageState extends State<UserProfilePage> {
           TextButton(
             onPressed: () {
               Navigator.pop(context);
-              ScaffoldMessenger.of(context).showSnackBar(
-                const SnackBar(
-                  content: Text('User blocked successfully'),
-                  backgroundColor: AppTheme.successColor,
-                ),
-              );
+              if(mounted){
+                ScaffoldMessenger.of(context).showSnackBar(
+                  const SnackBar(
+                    content: Text('User blocked successfully'),
+                    backgroundColor: AppTheme.successColor,
+                  ),
+                );
+              }
             },
             child: const Text('Block'),
           ),

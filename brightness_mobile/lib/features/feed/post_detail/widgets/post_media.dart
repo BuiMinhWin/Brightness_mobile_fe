@@ -37,8 +37,8 @@ class PostMedia extends StatelessWidget {
                         begin: Alignment.topLeft,
                         end: Alignment.bottomRight,
                         colors: [
-                          const Color(0xFF4CAF50).withOpacity(0.1),
-                          const Color(0xFF2196F3).withOpacity(0.1),
+                          const Color(0xFF4CAF50).withAlpha(26),
+                          const Color(0xFF2196F3).withAlpha(26),
                         ],
                       ),
                     ),

@@ -1,4 +1,3 @@
-import '../entities/user.dart';
 import '../repositories/auth_repository.dart';
 import '../../../../core/errors/failure.dart';
 import '../../../../core/utils/either.dart';
@@ -26,14 +25,13 @@ class RegisterParams {
   });
 }
 
-class RegisterUseCase implements UseCaseRegister<User, RegisterParams> {
+class RegisterUseCase implements UseCaseRegister<void, RegisterParams> {
   final AuthRepository repository;
 
   RegisterUseCase({required this.repository});
 
   @override
-  Future<Either<Failure, User>> call(RegisterParams params) async {
-    // Basic validation
+  Future<Either<Failure, void>> call(RegisterParams params) async {
     if (params.email.isEmpty) {
       return Left(ValidationFailure('Email is required'));
     }
@@ -46,14 +44,12 @@ class RegisterUseCase implements UseCaseRegister<User, RegisterParams> {
       return Left(ValidationFailure('Password must be at least 6 characters'));
     }
 
-    // Email format validation
     final emailRegExp = RegExp(r'^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$');
     if (!emailRegExp.hasMatch(params.email)) {
       return Left(ValidationFailure('Invalid email format'));
     }
 
-    // Call repository
-    return await repository.register(
+    return repository.register(
       email: params.email,
       password: params.password,
       username: params.username,
@@ -65,8 +61,8 @@ class RegisterUseCase implements UseCaseRegister<User, RegisterParams> {
     );
   }
 
-  /// Convenience method để gọi nhanh mà không cần new RegisterParams
-  Future<Either<Failure, User>> execute({
+  /// Convenience helper for callers who don't want to instantiate RegisterParams.
+  Future<Either<Failure, void>> execute({
     required String email,
     required String password,
     String? username,
