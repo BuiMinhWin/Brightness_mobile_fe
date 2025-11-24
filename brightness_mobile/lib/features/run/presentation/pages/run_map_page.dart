@@ -1,34 +1,31 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_map/flutter_map.dart';
-import 'package:latlong2/latlong.dart';
+import 'package:google_maps_flutter/google_maps_flutter.dart';
+import 'package:latlong2/latlong.dart' as latlong2;
 import 'package:brightness_mobile/app/router.dart';
 
 class RunMapPage extends StatelessWidget {
   const RunMapPage({super.key});
 
-  // A light basemap similar to the Figma look
-  static const _tileTemplate =
-      'https://{s}.basemaps.cartocdn.com/light_all/{z}/{x}/{y}{r}.png';
-
   // Center somewhere generic; adjust as needed
-  static final LatLng _center = LatLng(37.7749, -122.4194);
+  static final latlong2.LatLng _center = latlong2.LatLng(37.7749, -122.4194);
 
   // Example path coordinates for the dotted routes
-  List<LatLng> get _pinkPath => const [
-    LatLng(37.7760, -122.4255),
-    LatLng(37.7750, -122.4230),
-    LatLng(37.7740, -122.4200),
-  ];
+  List<latlong2.LatLng> get _pinkPath => const [
+        latlong2.LatLng(37.7760, -122.4255),
+        latlong2.LatLng(37.7750, -122.4230),
+        latlong2.LatLng(37.7740, -122.4200),
+      ];
 
-  List<LatLng> get _blackPath => const [
-    LatLng(37.7732, -122.4170),
-    LatLng(37.7722, -122.4150),
-    LatLng(37.7715, -122.4120),
-    LatLng(37.7718, -122.4105),
-  ];
+  List<latlong2.LatLng> get _blackPath => const [
+        latlong2.LatLng(37.7732, -122.4170),
+        latlong2.LatLng(37.7722, -122.4150),
+        latlong2.LatLng(37.7715, -122.4120),
+        latlong2.LatLng(37.7718, -122.4105),
+      ];
 
   // Create evenly spaced points along each segment for dotted effect
-  List<LatLng> _dotsFromPath(List<LatLng> path, {int dotsPerSegment = 10}) {
+  List<LatLng> _dotsFromPath(List<latlong2.LatLng> path,
+      {int dotsPerSegment = 10}) {
     final dots = <LatLng>[];
     for (var i = 0; i < path.length - 1; i++) {
       final a = path[i];
@@ -43,6 +40,62 @@ class RunMapPage extends StatelessWidget {
     return dots;
   }
 
+  // Helper to build circles for dotted paths
+  Set<Circle> _buildCircles(List<LatLng> pinkDots, List<LatLng> blackDots,
+      Color pinkColor, Color blackColor) {
+    final Set<Circle> circles = {};
+    for (int i = 0; i < pinkDots.length; i++) {
+      circles.add(
+        Circle(
+          circleId: CircleId('pink_dot_$i'),
+          center: pinkDots[i],
+          radius: 3.5,
+          fillColor: pinkColor,
+          strokeWidth: 0,
+        ),
+      );
+    }
+    for (int i = 0; i < blackDots.length; i++) {
+      circles.add(
+        Circle(
+          circleId: CircleId('black_dot_$i'),
+          center: blackDots[i],
+          radius: 3.5,
+          fillColor: blackColor,
+          strokeWidth: 0,
+        ),
+      );
+    }
+    return circles;
+  }
+
+  // Helper to build markers for locations and avatars
+  Set<Marker> _buildMarkers(BuildContext context) {
+    final Set<Marker> markers = {};
+    // Big dark location pin
+    markers.add(
+      Marker(
+        markerId: const MarkerId('location_pin'),
+        position: const LatLng(37.7746, -122.4215),
+        // Using a default marker icon. For custom widget markers,
+        // you would need to render the widget to a BitmapDescriptor.
+        icon: BitmapDescriptor.defaultMarkerWithHue(BitmapDescriptor.hueAzure),
+        anchor: const Offset(0.5, 0.5),
+      ),
+    );
+    // Friend avatar
+    markers.add(
+      Marker(
+        markerId: const MarkerId('friend_avatar'),
+        position: const LatLng(37.7738, -122.4179),
+        // Using a default marker icon. For custom widget markers,
+        // you would need to render the widget to a BitmapDescriptor.
+        icon: BitmapDescriptor.defaultMarker,
+      ),
+    );
+    return markers;
+  }
+
   @override
   Widget build(BuildContext context) {
     final theme = Theme.of(context);
@@ -52,7 +105,7 @@ class RunMapPage extends StatelessWidget {
     final statGreenBg = const Color(0xFFE8F7EE);
     final statGreen = const Color(0xFF22C55E);
 
-    // Dots
+    // Dots for paths
     final pinkDots = _dotsFromPath(_pinkPath, dotsPerSegment: 10);
     final blackDots = _dotsFromPath(_blackPath, dotsPerSegment: 12);
 
@@ -61,110 +114,17 @@ class RunMapPage extends StatelessWidget {
       body: Stack(
         children: [
           // MAP
-          FlutterMap(
-            options: MapOptions(
-              initialCenter: _center,
-              initialZoom: 15,
-              interactionOptions: const InteractionOptions(
-                flags:
-                    InteractiveFlag.pinchZoom |
-                    InteractiveFlag.drag |
-                    InteractiveFlag.doubleTapZoom,
-              ),
+          GoogleMap(
+            initialCameraPosition: CameraPosition(
+              target: LatLng(_center.latitude, _center.longitude),
+              zoom: 15,
             ),
-            children: [
-              TileLayer(
-                urlTemplate: _tileTemplate,
-                subdomains: const ['a', 'b', 'c', 'd'],
-                // Enable high-res tiles when on high-density displays
-                retinaMode: RetinaMode.isHighDensity(context),
-                userAgentPackageName: 'com.example.brightness_mobile',
-              ),
-              // Pink dotted route
-              CircleLayer(
-                circles: [
-                  for (final p in pinkDots)
-                    CircleMarker(
-                      point: p,
-                      radius: 3.5,
-                      color: pink,
-                      borderStrokeWidth: 0,
-                    ),
-                ],
-              ),
-              // Black dotted route
-              CircleLayer(
-                circles: [
-                  for (final p in blackDots)
-                    CircleMarker(
-                      point: p,
-                      radius: 3.5,
-                      color: Colors.black,
-                      borderStrokeWidth: 0,
-                    ),
-                ],
-              ),
-              // Markers: big dark location pin and a friend avatar
-              MarkerLayer(
-                markers: [
-                  Marker(
-                    point: const LatLng(37.7746, -122.4215),
-                    width: 48,
-                    height: 48,
-                    alignment: Alignment.center,
-                    child: Container(
-                      decoration: BoxDecoration(
-                        shape: BoxShape.circle,
-                        gradient: const RadialGradient(
-                          colors: [Colors.black, Color(0xFF444444)],
-                        ),
-                        boxShadow: [
-                          BoxShadow(
-                            color: Colors.black.withAlpha(64),
-                            blurRadius: 8,
-                            offset: const Offset(0, 4),
-                          ),
-                        ],
-                      ),
-                      child: Center(
-                        child: Container(
-                          width: 12,
-                          height: 12,
-                          decoration: const BoxDecoration(
-                            color: Colors.white,
-                            shape: BoxShape.circle,
-                          ),
-                        ),
-                      ),
-                    ),
-                  ),
-                  Marker(
-                    point: const LatLng(37.7738, -122.4179),
-                    width: 40,
-                    height: 40,
-                    child: Container(
-                      decoration: BoxDecoration(
-                        shape: BoxShape.circle,
-                        color: Colors.white,
-                        boxShadow: [
-                          BoxShadow(
-                            color: Colors.black.withAlpha(26),
-                            blurRadius: 8,
-                            offset: const Offset(0, 4),
-                          ),
-                        ],
-                      ),
-                      padding: const EdgeInsets.all(3),
-                      child: const CircleAvatar(
-                        backgroundImage: NetworkImage(
-                          'https://images.unsplash.com/photo-1544005313-94ddf0286df2?w=256&q=80&auto=format&fit=crop',
-                        ),
-                      ),
-                    ),
-                  ),
-                ],
-              ),
-            ],
+            zoomControlsEnabled: false,
+            mapType: MapType.normal,
+            circles: _buildCircles(pinkDots, blackDots, pink, Colors.black),
+            markers: _buildMarkers(context),
+            // You can add more interaction options here if needed,
+            // e.g., scrollGesturesEnabled, zoomGesturesEnabled.
           ),
 
           // Top app bar with back arrow
@@ -398,17 +358,17 @@ class _StatBlock extends StatelessWidget {
         Text(
           label,
           style: Theme.of(context).textTheme.bodySmall?.copyWith(
-            color: labelColor,
-            fontWeight: FontWeight.w600,
-          ),
+                color: labelColor,
+                fontWeight: FontWeight.w600,
+              ),
         ),
         const SizedBox(height: 8),
         Text(
           value,
           style: Theme.of(context).textTheme.titleMedium?.copyWith(
-            color: valueColor,
-            fontWeight: FontWeight.w800,
-          ),
+                color: valueColor,
+                fontWeight: FontWeight.w800,
+              ),
         ),
       ],
     );

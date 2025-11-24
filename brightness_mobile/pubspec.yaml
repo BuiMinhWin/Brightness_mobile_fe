@@ -3,7 +3,7 @@ description: "Ứng dụng di động cho dự án Brightness, giúp kết nối
 publish_to: "none" # Ngăn chặn việc publish tình cờ lên pub.dev
 
 # QUAN TRỌNG: Luôn tăng số sau dấu '+' (build number) mỗi khi build để upload lên store.
-version: 0.1.0+2
+version: 0.1.0+4
 
 environment:
   # Dùng một khoảng SDK rộng hơn để tương thích tốt hơn
@@ -19,7 +19,7 @@ dependencies:
   dartz: ^0.10.1
   dio: ^5.4.0 # Giữ lại dio, đã loại bỏ http
   # english_words: ^4.0.0 # CÂN NHẮC: Xóa nếu không dùng đến
-  flutter_map: ^6.1.0
+  google_maps_flutter: ^2.6.1
   flutter_svg: ^2.2.1
   get_it: ^7.7.0
   image_picker: ^1.0.4

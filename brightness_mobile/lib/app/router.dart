@@ -51,82 +51,82 @@ class AppRouter {
       // Main
       case home:
         return MaterialPageRoute(
-          builder: (_) => const HomeScreen(),
+          builder: (BuildContext context) => const HomeScreen(),
           settings: settings,
         );
       case login:
         return MaterialPageRoute(
-          builder: (_) => const LoginPage(),
+          builder: (BuildContext context) => const LoginPage(),
           settings: settings,
         );
       case register:
         return MaterialPageRoute(
-          builder: (_) => const RegisterPage(),
+          builder: (BuildContext context) => const RegisterPage(),
           settings: settings,
         );
       case main:
         return MaterialPageRoute(
-          builder: (_) => const MainNavigationController(),
+          builder: (BuildContext context) => const MainNavigationController(),
           settings: settings,
         );
       case pricing:
         return MaterialPageRoute(
-          builder: (_) => const PricingPage(),
+          builder: (BuildContext context) => const PricingPage(),
           settings: settings,
         );
       case onboarding:
         return MaterialPageRoute(
-          builder: (_) => const OnboardingScreen(),
+          builder: (BuildContext context) => const OnboardingScreen(),
           settings: settings,
         );
 
       // Home sub-pages
       case stepsDetail:
         return MaterialPageRoute(
-          builder: (_) => const StepsDetailPage(),
+          builder: (BuildContext context) => const StepsDetailPage(),
           settings: settings,
         );
       case calendar:
         return MaterialPageRoute(
-          builder: (_) => const CalendarPage(),
+          builder: (BuildContext context) => const CalendarPage(),
           settings: settings,
         );
       case settingsPage:
         return MaterialPageRoute(
-          builder: (_) => const SettingsPage(),
+          builder: (BuildContext context) => const SettingsPage(),
           settings: settings,
         );
       case runMap:
         return MaterialPageRoute(
-          builder: (_) => const RunMapPage(),
+          builder: (BuildContext context) => const RunMapPage(),
           settings: settings,
         );
       case runDetail:
         return MaterialPageRoute(
-          builder: (_) => const RunDetailPage(),
+          builder: (BuildContext context) => const RunDetailPage(),
           settings: settings,
         );
       case workout:
         return MaterialPageRoute(
-          builder: (_) => const WorkoutPage(),
+          builder: (BuildContext context) => const WorkoutPage(),
           settings: settings,
         );
 
       // Feed
       case feed:
         return MaterialPageRoute(
-          builder: (_) => const FeedScreen(),
+          builder: (BuildContext context) => const FeedScreen(),
           settings: settings,
         );
       case profile:
         return MaterialPageRoute(
-          builder: (_) => const UserProfilePage(isOwnProfile: true),
+          builder: (BuildContext context) => const UserProfilePage(isOwnProfile: true),
           settings: settings,
         );
       case postDetail:
         final args = settings.arguments as Map<String, dynamic>?;
         return MaterialPageRoute(
-          builder: (_) => PostDetailScreen(
+          builder: (BuildContext context) => PostDetailScreen(
             postId: args?['postId'] ?? '',
             postData: args?['postData'],
           ),
@@ -134,17 +134,17 @@ class AppRouter {
         );
       case createPost:
         return MaterialPageRoute(
-          builder: (_) => const CreatePostScreen(),
+          builder: (BuildContext context) => const CreatePostScreen(),
           settings: settings,
         );
       case aiChat:
         return MaterialPageRoute(
-          builder: (_) => const AiChatScreen(),
+          builder: (BuildContext context) => const AiChatScreen(),
           settings: settings,
         );
       default:
         return MaterialPageRoute(
-          builder: (_) => const HomeScreen(),
+          builder: (BuildContext context) => const HomeScreen(),
           settings: settings,
         );
     }

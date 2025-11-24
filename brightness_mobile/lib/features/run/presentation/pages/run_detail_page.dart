@@ -1,11 +1,11 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_map/flutter_map.dart';
-import 'package:latlong2/latlong.dart';
+import 'package:google_maps_flutter/google_maps_flutter.dart';
+import 'package:latlong2/latlong.dart' as latlong2;
 
 class RunDetailPage extends StatelessWidget {
   const RunDetailPage({super.key});
 
-  static final LatLng _center = LatLng(37.7749, -122.4194);
+  static final latlong2.LatLng _center = latlong2.LatLng(37.7749, -122.4194);
 
   @override
   Widget build(BuildContext context) {
@@ -20,24 +20,13 @@ class RunDetailPage extends StatelessWidget {
       body: Stack(
         children: [
           // Map background, dimmed to match the grayish Figma look
-          FlutterMap(
-            options: MapOptions(
-              initialCenter: _center,
-              initialZoom: 14.5,
-              interactionOptions: const InteractionOptions(
-                flags: InteractiveFlag.pinchZoom |
-                    InteractiveFlag.drag |
-                    InteractiveFlag.doubleTapZoom,
-              ),
+          GoogleMap(
+            initialCameraPosition: CameraPosition(
+              target: LatLng(_center.latitude, _center.longitude),
+              zoom: 14.5,
             ),
-            children: [
-              TileLayer(
-                urlTemplate:
-                    'https://{s}.basemaps.cartocdn.com/light_all/{z}/{x}/{y}{r}.png',
-                subdomains: ['a', 'b', 'c', 'd'],
-                userAgentPackageName: 'com.example.brightness_mobile',
-              ),
-            ],
+            zoomControlsEnabled: false,
+            mapType: MapType.normal,
           ),
           // A soft overlay to mute map colors
           Container(color: const Color(0xCCD1D5DB)),
